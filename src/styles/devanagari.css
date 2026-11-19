@@ -1,0 +1,53 @@
+/* Devanagari Typography & Multi-language Layout Rules */
+
+html[lang="hi"],
+html[lang="mr"] {
+  font-family: 'Noto Sans Devanagari', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html[lang="hi"] body,
+html[lang="mr"] body {
+  line-height: 1.7;
+}
+
+html[lang="hi"] h1,
+html[lang="hi"] h2,
+html[lang="hi"] h3,
+html[lang="hi"] h4,
+html[lang="hi"] h5,
+html[lang="hi"] h6,
+html[lang="mr"] h1,
+html[lang="mr"] h2,
+html[lang="mr"] h3,
+html[lang="mr"] h4,
+html[lang="mr"] h5,
+html[lang="mr"] h6 {
+  font-family: var(--font-noto-serif-devanagari, 'Noto Serif Devanagari'), serif;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+/* Hindi and Marathi run 20-30% longer: ensure zero clipping or overflow */
+html[lang="hi"] button,
+html[lang="hi"] a,
+html[lang="hi"] .badge,
+html[lang="mr"] button,
+html[lang="mr"] a,
+html[lang="mr"] .badge {
+  letter-spacing: normal !important;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Ensure flexible layouts for navigation and action cards */
+html[lang="hi"] .nav-link,
+html[lang="mr"] .nav-link {
+  min-width: fit-content;
+}
+
+/* Responsive safeguard for 360px viewport */
+* {
+  overflow-wrap: anywhere;
+}

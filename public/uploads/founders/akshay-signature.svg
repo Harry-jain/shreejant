@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" fill="none">
+  <path d="M 80 180 C 100 80, 130 40, 150 40 C 170 40, 150 160, 160 180 C 180 140, 210 110, 240 115 C 270 120, 270 170, 290 160 C 310 150, 330 110, 360 120 C 390 130, 400 170, 440 140 C 470 110, 510 80, 560 60 M 110 130 L 220 125 M 60 190 Q 260 235, 520 175" 
+        stroke="url(#sigGradient3)" 
+        stroke-width="5" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="sigGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F472B6" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#A78BFA" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#E2C978" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+</svg>
+

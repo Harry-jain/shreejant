@@ -1,0 +1,47 @@
+---
+title: "DocGen — Autonomous On-Brand Document & SOP Engine"
+slug: "docgen"
+client: "DocGen (Open-Source Architecture)"
+industry: "Developer Tools & AI Architecture"
+category: "AI Solutions"
+summary: "Autonomous documentation engine turning rough notes into compliance-grade, on-brand Word (.docx) and PDF documents with 100% content preservation and sub-100ms latency."
+domainUrl: "github.com/Akshayjankar/DocGen"
+externalUrl: "https://github.com/Akshayjankar/DocGen"
+featured: true
+tags: ["Python 3.12", "FastAPI", "python-docx", "PyMuPDF", "Next.js 16", "Tailwind CSS v4", "Multi-Agent LLM"]
+metrics:
+  - label: "Content Preservation"
+    value: "100%"
+  - label: "WCAG AA Pass Rate"
+    value: "100%"
+  - label: "DOCX Validity"
+    value: "100%"
+  - label: "p50 / p95 Latency"
+    value: "91 / 134 ms"
+results:
+  - "Converts raw unstructured text into structured enterprise SOPs and branded reports"
+  - "Guarantees 100% content lock: formatting and structure improved without altering business wording"
+  - "Extracts brand color palettes automatically from company logo with full WCAG contrast scoring"
+  - "Native dual-output rendering to Microsoft Word (.docx) and high-fidelity PDF with zero data retention"
+---
+
+## The Challenge
+Enterprise operations, healthcare clinics, and manufacturing firms lose hundreds of engineering and management hours drafting Standard Operating Procedures (SOPs), compliance guides, and incident reports. Traditional LLM-based formatters often hallucinate, drop critical technical terms, or produce generic markdown files that fail enterprise brand guidelines.
+
+## The Architectural Solution
+DocGen solves this by decoupling content structuring from formatting rules with a deterministic multi-stage verification pipeline:
+
+```
+logo → Theme Engine → Theme
+text → Ingest → Structurer (LLM|rules) → Block[] → Renderer → DOCX → PDF
+                              ↑                         │
+                         Verifier ←─────────────────────┘
+```
+
+- **Content-Lock Pipeline:** Employs a strict verifier layer that compares output tokens against input source text to guarantee 0% unauthorized modifications or hallucinations.
+- **Automated Theme Engine:** Ingests cover and corner brand logos, extracts primary and secondary colors using `coloraide`, and generates WCAG AA/AAA compliant color tokens.
+- **Dual-Engine Native Typography:** Compiles structured AST blocks directly into styled Microsoft Word (.docx) and vector-sharp PDF with adaptive tables of contents, revision histories, callout boxes, and syntax-highlighted code containers.
+- **Zero-Trust Privacy Standard:** Zero persistent document storage (`STORE_HISTORY=false`), automatic TTL file purging, and local LLM routing (Ollama) for confidential regulatory records.
+
+## Key Outcomes
+DocGen operates at sub-100ms p50 latency, delivers 100% DOCX validation across all compliance benchmarks, and completely eliminates third-party document SaaS subscription fees.

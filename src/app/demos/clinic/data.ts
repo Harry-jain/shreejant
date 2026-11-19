@@ -1,0 +1,205 @@
+export const clinicData = {
+  header: {
+    brandName: "Dr. Vora Clinic",
+    navLinks: [
+      { label: "Doctor Profile", href: "#doctor" },
+      { label: "Specialities", href: "#specialities" },
+      { label: "WhatsApp Triage", href: "#triage" },
+      { label: "Book Slot", href: "#appointment" },
+    ],
+    ctaLabel: "Book Appointment",
+    ctaHref: "#appointment",
+  },
+  hero: {
+    eyebrow: "ADVANCED DERMATOLOGY & FAMILY MEDICINE · NASHIK",
+    headline: "Specialist care, booked in under a minute.",
+    subhead:
+      "Dermatology and general medicine in Nashik. Book online, on WhatsApp, or walk in for experienced, unhurried consultations.",
+    primaryCta: {
+      label: "Book appointment",
+      href: "#appointment",
+    },
+    secondaryCta: {
+      label: "Book on WhatsApp",
+      href: "https://wa.me/919876500000?text=Hello%20Dr.%20Vora%20Clinic,%20I%20would%20like%20to%20book%20a%20consultation",
+    },
+  },
+  trustStrip: [
+    { value: "12+ Yrs", label: "Clinical Excellence" },
+    { value: "18,500+", label: "Patients Treated" },
+    { value: "4.9 ★", label: "Practo & Google Rating" },
+    { value: "< 15 min", label: "Average Clinic Wait Time" },
+  ],
+  doctor: {
+    name: "Dr. Anaya Vora",
+    qualifications: "MBBS, MD (Dermatology, Venereology & Leprosy)",
+    experience: "12 Years Clinical Experience",
+    regNo: "MCI-MH-49201",
+    languages: ["English", "हिंदी (Hindi)", "मराठी (Marathi)"],
+    nextAvailableSlot: "Today at 4:30 PM",
+    bio: "Ex-Consultant at KEM Hospital Mumbai. Specializes in clinical dermatology, adult acne, hormonal pigmentation, eczema, and preventive health screenings. Known for evidence-based treatments without unnecessary polypharmacy.",
+    highlights: [
+      "Gold Medalist in MD Dermatology",
+      "Member of Indian Association of Dermatologists (IADVL)",
+      "Strict 15-minute dedicated slot per patient",
+    ],
+  },
+  specialities: [
+    {
+      id: "derm",
+      title: "Clinical Dermatology",
+      desc: "Acne, rosacea, stubborn pigmentation, hair fall treatments, and clinical chemical peels.",
+      fee: "₹500",
+      duration: "20 mins",
+      badge: "Flagship",
+    },
+    {
+      id: "genmed",
+      title: "General Medicine",
+      desc: "Acute fevers, viral infections, gastrointestinal issues, and preventive adult screenings.",
+      fee: "₹400",
+      duration: "15 mins",
+      badge: "Daily OPD",
+    },
+    {
+      id: "paediatrics",
+      title: "Paediatrics & Child Health",
+      desc: "Growth monitoring, immunizations, childhood allergies, and adolescent wellness.",
+      fee: "₹600",
+      duration: "20 mins",
+      badge: "Family Care",
+    },
+    {
+      id: "diabetes",
+      title: "Diabetes & Hypertension",
+      desc: "HbA1c monitoring, diet management, cardiovascular risk profiling, and insulin adjustments.",
+      fee: "₹700",
+      duration: "25 mins",
+      badge: "Chronic Care",
+    },
+    {
+      id: "allergy",
+      title: "Allergy Testing & Patch Tests",
+      desc: "Skin prick diagnostics, contact dermatitis mapping, and personalized immunotherapy plans.",
+      fee: "₹800",
+      duration: "30 mins",
+      badge: "Diagnostic",
+    },
+    {
+      id: "checkup",
+      title: "Comprehensive Health Checkup",
+      desc: "Full metabolic panel, lipid profile, CBC, liver/kidney vitals, ECG review, and physician report.",
+      fee: "₹1,500",
+      duration: "45 mins",
+      badge: "Preventive",
+    },
+  ],
+  signatureFeature: {
+    badge: "AI TRIAGE & SLOT ALLOCATION",
+    heading: "Smart WhatsApp Triage & Instant Confirmation",
+    description:
+      "Patients can check doctor availability, describe symptoms in English, Hindi, or Marathi, and confirm an appointment in three taps without phone tag.",
+    bullets: [
+      "Natural language understanding in English, Hindi, and Marathi.",
+      "Live sync with Dr. Vora's clinic calendar — zero double booking.",
+    ],
+    messages: [
+      {
+        sender: "user" as const,
+        text: "Namaste Doctor, I have developed a red itchy skin rash on my neck since yesterday. Do you have a slot tomorrow evening?",
+        time: "08:42 PM",
+      },
+      {
+        sender: "bot" as const,
+        text: "Namaste! Dr. Anaya Vora is available tomorrow (Thursday) at our College Road clinic. Here are 3 open slots:",
+        time: "08:42 PM",
+        actionButton: {
+          label: "Confirm Slot: Tomorrow 5:30 PM",
+          href: "#appointment",
+        },
+      },
+      {
+        sender: "user" as const,
+        text: "Book 5:30 PM please. Name is Kiran Deshmukh.",
+        time: "08:43 PM",
+      },
+      {
+        sender: "bot" as const,
+        text: "Your appointment is confirmed for tomorrow at 5:30 PM (Token #14). Please avoid applying scented creams before consultation. Clinic location: 2nd Floor, Mediplex, College Road.",
+        time: "08:43 PM",
+      },
+    ],
+  },
+  testimonials: [
+    {
+      name: "Kiran D.",
+      city: "Nashik",
+      rating: 5,
+      quote:
+        "Booked on WhatsApp at night, got a confirmation, and was seen the next morning. No phone tag at all.",
+    },
+    {
+      name: "Meenal S.",
+      city: "Pune",
+      rating: 5,
+      quote:
+        "Dr. Anaya took the time to explain my hormonal acne triggers instead of just prescribing heavy antibiotics. My skin cleared within 8 weeks.",
+    },
+    {
+      name: "Rajesh P.",
+      city: "Nashik",
+      rating: 5,
+      quote:
+        "Transparent fee structure (₹500 consultation) with zero surprise costs. The clinic was immaculately clean and organized.",
+    },
+  ],
+  bookingForm: {
+    badge: "DIRECT CLINIC SCHEDULING",
+    heading: "Book Your In-Clinic Consultation",
+    subhead: "Select a date and available time slot. Instant SMS and WhatsApp confirmation.",
+    submitLabel: "Confirm Clinic Appointment",
+    fields: [
+      { id: "patientName", label: "Patient Full Name", type: "text" as const, required: true, placeholder: "e.g. Kiran Deshmukh" },
+      { id: "age", label: "Patient Age", type: "text" as const, required: true, placeholder: "e.g. 34" },
+      { id: "phone", label: "WhatsApp Mobile Number", type: "tel" as const, required: true, placeholder: "+91 98765 00000" },
+      {
+        id: "speciality",
+        label: "Consultation Specialty",
+        type: "select" as const,
+        required: true,
+        options: [
+          { label: "Clinical Dermatology (₹500)", value: "dermatology" },
+          { label: "General Medicine (₹400)", value: "general" },
+          { label: "Paediatrics & Child Health (₹600)", value: "paediatrics" },
+          { label: "Diabetes & Chronic Care (₹700)", value: "diabetes" },
+          { label: "Allergy Testing (₹800)", value: "allergy" },
+          { label: "Full Body Health Checkup (₹1,500)", value: "checkup" },
+        ],
+      },
+      { id: "preferredDate", label: "Preferred Date", type: "date" as const, required: true },
+      {
+        id: "firstVisit",
+        label: "Is this your first visit to Dr. Vora Clinic?",
+        type: "select" as const,
+        required: true,
+        options: [
+          { label: "Yes, this is my first consultation", value: "yes" },
+          { label: "No, I am a returning patient", value: "no" },
+        ],
+      },
+      {
+        id: "symptoms",
+        label: "Chief Complaints / Symptoms",
+        type: "textarea" as const,
+        placeholder: "Briefly describe your symptoms or reason for visit...",
+      },
+    ],
+  },
+  footer: {
+    address: "Suite 204, Mediplex Healthcare Tower, College Road, Nashik, MH 422005",
+    hours: "Morning: 10:00 AM – 1:30 PM | Evening: 4:30 PM – 8:30 PM (Mon – Sat)",
+    phone: "+91 98765 00000",
+    email: "appointments@drvoraclinic.shreejan.ai",
+  },
+};
+

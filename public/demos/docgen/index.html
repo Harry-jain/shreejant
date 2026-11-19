@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docgen — The Chroma Press</title>
+  <meta name="description" content="Turn rough notes into compliance-grade, on-brand SOPs, setup guides and reports — with your wording untouched.">
+  <meta name="application-name" content="Docgen">
+  <meta name="keywords" content="Docgen, SOP, branded documents, DOCX, PDF, Chroma Press">
+  <meta name="theme-color" content="#F6F2EA">
+
+  <!-- Google Fonts: Bricolage Grotesque, Fraunces, Instrument Sans, Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Geist+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Design tokens (The Chroma Press) ─── */
+    :root {
+      --paper: #f6f2ea;
+      --paper-deep: #ebe4d6;
+      --ink: #1a1714;
+      --ink-muted: #5c5348;
+      --rule: #d4c9b8;
+      --darkroom: #0b0b12;
+      --darkroom-lift: #15151f;
+      --darkroom-ink: #f0ebe3;
+      --darkroom-muted: #9a9388;
+      --darkroom-rule: #2a2a36;
+
+      --brand: #1f6f5b;
+      --brand-dark: #154a3d;
+      --brand-tint: #e4f2ed;
+      --brand-secondary: #2c3a36;
+      --brand-accent: #c45c26;
+
+      --danger: #b42318;
+      --warning: #b54708;
+      --success: #067647;
+      --info: #175cd3;
+
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 14px;
+
+      --font-display: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-serif: "Fraunces", Georgia, serif;
+      --font-sans: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+      --bg: var(--paper);
+      --fg: var(--ink);
+      --fg-muted: var(--ink-muted);
+      --surface: #fffdf8;
+      --surface-2: var(--paper-deep);
+      --border: var(--rule);
+      --header-bg: color-mix(in srgb, var(--paper) 88%, transparent);
+
+      --slider-pos: 52%;
+    }
+
+    [data-theme="dark"] {
+      --bg: var(--darkroom);
+      --fg: var(--darkroom-ink);
+      --fg-muted: var(--darkroom-muted);
+      --surface: var(--darkroom-lift);
+      --surface-2: #1c1c28;
+      --border: var(--darkroom-rule);
+      --header-bg: color-mix(in srgb, var(--darkroom) 88%, transparent);
+      --brand-tint: color-mix(in srgb, var(--brand) 22%, var(--darkroom));
+    }
+
+    /* ─── Global Reset & Setup ─── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar, body::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+
+    ::selection {
+      background: color-mix(in srgb, var(--brand) 35%, transparent);
+      color: var(--fg);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 3px;
+    }
+
+    /* ─── Paper Atmosphere Background & Grain ─── */
+    .paper-atmosphere {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(
+          ellipse 120% 80% at 10% -10%,
+          color-mix(in srgb, var(--brand) 14%, transparent),
+          transparent 55%
+        ),
+        radial-gradient(
+          ellipse 90% 60% at 90% 0%,
+          color-mix(in srgb, var(--brand-accent) 10%, transparent),
+          transparent 50%
+        ),
+        linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--surface) 40%, transparent),
+          transparent 40%
+        ),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+      background-attachment: fixed, fixed, fixed, scroll;
+    }
+
+    [data-theme="dark"] .paper-atmosphere {
+      background-image:
+        radial-gradient(
+          ellipse 100% 70% at 20% -20%,
+          color-mix(in srgb, var(--brand) 28%, transparent),
+          transparent 55%
+        ),
+        radial-gradient(
+          ellipse 80% 50% at 100% 10%,
+          color-mix(in srgb, var(--brand-accent) 16%, transparent),
+          transparent 45%
+        );
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.045;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 180px 180px;
+    }
+
+    [data-theme="dark"] .grain {
+      opacity: 0.07;
+      mix-blend-mode: soft-light;
+    }
+
+    /* ─── Cursor Follower ─── */
+    .cursor-follower {
+      pointer-events: none;
+      position: fixed;
+      z-index: 60;
+      width: 2rem;
+      height: 2rem;
+      transform: translate(-50%, -50%);
+      border-radius: 9999px;
+      border: 1px solid color-mix(in srgb, var(--brand) 55%, transparent);
+      background: radial-gradient(circle, color-mix(in srgb, var(--brand) 18%, transparent), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    /* ─── Typography Helpers ─── */
+    .font-display { font-family: var(--font-display); }
+    .font-serif { font-family: var(--font-serif); }
+    .font-sans { font-family: var(--font-sans); }
+    .font-mono { font-family: var(--font-mono); }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brand);
+      font-weight: 500;
+    }
+
+    .ink-rule {
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--brand) 55%, var(--border)),
+        transparent
+      );
+    }
+
+    /* ─── Layout & Utility Classes ─── */
+    .max-w-7xl { max-width: 80rem; margin-left: auto; margin-right: auto; }
+    .max-w-5xl { max-width: 64rem; margin-left: auto; margin-right: auto; }
+    .max-w-xl { max-width: 36rem; }
+    .max-w-md { max-width: 28rem; }
+    .max-w-lg { max-width: 32rem; }
+
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+    /* ─── Header ─── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: var(--header-bg);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .header-inner {
+      height: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-bar {
+      height: 1.5rem;
+      width: 0.25rem;
+      border-radius: 9999px;
+      background-color: var(--brand);
+      box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 45%, transparent);
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+
+    .logo-link:hover .logo-bar {
+      transform: scaleY(1.15);
+    }
+
+    .logo-text {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .logo-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+
+    .logo-sub {
+      display: none;
+      font-family: var(--font-serif);
+      font-size: 0.875rem;
+      font-style: italic;
+      color: var(--fg-muted);
+    }
+
+    @media (min-width: 640px) {
+      .logo-sub { display: inline; }
+      .px-sm-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+
+    nav.primary-nav {
+      display: none;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    @media (min-width: 768px) {
+      nav.primary-nav { display: flex; }
+    }
+
+    .nav-link {
+      border-radius: var(--radius-sm);
+      padding: 0.375rem 0.75rem;
+      font-size: 0.875rem;
+      text-decoration: none;
+      color: var(--fg-muted);
+      transition: color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--fg);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .cmd-badge {
+      display: none;
+      align-items: center;
+      gap: 0.25rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 0.125rem 0.375rem;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--fg-muted);
+      cursor: pointer;
+    }
+
+    @media (min-width: 640px) {
+      .cmd-badge { display: inline-flex; }
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--fg);
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      background-color: var(--surface-2);
+      transform: scale(1.04);
+    }
+
+    .btn-open-studio {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      height: 2.25rem;
+      border-radius: var(--radius-md);
+      background-color: var(--brand);
+      padding: 0 0.875rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #ffffff;
+      text-decoration: none;
+      box-shadow: 0 8px 20px -12px color-mix(in srgb, var(--brand) 70%, transparent);
+      transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-open-studio:hover {
+      background-color: var(--brand-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ─── Hero Section ─── */
+    .hero-section {
+      position: relative;
+      overflow: hidden;
+      padding-top: 2rem;
+      padding-bottom: 3rem;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-section {
+        padding-top: 3rem;
+        padding-bottom: 4rem;
+      }
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (min-width: 640px) {
+      .hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: center;
+      }
+    }
+
+    .hero-title {
+      margin-top: 1.25rem;
+      font-family: var(--font-display);
+      font-size: 3rem;
+      line-height: 1.02;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--fg);
+    }
+
+    @media (min-width: 640px) {
+      .hero-title { font-size: 3.75rem; }
+    }
+    @media (min-width: 1024px) {
+      .hero-title { font-size: 4.5rem; }
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      max-width: 28rem;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--fg-muted);
+    }
+
+    @media (min-width: 640px) {
+      .hero-sub { font-size: 1.5rem; }
+    }
+
+    .hero-actions {
+      margin-top: 2.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn-primary-lg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      height: 3rem;
+      padding: 0 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      background-color: var(--brand);
+      color: #ffffff;
+      text-decoration: none;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), 0 8px 20px -12px color-mix(in srgb, var(--brand) 70%, transparent);
+      transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary-lg:hover {
+      background-color: var(--brand-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary-lg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      height: 3rem;
+      padding: 0 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      background-color: var(--surface);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+      cursor: pointer;
+    }
+
+    .btn-secondary-lg:hover {
+      background-color: var(--surface-2);
+      border-color: color-mix(in srgb, var(--brand) 35%, var(--border));
+      transform: translateY(-1px);
+    }
+
+    /* ─── Floating Decorative Badges ─── */
+    .floating-docs {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      display: none;
+    }
+
+    @media (min-width: 1024px) {
+      .floating-docs { display: block; }
+    }
+
+    .float-card {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background-color: color-mix(in srgb, var(--surface) 92%, transparent);
+      padding: 0.5rem 0.75rem;
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      animation: float-drift 5s ease-in-out infinite alternate;
+    }
+
+    .float-icon-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: var(--radius-sm);
+      background-color: var(--brand-tint);
+      color: var(--brand);
+      flex-shrink: 0;
+    }
+
+    .float-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--fg);
+    }
+
+    .float-sub {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 11px;
+      color: var(--fg-muted);
+    }
+
+    @keyframes float-drift {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-12px); }
+    }
+
+    /* ─── PaperStack ─── */
+    .paper-stack-container {
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      height: 340px;
+      width: 100%;
+      max-width: 28rem;
+    }
+
+    .paper-sheet {
+      position: absolute;
+      inset-inline: 2rem;
+      top: 1.5rem;
+      bottom: 2.5rem;
+      border-radius: 3px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background-color: #fffdf8;
+      box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.35);
+      padding: 1.5rem;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      transform-origin: center bottom;
+    }
+
+    .paper-sheet:hover {
+      box-shadow: 0 28px 60px -20px rgba(0, 0, 0, 0.45);
+    }
+
+    .sheet-cover {
+      transform: translateY(18px) rotate(-6deg);
+      z-index: 1;
+    }
+    .sheet-toc {
+      transform: translateY(8px) rotate(2.5deg);
+      z-index: 2;
+    }
+    .sheet-body {
+      transform: translateY(0px) rotate(-1deg);
+      z-index: 3;
+    }
+
+    .sheet-body:hover {
+      transform: translateY(-6px) rotate(-0.5deg);
+    }
+
+    .paper-sheet .top-line {
+      height: 0.5rem;
+      width: 6rem;
+      border-radius: 9999px;
+      background-color: var(--brand);
+      opacity: 0.85;
+    }
+
+    .paper-sheet .text-line-75 {
+      margin-top: 0.75rem;
+      height: 0.5rem;
+      width: 75%;
+      border-radius: 9999px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .paper-sheet .text-line-66 {
+      margin-top: 0.5rem;
+      height: 0.5rem;
+      width: 66%;
+      border-radius: 9999px;
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .paper-swatch-grid {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    .paper-swatch-cell {
+      height: 2rem;
+      border-radius: 2px;
+    }
+
+    .paper-body-lines {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .paper-body-line {
+      height: 0.375rem;
+      border-radius: 9999px;
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .sheet-corner-tag {
+      position: absolute;
+      right: 1rem;
+      bottom: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      color: rgba(0, 0, 0, 0.35);
+      text-transform: uppercase;
+    }
+
+    /* ─── Chroma Drop Section ─── */
+    .chroma-section {
+      border-top: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      background-color: color-mix(in srgb, var(--surface) 50%, transparent);
+      padding: 4rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .chroma-section { padding: 5rem 1.5rem; }
+    }
+
+    .chroma-dropzone {
+      position: relative;
+      width: 100%;
+      min-height: 28rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      border: 3px dashed var(--border);
+      background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (min-width: 640px) {
+      .chroma-dropzone {
+        min-height: 32rem;
+        padding: 5rem 4rem;
+      }
+    }
+
+    .chroma-dropzone:hover {
+      border-color: color-mix(in srgb, var(--brand) 60%, transparent);
+    }
+
+    .chroma-dropzone.dragging {
+      border-color: var(--brand);
+      background-color: var(--brand-tint);
+      transform: scale(1.01);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand) 25%, transparent);
+    }
+
+    .chroma-icon-circle {
+      margin-bottom: 2rem;
+      width: 7rem;
+      height: 7rem;
+      border-radius: 9999px;
+      background-color: var(--brand-tint);
+      color: var(--brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+      animation: float-icon 3.5s ease-in-out infinite alternate;
+    }
+
+    @media (min-width: 640px) {
+      .chroma-icon-circle {
+        width: 9rem;
+        height: 9rem;
+      }
+    }
+
+    @keyframes float-icon {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-8px) scale(1.02); }
+    }
+
+    .chroma-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+
+    @media (min-width: 640px) {
+      .chroma-title { font-size: 3rem; }
+    }
+
+    .chroma-desc {
+      margin-top: 1rem;
+      max-width: 32rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--fg-muted);
+    }
+
+    @media (min-width: 640px) {
+      .chroma-desc { font-size: 1.125rem; }
+    }
+
+    .chroma-foot {
+      margin-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--fg-muted);
+    }
+
+    /* ─── Before / After Slider Section ─── */
+    .slider-section {
+      padding: 5rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .slider-section { padding: 6rem 1.5rem; }
+    }
+
+    .showcase-slider-wrap {
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background-color: var(--surface);
+      box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.1);
+    }
+
+    .slider-canvas {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background-color: var(--surface-2);
+      user-select: none;
+      overflow: hidden;
+    }
+
+    /* After Pane (branded) */
+    .after-pane {
+      position: absolute;
+      inset: 0;
+      background-color: #fffdf8;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 640px) {
+      .after-pane { padding: 2.5rem; }
+    }
+
+    .sop-document-card {
+      height: 100%;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 1.25rem;
+      background: #ffffff;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .sop-top-bar {
+      margin-bottom: 0.75rem;
+      height: 0.25rem;
+      width: 100%;
+      background-color: var(--brand);
+      border-radius: 2px;
+    }
+
+    .sop-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+    }
+
+    .sop-sub {
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+      color: rgba(0, 0, 0, 0.45);
+    }
+
+    .sop-table {
+      margin-top: 1rem;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      font-size: 10px;
+    }
+
+    .sop-table-head {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background-color: var(--brand);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 0.35rem 0.5rem;
+    }
+
+    .sop-table-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0.35rem 0.5rem;
+      color: rgba(0, 0, 0, 0.75);
+    }
+
+    .sop-table-row:nth-child(even) {
+      background-color: color-mix(in srgb, var(--brand) 12%, white);
+    }
+
+    .sop-table-row:nth-child(odd) {
+      background-color: #ffffff;
+    }
+
+    .badge-after {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      border-radius: 4px;
+      background-color: var(--brand);
+      color: #ffffff;
+      padding: 0.2rem 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* Before Pane (raw text) */
+    .before-pane {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background-color: #1a1714;
+      width: var(--slider-pos);
+      z-index: 5;
+    }
+
+    .before-inner {
+      height: 100%;
+      width: 100vw;
+      max-width: 720px;
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.6;
+      color: #c8c2b6;
+    }
+
+    @media (min-width: 640px) {
+      .before-inner { padding: 2.5rem; }
+    }
+
+    .badge-before {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 0.2rem 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* Slider divider handle */
+    .slider-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: var(--brand);
+      left: var(--slider-pos);
+      z-index: 10;
+      cursor: ew-resize;
+    }
+
+    .slider-handle-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      border: 2px solid var(--brand);
+      background-color: var(--surface);
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .slider-controls-bar {
+      border-top: 1px solid var(--border);
+      background-color: var(--surface);
+      padding: 0.75rem 1rem;
+    }
+
+    .slider-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .slider-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+    }
+
+    .slider-range-input {
+      width: 100%;
+      height: 0.375rem;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 9999px;
+      background-color: var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .slider-range-input::-webkit-slider-thumb {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 1.125rem;
+      height: 1.125rem;
+      border-radius: 9999px;
+      background-color: var(--brand);
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+      cursor: ew-resize;
+    }
+
+    /* ─── Ink Bench Section ─── */
+    .bench-section {
+      border-top: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      background-color: color-mix(in srgb, var(--surface) 35%, transparent);
+      padding: 5rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .bench-section { padding: 6rem 1.5rem; }
+    }
+
+    .swatches-grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .swatches-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .swatches-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .swatch-card {
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      text-align: left;
+      cursor: pointer;
+      background: var(--surface);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .swatch-card:hover {
+      border-color: color-mix(in srgb, var(--brand) 50%, var(--border));
+      transform: translateY(-2px);
+    }
+
+    .swatch-card.active {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand) 30%, transparent);
+    }
+
+    .swatch-color-bar {
+      height: 4rem;
+      width: 100%;
+    }
+
+    .swatch-info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.625rem 0.75rem;
+      background-color: var(--surface);
+    }
+
+    .swatch-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--fg);
+    }
+
+    .swatch-hex {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--fg-muted);
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      background-color: var(--bg);
+      margin-top: auto;
+    }
+
+    .footer-main {
+      padding: 2.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .footer-main {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding: 2.5rem 1.5rem;
+      }
+    }
+
+    .footer-brand-title {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .footer-brand-bar {
+      height: 1.25rem;
+      width: 0.25rem;
+      border-radius: 9999px;
+      background-color: var(--brand);
+    }
+
+    .footer-sub {
+      margin-top: 0.5rem;
+      max-width: 24rem;
+      font-family: var(--font-serif);
+      font-size: 0.875rem;
+      font-style: italic;
+      color: var(--fg-muted);
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+    }
+
+    .footer-nav a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .footer-nav a:hover {
+      color: var(--fg);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+      padding: 0.75rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .footer-bottom { padding: 0.75rem 1.5rem; }
+    }
+
+    .footer-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--fg-muted);
+    }
+
+    /* ─── Command Palette Modal ─── */
+    .cmd-palette-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 18vh 1rem 1rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .cmd-palette-backdrop.open {
+      display: flex;
+    }
+
+    .cmd-modal {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 32rem;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background-color: var(--surface);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    }
+
+    .cmd-input {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      padding: 0.875rem 1rem;
+      font-size: 1rem;
+      color: var(--fg);
+      outline: none;
+      font-family: var(--font-sans);
+    }
+
+    .cmd-input::placeholder {
+      color: var(--fg-muted);
+    }
+
+    .cmd-list {
+      max-height: 18rem;
+      overflow-y: auto;
+      padding: 0.5rem;
+    }
+
+    .cmd-group-label {
+      padding: 0.25rem 0.5rem;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fg-muted);
+    }
+
+    .cmd-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: var(--radius-md);
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .cmd-item:hover, .cmd-item.active {
+      background-color: var(--brand-tint);
+      color: var(--brand-dark);
+    }
+
+    .cmd-item svg {
+      color: var(--brand);
+      flex-shrink: 0;
+    }
+
+    /* ─── Toast Notifications ─── */
+    .toast-container {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .toast-pill {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background-color: var(--surface);
+      color: var(--fg);
+      padding: 0.75rem 1rem;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+      font-size: 0.875rem;
+      font-weight: 500;
+      animation: toast-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(12px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+  </style>
+</head>
+<body class="paper-atmosphere">
+
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Cursor follower -->
+  <div class="cursor-follower" id="cursorFollower" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="max-w-7xl px-4 px-sm-6 header-inner">
+      <a href="#" class="logo-link" aria-label="Docgen home">
+        <span class="logo-bar" aria-hidden="true"></span>
+        <span class="logo-text">
+          <span class="logo-title">Docgen</span>
+          <span class="logo-sub">The Chroma Press</span>
+        </span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary">
+        <a href="#chroma-drop" class="nav-link">Studio</a>
+        <a href="#ink-bench" class="nav-link">Brand kits</a>
+        <a href="#before-after" class="nav-link">Library</a>
+      </nav>
+
+      <div class="header-actions">
+        <kbd class="cmd-badge" id="cmdBadge" title="Open command palette (⌘K)">
+          <svg width="10" height="10" viewBox="0 0 256 256" fill="currentColor">
+            <path d="M184,80H160V56a40,40,0,1,0-40,40h24v64H120a40,40,0,1,0,40,40V176h24a40,40,0,1,0-40-40V120h24a40,40,0,1,0-40-40ZM96,56a24,24,0,1,1,24,24H96ZM56,176a24,24,0,1,1,24-24v24Zm144-48a24,24,0,1,1-24,24V128ZM144,120V96h24a24,24,0,1,1-24,24Z"></path>
+          </svg>
+          K
+        </kbd>
+
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Switch theme" title="Toggle Light / Darkroom">
+          <!-- Moon Icon (for switching to dark) -->
+          <svg id="moonIcon" width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+            <path d="M216.7,152.6A91.9,91.9,0,0,1,103.4,39.3,8,8,0,0,0,92.6,30.5a96,96,0,1,0,132.9,132.9A8,8,0,0,0,216.7,152.6ZM128,208a80,80,0,0,1-62.7-129.8A96.3,96.3,0,0,0,177.8,190.7,79.5,79.5,0,0,1,128,208Z"></path>
+          </svg>
+          <!-- Sun Icon (for switching to light) -->
+          <svg id="sunIcon" style="display:none;" width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+            <path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM197.66,58.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM128,200a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V208A8,8,0,0,0,128,200Zm75.31-7.66a8,8,0,0,0-11.31,11.32l16,16a8,8,0,0,0,11.31-11.32ZM240,120H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16ZM40,120H16a8,8,0,0,0,0,16H40a8,8,0,0,0,0-16Z"></path>
+          </svg>
+        </button>
+
+        <a href="#chroma-drop" class="btn-open-studio">
+          Open Studio
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main style="position: relative; z-index: 10; flex: 1;">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <!-- Floating decorative badges (desktop only) -->
+      <div class="floating-docs" aria-hidden="true">
+        <!-- DOCX -->
+        <div class="float-card" style="left: 8%; top: 12%; animation-delay: 0.2s;">
+          <div class="float-icon-box">
+            <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+              <path d="M205.66,82.34l-56-56A8,8,0,0,0,144,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,205.66,82.34ZM144,48l40,40H144ZM200,216H56V40h72V96a8,8,0,0,0,8,8h56V216Zm-40-64a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16h48A8,8,0,0,1,160,152Zm0,32a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16h48A8,8,0,0,1,160,184Z"></path>
+            </svg>
+          </div>
+          <div>
+            <span class="float-label">DOCX</span>
+            <span class="float-sub">Real styles · TOC field</span>
+          </div>
+        </div>
+
+        <!-- PDF -->
+        <div class="float-card" style="left: 72%; top: 22%; animation-delay: 0.35s;">
+          <div class="float-icon-box">
+            <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+              <path d="M205.66,82.34l-56-56A8,8,0,0,0,144,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,205.66,82.34ZM144,48l40,40H144ZM200,216H56V40h72V96a8,8,0,0,0,8,8h56V216Z"></path>
+            </svg>
+          </div>
+          <div>
+            <span class="float-label">PDF</span>
+            <span class="float-sub">Tagged · WCAG AA</span>
+          </div>
+        </div>
+
+        <!-- Content Seal -->
+        <div class="float-card" style="left: 58%; top: 68%; animation-delay: 0.5s;">
+          <div class="float-icon-box">
+            <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+              <path d="M128,16a112,112,0,1,0,112,112A112.12,112.12,0,0,0,128,16Zm0,208a96,96,0,1,1,96-96A96.11,96.11,0,0,1,128,224Zm45.66-117.66a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,106.34Z"></path>
+            </svg>
+          </div>
+          <div>
+            <span class="float-label">Content Seal</span>
+            <span class="float-sub">100% preserved</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-7xl px-4 px-sm-6 hero-grid">
+        <!-- Hero Left Column -->
+        <div>
+          <p class="section-eyebrow">The Chroma Press</p>
+          <h1 class="hero-title">Docgen</h1>
+          <div style="margin-top: 1.25rem; max-width: 12rem;">
+            <div class="ink-rule"></div>
+          </div>
+          <p class="hero-sub">
+            Rough notes in. On-brand SOPs out — wording locked.
+          </p>
+          <div class="hero-actions">
+            <a href="#chroma-drop" class="btn-primary-lg">
+              Open Studio
+              <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+                <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+              </svg>
+            </a>
+            <button type="button" class="btn-secondary-lg" onclick="document.getElementById('chroma-drop').scrollIntoView({ behavior: 'smooth' })">
+              Drop a logo
+            </button>
+          </div>
+        </div>
+
+        <!-- Hero Right Column (PaperStack) -->
+        <div>
+          <div class="paper-stack-container" aria-hidden="true">
+            <!-- Sheet 1: Cover -->
+            <div class="paper-sheet sheet-cover" style="border-top: 3px solid var(--brand);">
+              <div class="top-line"></div>
+              <div class="text-line-75"></div>
+              <div class="text-line-66"></div>
+              <div class="paper-swatch-grid">
+                <div class="paper-swatch-cell" style="background-color: var(--brand);"></div>
+                <div class="paper-swatch-cell" style="background-color: color-mix(in srgb, var(--brand) 35%, white);"></div>
+                <div class="paper-swatch-cell" style="background-color: rgba(0, 0, 0, 0.06);"></div>
+              </div>
+              <div class="paper-body-lines">
+                <div class="paper-body-line" style="width: 90%;"></div>
+                <div class="paper-body-line" style="width: 78%;"></div>
+                <div class="paper-body-line" style="width: 84%;"></div>
+                <div class="paper-body-line" style="width: 60%;"></div>
+              </div>
+              <span class="sheet-corner-tag">Cover</span>
+            </div>
+
+            <!-- Sheet 2: TOC -->
+            <div class="paper-sheet sheet-toc" style="border-top: 3px solid var(--brand);">
+              <div class="top-line"></div>
+              <div class="text-line-75"></div>
+              <div class="text-line-66"></div>
+              <div class="paper-swatch-grid">
+                <div class="paper-swatch-cell" style="background-color: var(--brand);"></div>
+                <div class="paper-swatch-cell" style="background-color: color-mix(in srgb, var(--brand) 35%, white);"></div>
+                <div class="paper-swatch-cell" style="background-color: rgba(0, 0, 0, 0.06);"></div>
+              </div>
+              <div class="paper-body-lines">
+                <div class="paper-body-line" style="width: 90%;"></div>
+                <div class="paper-body-line" style="width: 78%;"></div>
+                <div class="paper-body-line" style="width: 84%;"></div>
+                <div class="paper-body-line" style="width: 60%;"></div>
+              </div>
+              <span class="sheet-corner-tag">TOC</span>
+            </div>
+
+            <!-- Sheet 3: Body -->
+            <div class="paper-sheet sheet-body" style="border-top: 3px solid var(--brand);">
+              <div class="top-line"></div>
+              <div class="text-line-75"></div>
+              <div class="text-line-66"></div>
+              <div class="paper-swatch-grid">
+                <div class="paper-swatch-cell" style="background-color: var(--brand);"></div>
+                <div class="paper-swatch-cell" style="background-color: color-mix(in srgb, var(--brand) 35%, white);"></div>
+                <div class="paper-swatch-cell" style="background-color: rgba(0, 0, 0, 0.06);"></div>
+              </div>
+              <div class="paper-body-lines">
+                <div class="paper-body-line" style="width: 90%;"></div>
+                <div class="paper-body-line" style="width: 78%;"></div>
+                <div class="paper-body-line" style="width: 84%;"></div>
+                <div class="paper-body-line" style="width: 60%;"></div>
+              </div>
+              <span class="sheet-corner-tag">Body</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 01: Chroma Drop -->
+    <section id="chroma-drop" class="chroma-section">
+      <div class="max-w-5xl px-4 px-sm-6">
+        <div style="margin-bottom: 2rem; max-width: 32rem;">
+          <p class="section-eyebrow">Step 01</p>
+          <h2 class="font-display" style="margin-top: 0.75rem; font-size: 1.875rem; font-weight: 600; letter-spacing: -0.02em;">
+            Drop the brand
+          </h2>
+          <p style="margin-top: 0.5rem; color: var(--fg-muted);">
+            We pull ink from your logo — then Studio keeps your wording untouched.
+          </p>
+        </div>
+
+        <div class="chroma-dropzone" id="chromaDropzone" tabindex="0" role="button" aria-label="Drop your company logo or click to browse">
+          <input type="file" id="chromaFileInput" accept="image/png,image/jpeg,image/svg+xml,image/webp,.png,.jpg,.jpeg,.svg,.webp" style="display: none;">
+
+          <div class="chroma-icon-circle" id="chromaIconBox">
+            <svg id="dropIconSvg" width="64" height="64" viewBox="0 0 256 256" fill="currentColor">
+              <path d="M208,144c0,44.18-35.82,80-80,80s-80-35.82-80-80a84.7,84.7,0,0,1,23.43-56.57L128,32l56.57,55.43A84.7,84.7,0,0,1,208,144Z" opacity="0.2"></path>
+              <path d="M174.63,81.37,128,35.82,81.37,81.37a92.74,92.74,0,0,0-26.6,62.63C54.77,185.34,87.6,220,128,220s73.23-34.66,73.23-76A92.74,92.74,0,0,0,174.63,81.37ZM128,204c-31.55,0-57.23-27.42-57.23-60a76.84,76.84,0,0,1,22-51.78L128,57.77l35.25,34.45A76.84,76.84,0,0,1,185.23,144C185.23,176.58,159.55,204,128,204Z"></path>
+            </svg>
+            <img id="logoPreviewImg" alt="Uploaded logo" style="display: none; max-width: 65%; max-height: 65%; object-fit: contain;">
+          </div>
+
+          <p class="chroma-title" id="chromaStatusTitle">Drop your logo</p>
+          <p class="chroma-desc">
+            Click anywhere in this zone or drag an image — the Chroma Press re-tints
+            live from your brand. Layout stays deterministic.
+          </p>
+          <p class="chroma-foot">
+            PNG · JPG · SVG · WebP · large drop target
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 02: Before / After Slider -->
+    <section id="before-after" class="slider-section">
+      <div class="max-w-7xl px-4 px-sm-6">
+        <div style="margin-bottom: 2.5rem; max-width: 36rem;">
+          <p class="section-eyebrow">Step 02</p>
+          <h2 class="font-display" style="margin-top: 0.75rem; font-size: 1.875rem; font-weight: 600; letter-spacing: -0.02em;">
+            Before the press / after the press
+          </h2>
+          <p style="margin-top: 0.5rem; color: var(--fg-muted);">
+            Same words. Real Word styles, TOC field, striped tables, page X of Y.
+          </p>
+        </div>
+
+        <div class="showcase-slider-wrap">
+          <div class="slider-canvas" id="sliderCanvas">
+            <!-- After (branded output) -->
+            <div class="after-pane">
+              <div class="sop-document-card">
+                <div class="sop-top-bar"></div>
+                <p class="sop-title">Incident Response SOP</p>
+                <p class="sop-sub">v1.2 · Internal · Page 1 of 12</p>
+
+                <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                  <div style="height: 0.5rem; width: 70%; border-radius: 9999px; background-color: color-mix(in srgb, var(--brand) 70%, transparent);"></div>
+                  <div style="height: 0.5rem; width: 100%; border-radius: 9999px; background-color: rgba(0, 0, 0, 0.08);"></div>
+                  <div style="height: 0.5rem; width: 88%; border-radius: 9999px; background-color: rgba(0, 0, 0, 0.08);"></div>
+
+                  <div class="sop-table">
+                    <div class="sop-table-head">
+                      <span>Step</span>
+                      <span>Owner</span>
+                      <span>SLA</span>
+                    </div>
+                    <div class="sop-table-row">
+                      <span>01</span>
+                      <span>SecOps</span>
+                      <span>15m</span>
+                    </div>
+                    <div class="sop-table-row">
+                      <span>02</span>
+                      <span>SecOps</span>
+                      <span>15m</span>
+                    </div>
+                    <div class="sop-table-row">
+                      <span>03</span>
+                      <span>SecOps</span>
+                      <span>15m</span>
+                    </div>
+                  </div>
+                </div>
+
+                <span class="badge-after">AFTER</span>
+              </div>
+            </div>
+
+            <!-- Before (raw text clipped) -->
+            <div class="before-pane" id="beforePane">
+              <div class="before-inner">
+                <p style="font-weight: bold; color: #fff;">## incident response</p>
+                <p style="margin-top: 0.5rem; opacity: 0.7;">todo: format this later</p>
+                <p style="margin-top: 1rem;">1. detect</p>
+                <p>2. contain??</p>
+                <p>3. notify stakeholders</p>
+                <p style="margin-top: 1rem;">| step | owner | sla |</p>
+                <p>| 1 | secops | 15m |</p>
+                <p style="margin-top: 1.5rem; opacity: 0.5;">// pasted from slack · 2:14am</p>
+              </div>
+              <span class="badge-before">BEFORE</span>
+            </div>
+
+            <!-- Divider Line -->
+            <div class="slider-divider" id="sliderDivider" aria-hidden="true">
+              <div class="slider-handle-knob">⇆</div>
+            </div>
+          </div>
+
+          <!-- Bottom Control Bar -->
+          <div class="slider-controls-bar">
+            <div class="slider-input-group">
+              <div class="slider-label-row">
+                <span>Reveal branded output</span>
+                <span class="font-mono" id="sliderValueText">52%</span>
+              </div>
+              <input type="range" min="8" max="92" value="52" class="slider-range-input" id="rangeInput" aria-label="Reveal branded output">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ink Bench Section -->
+    <section id="ink-bench" class="bench-section">
+      <div class="max-w-7xl px-4 px-sm-6">
+        <div style="margin-bottom: 2.5rem; max-width: 36rem;">
+          <p class="section-eyebrow">Ink bench</p>
+          <h2 class="font-display" style="margin-top: 0.75rem; font-size: 1.875rem; font-weight: 600; letter-spacing: -0.02em;">
+            Sample brand inks
+          </h2>
+          <p style="margin-top: 0.5rem; color: var(--fg-muted);">
+            Click a swatch to re-tint the interface — the same path your logo takes.
+          </p>
+        </div>
+
+        <div class="swatches-grid">
+          <!-- Preset 1 -->
+          <button type="button" class="swatch-card active" data-color="#1F6F5B" data-name="Evergreen">
+            <div class="swatch-color-bar" style="background: linear-gradient(135deg, #1F6F5B, color-mix(in srgb, #1F6F5B 40%, #1a1714));"></div>
+            <div class="swatch-info-row">
+              <span class="swatch-name">Evergreen</span>
+              <span class="swatch-hex">#1F6F5B</span>
+            </div>
+          </button>
+
+          <!-- Preset 2 -->
+          <button type="button" class="swatch-card" data-color="#1B4F72" data-name="Harbor">
+            <div class="swatch-color-bar" style="background: linear-gradient(135deg, #1B4F72, color-mix(in srgb, #1B4F72 40%, #1a1714));"></div>
+            <div class="swatch-info-row">
+              <span class="swatch-name">Harbor</span>
+              <span class="swatch-hex">#1B4F72</span>
+            </div>
+          </button>
+
+          <!-- Preset 3 -->
+          <button type="button" class="swatch-card" data-color="#9A3412" data-name="Copper">
+            <div class="swatch-color-bar" style="background: linear-gradient(135deg, #9A3412, color-mix(in srgb, #9A3412 40%, #1a1714));"></div>
+            <div class="swatch-info-row">
+              <span class="swatch-name">Copper</span>
+              <span class="swatch-hex">#9A3412</span>
+            </div>
+          </button>
+
+          <!-- Preset 4 -->
+          <button type="button" class="swatch-card" data-color="#5C4033" data-name="Ink Oak">
+            <div class="swatch-color-bar" style="background: linear-gradient(135deg, #5C4033, color-mix(in srgb, #5C4033 40%, #1a1714));"></div>
+            <div class="swatch-info-row">
+              <span class="swatch-name">Ink Oak</span>
+              <span class="swatch-hex">#5C4033</span>
+            </div>
+          </button>
+
+          <!-- Preset 5 -->
+          <button type="button" class="swatch-card" data-color="#B45309" data-name="Signal">
+            <div class="swatch-color-bar" style="background: linear-gradient(135deg, #B45309, color-mix(in srgb, #B45309 40%, #1a1714));"></div>
+            <div class="swatch-info-row">
+              <span class="swatch-name">Signal</span>
+              <span class="swatch-hex">#B45309</span>
+            </div>
+          </button>
+
+          <!-- Preset 6 -->
+          <button type="button" class="swatch-card" data-color="#0F766E" data-name="Teal Press">
+            <div class="swatch-color-bar" style="background: linear-gradient(135deg, #0F766E, color-mix(in srgb, #0F766E 40%, #1a1714));"></div>
+            <div class="swatch-info-row">
+              <span class="swatch-name">Teal Press</span>
+              <span class="swatch-hex">#0F766E</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="max-w-7xl px-4 px-sm-6 footer-main">
+      <div>
+        <div class="footer-brand-title">
+          <span class="footer-brand-bar" aria-hidden="true"></span>
+          <p class="font-display" style="font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em;">Docgen</p>
+        </div>
+        <p class="footer-sub">
+          Rough notes in. Compliance-grade, on-brand documents out — wording locked.
+        </p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#chroma-drop">Privacy</a>
+        <a href="#chroma-drop">Studio</a>
+        <a href="#before-after">Library</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="max-w-7xl px-4 px-sm-6 footer-meta">
+        APP_NAME = "Docgen" · LLM never owns layout · WCAG AA by construction
+      </p>
+    </div>
+  </footer>
+
+  <!-- Command Palette Modal -->
+  <div class="cmd-palette-backdrop" id="cmdPaletteBackdrop" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmd-modal">
+      <input type="text" class="cmd-input" id="cmdInput" placeholder="Jump to… (⌘K)" autocomplete="off">
+      <div class="cmd-list" id="cmdList">
+        <div class="cmd-group-label">Navigate</div>
+        <a href="#" class="cmd-item active" data-url="/">
+          <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+            <path d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H48V115.55l80-75.48,80,75.48Z"></path>
+          </svg>
+          Home
+        </a>
+        <a href="#chroma-drop" class="cmd-item" data-url="#chroma-drop">
+          <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+            <path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,48H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V168A16,16,0,0,0,104,152Zm0,64H56V168h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V168A16,16,0,0,0,200,152Zm0,64H152V168h48v48Z"></path>
+          </svg>
+          Studio
+        </a>
+        <a href="#ink-bench" class="cmd-item" data-url="#ink-bench">
+          <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+            <path d="M200,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V40A16,16,0,0,0,200,24Zm0,192H56V40H200V216Z"></path>
+          </svg>
+          Brand kits
+        </a>
+        <a href="#before-after" class="cmd-item" data-url="#before-after">
+          <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+            <path d="M224,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h64a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Z"></path>
+          </svg>
+          Library
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Interactive Logic Engine -->
+  <script>
+    (function() {
+      // ─── Color Helper Utilities ───
+      function normalizeHex(hex) {
+        let v = hex.trim();
+        if (!v.startsWith('#')) v = '#' + v;
+        if (v.length === 4) {
+          v = '#' + v[1] + v[1] + v[2] + v[2] + v[3] + v[3];
+        }
+        return v.toUpperCase();
+      }
+
+      function hexToRgb(hex) {
+        const h = normalizeHex(hex).slice(1);
+        return {
+          r: parseInt(h.slice(0, 2), 16),
+          g: parseInt(h.slice(2, 4), 16),
+          b: parseInt(h.slice(4, 6), 16),
+        };
+      }
+
+      function rgbToHex(r, g, b) {
+        const clamp = n => Math.max(0, Math.min(255, Math.round(n)));
+        return '#' + [clamp(r), clamp(g), clamp(b)].map(n => n.toString(16).padStart(2, '0')).join('').toUpperCase();
+      }
+
+      function mix(a, b, t) {
+        const A = hexToRgb(a);
+        const B = hexToRgb(b);
+        return rgbToHex(
+          A.r + (B.r - A.r) * t,
+          A.g + (B.g - A.g) * t,
+          A.b + (B.b - A.b) * t
+        );
+      }
+
+      function lighten(hex, amount = 0.82) {
+        return mix(hex, '#FFFFFF', amount);
+      }
+
+      function darken(hex, amount = 0.28) {
+        return mix(hex, '#000000', amount);
+      }
+
+      function deriveBrandTint(primary) {
+        const p = normalizeHex(primary);
+        return {
+          primary: p,
+          primaryDark: darken(p, 0.28),
+          primaryTint: lighten(p, 0.82),
+          secondary: darken(mix(p, '#2A2A2A', 0.35), 0.1),
+          accent: mix(p, '#C45C26', 0.35)
+        };
+      }
+
+      function applyBrandColor(color) {
+        const root = document.documentElement;
+        const derived = deriveBrandTint(color);
+
+        root.style.setProperty('--brand', derived.primary);
+        root.style.setProperty('--brand-dark', derived.primaryDark);
+        root.style.setProperty('--brand-tint', derived.primaryTint);
+        root.style.setProperty('--brand-secondary', derived.secondary);
+        root.style.setProperty('--brand-accent', derived.accent);
+
+        // Update swatch cards active state
+        document.querySelectorAll('.swatch-card').forEach(btn => {
+          if (btn.getAttribute('data-color').toUpperCase() === derived.primary) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+
+      // ─── Toast System ───
+      function showToast(message) {
+        const container = document.getElementById('toastContainer');
+        const pill = document.createElement('div');
+        pill.className = 'toast-pill';
+        pill.innerHTML = `
+          <span style="display:inline-block; width:8px; height:8px; border-radius:9999px; background-color:var(--brand);"></span>
+          <span>${message}</span>
+        `;
+        container.appendChild(pill);
+        setTimeout(() => {
+          pill.style.opacity = '0';
+          pill.style.transform = 'translateY(12px) scale(0.96)';
+          pill.style.transition = 'all 0.25s ease';
+          setTimeout(() => pill.remove(), 250);
+        }, 3200);
+      }
+
+      // ─── Theme Toggle (Paper / Darkroom) ───
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const moonIcon = document.getElementById('moonIcon');
+      const sunIcon = document.getElementById('sunIcon');
+
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('docgen-theme', theme);
+        if (theme === 'dark') {
+          moonIcon.style.display = 'none';
+          sunIcon.style.display = 'block';
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0B0B12');
+        } else {
+          moonIcon.style.display = 'block';
+          sunIcon.style.display = 'none';
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#F6F2EA');
+        }
+      }
+
+      const savedTheme = localStorage.getItem('docgen-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      setTheme(savedTheme);
+
+      themeToggleBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      });
+
+      // ─── Ink Bench Swatch Clicks ───
+      document.querySelectorAll('.swatch-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const color = card.getAttribute('data-color');
+          const name = card.getAttribute('data-name');
+          applyBrandColor(color);
+          showToast(`Chroma locked — ${name} ink applied.`);
+        });
+      });
+
+      // ─── Before / After Slider ───
+      const rangeInput = document.getElementById('rangeInput');
+      const sliderValueText = document.getElementById('sliderValueText');
+      const rootEl = document.documentElement;
+      const sliderCanvas = document.getElementById('sliderCanvas');
+
+      function setSlider(pos) {
+        const clamped = Math.max(8, Math.min(92, Math.round(pos)));
+        rangeInput.value = clamped;
+        rootEl.style.setProperty('--slider-pos', clamped + '%');
+        sliderValueText.textContent = clamped + '%';
+      }
+
+      rangeInput.addEventListener('input', (e) => {
+        setSlider(e.target.value);
+      });
+
+      // Direct dragging on the canvas
+      let isDraggingSlider = false;
+
+      function onCanvasPointerMove(e) {
+        if (!isDraggingSlider) return;
+        const rect = sliderCanvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const offsetX = clientX - rect.left;
+        const pct = (offsetX / rect.width) * 100;
+        setSlider(pct);
+      }
+
+      sliderCanvas.addEventListener('mousedown', (e) => {
+        isDraggingSlider = true;
+        onCanvasPointerMove(e);
+      });
+
+      window.addEventListener('mousemove', onCanvasPointerMove);
+      window.addEventListener('mouseup', () => { isDraggingSlider = false; });
+
+      sliderCanvas.addEventListener('touchstart', (e) => {
+        isDraggingSlider = true;
+        onCanvasPointerMove(e);
+      }, { passive: true });
+
+      window.addEventListener('touchmove', onCanvasPointerMove, { passive: true });
+      window.addEventListener('touchend', () => { isDraggingSlider = false; });
+
+      // ─── Chroma Drop Image Sampling & Drag-and-Drop ───
+      const chromaDropzone = document.getElementById('chromaDropzone');
+      const chromaFileInput = document.getElementById('chromaFileInput');
+      const dropIconSvg = document.getElementById('dropIconSvg');
+      const logoPreviewImg = document.getElementById('logoPreviewImg');
+      const chromaStatusTitle = document.getElementById('chromaStatusTitle');
+
+      chromaDropzone.addEventListener('click', () => {
+        chromaFileInput.click();
+      });
+
+      chromaDropzone.addEventListener('dragenter', (e) => {
+        e.preventDefault();
+        chromaDropzone.classList.add('dragging');
+        chromaStatusTitle.textContent = 'Release to load';
+      });
+
+      chromaDropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+      });
+
+      chromaDropzone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        chromaDropzone.classList.remove('dragging');
+        chromaStatusTitle.textContent = 'Drop your logo';
+      });
+
+      chromaDropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        chromaDropzone.classList.remove('dragging');
+        chromaStatusTitle.textContent = 'Drop your logo';
+        const file = e.dataTransfer.files?.[0];
+        if (file) handleLogoFile(file);
+      });
+
+      chromaFileInput.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (file) handleLogoFile(file);
+        e.target.value = '';
+      });
+
+      function handleLogoFile(file) {
+        if (!file.type.startsWith('image/')) {
+          showToast('Please drop an image file (PNG, JPG, SVG, WebP)');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            // Sample dominant saturated color
+            const canvas = document.createElement('canvas');
+            const size = 64;
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, size, size);
+            const data = ctx.getImageData(0, 0, size, size).data;
+
+            const buckets = new Map();
+            for (let i = 0; i < data.length; i += 4) {
+              const a = data[i + 3];
+              if (a < 40) continue;
+              const r = data[i], g = data[i + 1], b = data[i + 2];
+              // skip near-white / near-black
+              if (r > 245 && g > 245 && b > 245) continue;
+              if (r < 18 && g < 18 && b < 18) continue;
+
+              const qr = r >> 4, qg = g >> 4, qb = b >> 4;
+              const key = `${qr},${qg},${qb}`;
+              const max = Math.max(r, g, b), min = Math.min(r, g, b);
+              const sat = max === 0 ? 0 : (max - min) / max;
+              const weight = 1 + sat * 4;
+
+              const prev = buckets.get(key);
+              if (prev) {
+                prev.r += r * weight;
+                prev.g += g * weight;
+                prev.b += b * weight;
+                prev.w += weight;
+              } else {
+                buckets.set(key, { r: r * weight, g: g * weight, b: b * weight, w: weight });
+              }
+            }
+
+            let best = null;
+            let bestScore = -1;
+            for (const b of buckets.values()) {
+              const r = b.r / b.w, g = b.g / b.w, bl = b.b / b.w;
+              const max = Math.max(r, g, bl), min = Math.min(r, g, bl);
+              const sat = max === 0 ? 0 : (max - min) / max;
+              const score = b.w * (0.35 + sat);
+              if (score > bestScore) {
+                bestScore = score;
+                best = { r, g, b: bl };
+              }
+            }
+
+            const sampledColor = best ? rgbToHex(best.r, best.g, best.b) : '#1F6F5B';
+            applyBrandColor(sampledColor);
+
+            // Show logo preview inside icon circle
+            dropIconSvg.style.display = 'none';
+            logoPreviewImg.src = e.target.result;
+            logoPreviewImg.style.display = 'block';
+
+            showToast('Chroma locked — UI re-tinted to your brand.');
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // ─── Command Palette (⌘K) ───
+      const cmdPaletteBackdrop = document.getElementById('cmdPaletteBackdrop');
+      const cmdBadge = document.getElementById('cmdBadge');
+      const cmdInput = document.getElementById('cmdInput');
+      const cmdList = document.getElementById('cmdList');
+
+      function openCommandPalette() {
+        cmdPaletteBackdrop.classList.add('open');
+        cmdInput.value = '';
+        cmdInput.focus();
+        filterCmdItems('');
+      }
+
+      function closeCommandPalette() {
+        cmdPaletteBackdrop.classList.remove('open');
+      }
+
+      cmdBadge.addEventListener('click', openCommandPalette);
+
+      window.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          if (cmdPaletteBackdrop.classList.contains('open')) {
+            closeCommandPalette();
+          } else {
+            openCommandPalette();
+          }
+        }
+        if (e.key === 'Escape' && cmdPaletteBackdrop.classList.contains('open')) {
+          closeCommandPalette();
+        }
+      });
+
+      cmdPaletteBackdrop.addEventListener('click', (e) => {
+        if (e.target === cmdPaletteBackdrop) {
+          closeCommandPalette();
+        }
+      });
+
+      function filterCmdItems(query) {
+        const items = cmdList.querySelectorAll('.cmd-item');
+        const q = query.trim().toLowerCase();
+        items.forEach(item => {
+          const text = item.textContent.trim().toLowerCase();
+          if (!q || text.includes(q)) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+
+      cmdInput.addEventListener('input', (e) => {
+        filterCmdItems(e.target.value);
+      });
+
+      cmdList.querySelectorAll('.cmd-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          closeCommandPalette();
+        });
+      });
+
+      // ─── Cursor Follower (Desktop pointer) ───
+      const cursorFollower = document.getElementById('cursorFollower');
+      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+      if (hasFinePointer) {
+        window.addEventListener('mousemove', (e) => {
+          cursorFollower.style.left = e.clientX + 'px';
+          cursorFollower.style.top = e.clientY + 'px';
+          cursorFollower.style.opacity = '0.55';
+        });
+
+        document.documentElement.addEventListener('mouseleave', () => {
+          cursorFollower.style.opacity = '0';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

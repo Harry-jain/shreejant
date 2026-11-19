@@ -1,0 +1,1030 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Authentic Cal Sans Display Font (SickDevs) */
+@font-face {
+  font-family: 'Cal Sans';
+  src: url('/fonts/cal-sans-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cal Sans';
+  src: url('/fonts/cal-sans-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Font Family Definitions */
+  --font-cal-sans: 'Cal Sans', var(--font-dm-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-dm-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-inter-tight: 'Inter Tight', 'DM Sans', -apple-system, sans-serif;
+  --font-space-grotesk: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', monospace;
+  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+  --font-noto-serif-devanagari: 'Noto Serif Devanagari', serif;
+  --font-noto-sans-devanagari: 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Single Source of Truth for SHREEJAN site Headings & Body */
+  --font-heading: var(--font-cal-sans);
+  --font-display: var(--font-cal-sans);
+  --font-body: var(--font-dm-sans);
+  --font-tech: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+
+  /* SickDevs Dark Void Palette by Default */
+  --color-bg: #090C15;
+  /* Deep Void background */
+  --brand-charcoal: #0A0A0F;
+  --brand-purple-accent: #885CF6;
+  --brand-purple-glow: rgba(136, 92, 246, 0.18);
+  --color-bg-alt: #0E121E;
+  /* Dark elevated slate background */
+  --color-text: #F4F7FB;
+  /* Ghost text */
+  --color-text-muted: #8E95A5;
+  /* Muted ghost text */
+  --color-brand: #7C5CFC;
+  /* Radiant Violet */
+  --color-brand-hover: #9E84FF;
+  /* Bright Violet */
+  --color-brand-whisper: rgba(124, 92, 252, 0.15);
+  --color-gold: #7C5CFC;
+  /* Brand violet */
+  --color-gold-dark: #5B3FD4;
+  /* Deep violet */
+  --color-gold-bright: #9E84FF;
+  /* Bright violet */
+  --color-gold-line: #7C5CFC;
+  /* Brand violet line */
+  --color-amber: #FBBF24;
+  /* Verified rating stars / warning */
+  --color-emerald: #34D399;
+  /* Live operational indicator */
+  --color-divider: rgba(255, 255, 255, 0.08);
+  /* Hairline border */
+  --color-watermark: #161922;
+  --watermark-opacity: 0.14;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  --color-surface: rgba(18, 21, 27, 0.85);
+  --color-surface-hover: rgba(26, 30, 40, 0.95);
+  --color-panel: #12151B;
+  --color-gold-on-navy: #7C5CFC;
+  --color-slate-blue: #1E2128;
+  --color-bright-gold: #9E84FF;
+  --color-gold-tint: rgba(124, 92, 252, 0.15);
+
+  /* Design System Token Aliases */
+  --bg-0: #090C15;
+  --bg-1: #0E121E;
+  --surface: #12151B;
+  --ghost: #090C15;
+  --ink: #F4F7FB;
+  --ink-2: #16162A;
+  --ink-3: #1F2433;
+  --ink-muted: #8E95A5;
+  --hair: rgba(255, 255, 255, 0.08);
+  --bronze: #7C5CFC;
+  --bronze-deep: #5B3FD4;
+  --gold: #7C5CFC;
+  --gold-soft: rgba(124, 92, 252, 0.2);
+  --blush: rgba(124, 92, 252, 0.1);
+  --lilac: #EDE9FE;
+  --ivory: #090C15;
+
+  /* Inset Shadows & Glows */
+  --cta-brand-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 1px 2px rgba(58, 31, 184, 0.25), 0 10px 24px -10px rgba(124, 92, 252, 0.7);
+  --card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+
+  /* 10-Day Sprint Spotlight Tokens */
+  --sprint-card-bg: #090C16;
+  --sprint-card-border: rgba(124, 92, 252, 0.35);
+  --sprint-purple: #7C5CFC;
+  --sprint-purple-bright: #A78BFA;
+  --sprint-purple-deep: #5B3FD4;
+  --sprint-purple-glow: rgba(124, 92, 252, 0.45);
+  --sprint-purple-subtle: rgba(124, 92, 252, 0.12);
+  --sprint-cyan: #38BDF8;
+  --sprint-cyan-glow: rgba(56, 189, 248, 0.35);
+  --sprint-emerald: #10B981;
+  --sprint-emerald-glow: rgba(16, 185, 129, 0.4);
+  --sprint-surface: rgba(15, 19, 32, 0.85);
+  --sprint-surface-dark: #080A12;
+  --sprint-wireframe-border: rgba(255, 255, 255, 0.12);
+  --sprint-wireframe-line: rgba(255, 255, 255, 0.08);
+  --sprint-tablet-border: #7C5CFC;
+  --sprint-tablet-glow: rgba(124, 92, 252, 0.65);
+  --sprint-grid-line: rgba(124, 92, 252, 0.08);
+
+  /* Cinema Viewer Chrome Tokens (Derived strictly from project brand tokens) */
+  --cinema-bg: var(--color-bg);
+  --cinema-bg-alt: var(--color-bg-alt);
+  --cinema-surface: var(--color-surface);
+  --cinema-panel: var(--color-panel);
+  --cinema-border: var(--color-border);
+  --cinema-border-bright: rgba(124, 92, 252, 0.4);
+  --cinema-ink: var(--color-text);
+  --cinema-ink-muted: var(--color-text-muted);
+  --cinema-accent: var(--color-brand);
+  --cinema-accent-hover: var(--color-brand-hover);
+  --cinema-letterbox: #000000;
+  --cinema-glow: rgba(124, 92, 252, 0.35);
+  --cinema-overlay: rgba(9, 12, 21, 0.92);
+  --cinema-dot-inactive: rgba(255, 255, 255, 0.45);
+
+  /* Stack Showcase Tokens */
+  --stack-mac-red: #FF5F56;
+  --stack-mac-yellow: #FFBD2E;
+  --stack-mac-green: #27C93F;
+  --stack-header-bg: #121624;
+  --stack-card-bg: #0C0F18;
+  --stack-viewport-bg: #090C15;
+  --stack-neon-glow: rgba(124, 92, 252, 0.85);
+  --stack-neon-ring: rgba(157, 132, 255, 0.5);
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --cinema-bg: #F8FAFC;
+  --cinema-bg-alt: #F1F5F9;
+  --cinema-surface: #FFFFFF;
+  --cinema-panel: #FFFFFF;
+  --cinema-border: rgba(15, 23, 42, 0.1);
+  --cinema-border-bright: rgba(124, 92, 252, 0.45);
+  --cinema-ink: #0F172A;
+  --cinema-ink-muted: #475569;
+  --cinema-accent: #7C5CFC;
+  --cinema-accent-hover: #6847ED;
+  --cinema-letterbox: #0B0E17;
+  --cinema-glow: rgba(124, 92, 252, 0.2);
+  --cinema-overlay: rgba(248, 250, 252, 0.94);
+  --cinema-dot-inactive: rgba(15, 23, 42, 0.4);
+
+  /* Stack Showcase Tokens */
+  --stack-mac-red: #FF5F56;
+  --stack-mac-yellow: #FFBD2E;
+  --stack-mac-green: #27C93F;
+  --stack-header-bg: #E2E8F0;
+  --stack-card-bg: #F1F5F9;
+  --stack-viewport-bg: #FFFFFF;
+  --stack-neon-glow: rgba(124, 92, 252, 0.45);
+  --stack-neon-ring: rgba(124, 92, 252, 0.3);
+}
+
+[data-theme="dark"] {
+  /* SickDevs Dark Void Palette */
+  --color-bg: #0C0E14;
+  /* Deep Void background */
+  --color-bg-alt: #12151D;
+  /* Dark elevated slate background */
+  --color-text: #F4F7FB;
+  /* Ghost text */
+  --color-text-muted: #8E95A5;
+  /* Muted ghost text */
+  --color-brand: #8B6DFF;
+  /* Radiant Violet */
+  --color-brand-hover: #9E84FF;
+  /* Bright Violet */
+  --color-brand-whisper: rgba(124, 92, 252, 0.15);
+  --color-gold: #7C5CFC;
+  --color-gold-dark: #5B3FD4;
+  --color-gold-bright: #9E84FF;
+  --color-gold-line: #7C5CFC;
+  --color-amber: #FBBF24;
+  --color-emerald: #34D399;
+  --color-divider: rgba(255, 255, 255, 0.08);
+  --color-watermark: #161922;
+  --watermark-opacity: 0.14;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  --color-surface: rgba(18, 21, 27, 0.8);
+  --color-surface-hover: rgba(26, 30, 40, 0.9);
+  --color-panel: #12151B;
+
+  --bg-0: #0C0E14;
+  --bg-1: #12151D;
+  --surface: #12151B;
+  --ghost: #0C0E14;
+  --ink: #F4F7FB;
+  --ink-2: #16162A;
+  --ink-3: #1F2433;
+  --ink-muted: #8E95A5;
+  --hair: rgba(255, 255, 255, 0.08);
+  --bronze: #8B6DFF;
+  --gold: #7C5CFC;
+
+  --card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+
+  color-scheme: dark;
+}
+
+/* Demo Theme Tokens — Scoped strictly to .demo-theme */
+.demo-theme {
+  --demo-bg: #FAF8F5;
+  --demo-surface: #FFFFFF;
+  --demo-ink: #1A1816;
+  --demo-muted: #6E645A;
+  --demo-primary: #8A6214;
+  --demo-primary-contrast: #FFFFFF;
+  --demo-tint: #F5EFE6;
+  --demo-border: #EAE3D5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-scroll-behavior="smooth"]:not([data-navigating="true"]) {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(circle 900px at 15% 10%, rgba(124, 92, 252, 0.06) 0%, transparent 60%),
+    radial-gradient(circle 800px at 85% 25%, rgba(56, 189, 248, 0.04) 0%, transparent 60%),
+    radial-gradient(circle 950px at 50% 70%, rgba(124, 92, 252, 0.05) 0%, transparent 70%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--color-text);
+  font-family: var(--font-body), var(--font-dm-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* SHREEJAN Master Responsive Layout Containers (Eliminates excessive horizontal margins) */
+.site-container {
+  width: 100%;
+  max-width: 1536px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(20px, 3.8vw, 64px);
+  padding-right: clamp(20px, 3.8vw, 64px);
+}
+
+.site-container-wide {
+  width: 100%;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(16px, 3vw, 48px);
+  padding-right: clamp(16px, 3vw, 48px);
+}
+
+.site-container-narrow {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(20px, 3.5vw, 48px);
+  padding-right: clamp(20px, 3.5vw, 48px);
+}
+
+/* Zero outline / border for logo link */
+.logo-link,
+.logo-link *,
+a[aria-label*="Home"],
+a[aria-label*="Home"]:focus,
+a[aria-label*="Home"]:active,
+a[aria-label*="Home"]:focus-visible,
+a[aria-label*="Home"] *,
+a:has(img[alt*="SHREEJAN"]),
+a:has(img[alt*="SHREEJAN"]) * {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  border: none !important;
+  border-color: transparent !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-shadow: none !important;
+  --tw-ring-offset-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Headings Typography — Manrope */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), var(--font-manrope), sans-serif;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+/* Glass & Card System (SickDevs) */
+.glass {
+  background: var(--color-surface);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--color-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 8px 24px -12px rgba(0, 0, 0, 0.08);
+  border-radius: 22px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+[data-theme="dark"] .glass {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+}
+
+.glass:hover {
+  transform: translateY(-3px);
+  border-color: rgba(124, 92, 252, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 16px 36px -12px rgba(124, 92, 252, 0.15);
+}
+
+.glass-strong {
+  background: var(--color-panel);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--color-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 12px 30px -15px rgba(0, 0, 0, 0.1);
+  border-radius: 22px;
+}
+
+[data-theme="dark"] .glass-strong {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.glass-gold {
+  background: var(--color-surface);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(124, 92, 252, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 8px 24px -12px rgba(124, 92, 252, 0.12);
+  border-radius: 22px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-gold:hover {
+  transform: translateY(-3px);
+  border-color: rgba(124, 92, 252, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 16px 36px -12px rgba(124, 92, 252, 0.25);
+}
+
+@media (max-width: 767px) {
+
+  .glass,
+  .glass-strong,
+  .glass-gold {
+    backdrop-filter: blur(6px) saturate(120%);
+    -webkit-backdrop-filter: blur(6px) saturate(120%);
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+
+  .glass,
+  .glass-strong,
+  .glass-gold {
+    background: rgba(255, 251, 240, .96) !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+
+  .glass,
+  .glass-strong,
+  .glass-gold {
+    background: rgba(255, 251, 240, .97) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* Lite Performance Mode */
+html[data-perf="lite"] body {
+  background: var(--bg-0) !important;
+  background-image: none !important;
+}
+
+html[data-perf="lite"] .glass,
+html[data-perf="lite"] .glass-strong,
+html[data-perf="lite"] .glass-gold {
+  background: rgba(14, 18, 30, .96) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .15) !important;
+}
+
+/* Below the fold content visibility */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* Scroll reveal utility */
+.reveal-wrapper {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal-wrapper.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Button Shimmer */
+@keyframes buttonShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.btn-shimmer:hover {
+  background-size: 200% 200%;
+  animation: buttonShimmer 3s ease infinite;
+}
+
+/* Reduced Motion Fallbacks — Preserves gentle opacity transitions while disabling aggressive looping */
+@media (prefers-reduced-motion: reduce) {
+
+  .animate-spin,
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-brand);
+  color: #ffffff;
+}
+
+/* Funky Team Profile Popup Animations */
+@keyframes stickerPop {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.82) rotate(calc(var(--tilt, 0deg) - 8deg));
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.04) rotate(calc(var(--tilt, 0deg) + 1deg));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(var(--tilt, 0deg));
+  }
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes squiggleDraw {
+  from {
+    stroke-dashoffset: 200;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeInFast {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-sticker-pop {
+  animation: stickerPop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-spin-slow {
+  animation: spinSlow 14s linear infinite;
+}
+
+.animate-squiggle {
+  stroke-dasharray: 200;
+  animation: squiggleDraw 400ms ease-out forwards;
+}
+
+.animate-fade-in-fast {
+  animation: fadeInFast 120ms ease-out forwards;
+}
+
+/* Chat bubble entrance slide */
+@keyframes slideUpBubble {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up-1 {
+  animation: slideUpBubble 350ms ease-out 100ms both;
+}
+
+.animate-slide-up-2 {
+  animation: slideUpBubble 350ms ease-out 220ms both;
+}
+
+/* Team Poster Entrance (One-time orchestrated moment <= 600ms) */
+@keyframes posterEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(24px) rotate(-3deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--resting-tilt, 0deg));
+  }
+}
+
+.animate-poster-entrance {
+  animation: posterEntrance 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-poster-entrance {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+html[data-perf="lite"] .animate-poster-entrance {
+  animation: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+/* Playful Team Animations */
+@keyframes characterBob {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes eyeBlink {
+
+  0%,
+  94%,
+  98%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  96% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes characterWiggle {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-3deg);
+  }
+
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes wordTicker {
+
+  0%,
+  12% {
+    transform: translateY(0%);
+  }
+
+  14.28%,
+  26.28% {
+    transform: translateY(-14.285%);
+  }
+
+  28.57%,
+  40.57% {
+    transform: translateY(-28.571%);
+  }
+
+  42.85%,
+  54.85% {
+    transform: translateY(-42.857%);
+  }
+
+  57.14%,
+  69.14% {
+    transform: translateY(-57.142%);
+  }
+
+  71.42%,
+  83.42% {
+    transform: translateY(-71.428%);
+  }
+
+  85.71%,
+  97.71% {
+    transform: translateY(-85.714%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animate-character-bob {
+  animation: characterBob 3s ease-in-out infinite;
+}
+
+.animate-eye-blink {
+  animation: eyeBlink 5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.group:hover .animate-character-wiggle,
+.group:focus-within .animate-character-wiggle {
+  animation: characterWiggle 400ms ease-in-out 1;
+  transform-origin: 50% 85%;
+}
+
+.animate-word-ticker {
+  animation: wordTicker 15.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.animate-word-ticker:hover,
+.animate-word-ticker:focus-within {
+  animation-play-state: paused;
+}
+
+html[data-perf="lite"] .animate-character-bob,
+html[data-perf="lite"] .animate-eye-blink,
+html[data-perf="lite"] .animate-character-wiggle,
+html[data-perf="lite"] .animate-word-ticker,
+@media (prefers-reduced-motion: reduce) {
+
+  .animate-character-bob,
+  .animate-eye-blink,
+  .animate-character-wiggle,
+  .animate-word-ticker {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* =========================================================================
+   SICKDEVS MOTION ENGINE, UTILITIES & SIGNATURE COMPONENTS
+   ========================================================================= */
+
+@property --cta-bd-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes cta-bd-flow {
+  to {
+    --cta-bd-angle: 360deg;
+  }
+}
+
+.cta-liquid {
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-liquid:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from var(--cta-bd-angle),
+      transparent 0deg,
+      var(--color-brand) 50deg,
+      #ffffff 75deg,
+      var(--color-brand) 100deg,
+      transparent 160deg,
+      transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px var(--color-brand));
+  z-index: 2;
+  animation: 10s linear infinite cta-bd-flow;
+}
+
+.cta-liquid>* {
+  z-index: 3;
+  position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-liquid:before {
+    opacity: 0.8;
+    animation: none;
+  }
+}
+
+/* SickDevs Floating Header Capsule */
+.header__pill {
+  border-radius: 22px;
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="light"] .header__pill {
+  background-color: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(17, 20, 24, 0.08);
+  box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(17, 20, 24, 0.04), 0 18px 42px -18px rgba(17, 20, 24, 0.12);
+}
+
+[data-theme="dark"] .header__pill {
+  background-color: rgba(20, 20, 24, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 2px rgba(0, 0, 0, 0.4), 0 20px 44px -18px rgba(0, 0, 0, 0.6);
+}
+
+/* Service Card Animated Underline */
+.svc-card-title {
+  transition: transform 0.25s ease-out, color 0.25s ease-out;
+  position: relative;
+  display: inline-block;
+}
+
+.svc-card-title:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc-card:hover .svc-card-title,
+.group:hover .svc-card-title {
+  transform: translateX(4px);
+  color: var(--color-brand);
+}
+
+.svc-card:hover .svc-card-title:after,
+.group:hover .svc-card-title:after {
+  transform: scaleX(1);
+}
+
+/* SickDevs Continuous Marquee */
+@keyframes marqueeLeft {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marqueeRight {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.marquee-track-left {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marqueeLeft 42s linear infinite;
+}
+
+.marquee-track-right {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marqueeRight 42s linear infinite;
+}
+
+.marquee-track-left:hover,
+.marquee-track-right:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .marquee-track-left,
+  .marquee-track-right {
+    animation: none !important;
+    overflow-x: auto;
+  }
+}
+
+/* SickDevs Rounded Card */
+.rounded-card {
+  border-radius: 22px;
+}
+
+/* Review Badge Float Animation */
+@keyframes badgeFloat {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.badge-float-anim {
+  animation: badgeFloat 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge-float-anim {
+    animation: none !important;
+  }
+}
+
+/* Hero Section Enhancements */
+@keyframes heroGridFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes heroGridFloorScroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 44px;
+  }
+}
+
+@keyframes heroGoldDrawLine {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes heroBrushDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 10-Day Sprint Spotlight Animations */
+@keyframes sprintTabletGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 35px var(--sprint-tablet-glow), 0 0 15px rgba(124, 92, 252, 0.4), inset 0 0 15px rgba(124, 92, 252, 0.25);
+  }
+
+  50% {
+    box-shadow: 0 0 50px rgba(124, 92, 252, 0.85), 0 0 25px rgba(124, 92, 252, 0.5), inset 0 0 20px rgba(124, 92, 252, 0.4);
+  }
+}
+
+@keyframes sprintWhatsAppPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 16px 4px rgba(37, 211, 102, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes sprintCodeHighlight {
+
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+
+  50% {
+    opacity: 1;
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes sprintTimelineTravel {
+  0% {
+    offset-distance: 0%;
+  }
+
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.sprint-tablet-glow-anim {
+  animation: sprintTabletGlow 4s ease-in-out infinite;
+}
+
+.sprint-whatsapp-pulse-anim {
+  animation: sprintWhatsAppPulse 2.8s ease-in-out infinite;
+}
+
+.sprint-code-highlight-anim {
+  animation: sprintCodeHighlight 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .sprint-tablet-glow-anim,
+  .sprint-whatsapp-pulse-anim,
+  .sprint-code-highlight-anim {
+    animation: none !important;
+  }
+}
