@@ -7,6 +7,7 @@ import { SideQuestLab } from "@/components/sections/home/SideQuestLab";
 import { ProcessSection } from "@/components/sections/home/ProcessSection";
 import { CraftStandardsSection } from "@/components/sections/home/CraftStandardsSection";
 import { ClosingCTASection } from "@/components/sections/home/ClosingCTASection";
+import { SignalGameSection } from "@/components/sections/home/signal-game/SignalGameSection";
 
 export const metadata: Metadata = {
   title: "SHREEJAN // Digital Engineering Studio — Mumbai",
@@ -24,6 +25,7 @@ export default function HomePage() {
       <ProcessSection />
       <CraftStandardsSection />
       <ClosingCTASection />
+      <SignalGameSection />
     </div>
   );
 }
