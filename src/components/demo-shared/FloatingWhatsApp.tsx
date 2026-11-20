@@ -2,7 +2,6 @@
 
 import React from "react";
 import { MessageSquare } from "lucide-react";
-import { useReducedMotion } from "framer-motion";
 
 interface FloatingWhatsAppProps {
   phone?: string;
@@ -15,7 +14,6 @@ export function FloatingWhatsApp({
   defaultMessage = "Hi, I want to enquire about your services.",
   brandName = "WhatsApp",
 }: FloatingWhatsAppProps) {
-  const prefersReducedMotion = useReducedMotion();
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(defaultMessage)}`;
 
   return (
@@ -25,9 +23,9 @@ export function FloatingWhatsApp({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Chat with ${brandName} on WhatsApp`}
-        className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] text-white shadow-[0_4px_24px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_32px_rgba(37,211,102,0.65)] hover:scale-105 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/40"
+        className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-emerald-600 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/40"
       >
-        <span className="absolute -inset-0.5 rounded-full bg-[#25D366]/30 pointer-events-none" />
+        <span className="absolute -inset-0.5 rounded-full bg-emerald-500/30 pointer-events-none" />
         <MessageSquare className="w-6 h-6 fill-current relative z-10" />
         <span className="sr-only">Chat on WhatsApp</span>
       </a>
@@ -36,4 +34,3 @@ export function FloatingWhatsApp({
 }
 
 export default FloatingWhatsApp;
-

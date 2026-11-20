@@ -5,7 +5,7 @@ export const restaurantData = {
       { label: "Menu", href: "#menu" },
       { label: "WhatsApp Bot", href: "#ai-chat" },
       { label: "Reservations", href: "#reservation" },
-      { label: "Guest Reviews", href: "#reviews" },
+      { label: "Location & Hours", href: "#footer" },
     ],
     ctaLabel: "Reserve a Table",
     ctaHref: "#reservation",
@@ -26,10 +26,10 @@ export const restaurantData = {
     },
   },
   trustStrip: [
-    { value: "14,000+", label: "Tables Hosted" },
-    { value: "4.8 ★", label: "Zomato & Google" },
-    { value: "0%", label: "Artificial Colors" },
-    { value: "100%", label: "Pure Ghee & Fresh Catch" },
+    { value: "Fresh", label: "Coastal Catch Sourced Daily" },
+    { value: "0%", label: "Artificial Flavours or Preservatives" },
+    { value: "Pure", label: "Slow-Cooked Hand-Pounded Masalas" },
+    { value: "Dedicated", label: "Separate Jain Kitchen Prep" },
   ],
   menu: {
     badge: "DAILY SPECIALTIES",
@@ -109,29 +109,6 @@ export const restaurantData = {
       },
     ],
   },
-  testimonials: [
-    {
-      name: "Priya M.",
-      city: "Pune",
-      rating: 5,
-      quote:
-        "The Malvani prawn fry alone is worth the trip, and the staff remembered our anniversary without being asked.",
-    },
-    {
-      name: "Nikhil J.",
-      city: "Nashik",
-      rating: 5,
-      quote:
-        "Best Mutton Sukka outside of Kolhapur. The sol kadhi was chilled to perfection, and our table was ready the second we stepped in.",
-    },
-    {
-      name: "Kavita R.",
-      city: "Mumbai",
-      rating: 5,
-      quote:
-        "Loved the WhatsApp concierge! We asked for Jain options on the drive from Mumbai and arrived to a hot, customized meal waiting for us.",
-    },
-  ],
   reservationForm: {
     badge: "INSTANT TABLE RESERVATION",
     heading: "Book Your Table in Under a Minute",
@@ -194,4 +171,3 @@ export const restaurantData = {
     email: "hello@bombaybistro.shreejan.ai",
   },
 };
-

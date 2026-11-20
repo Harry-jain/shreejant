@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { MessageSquare, CheckCircle2, ArrowRight, Clock, Loader2 } from "lucide-react";
+import { MessageSquare, CheckCircle2, ArrowRight, Loader2 } from "lucide-react";
 import { FadeUp } from "./FadeUp";
 
 export interface FormFieldOption {
@@ -19,7 +19,7 @@ export interface FormField {
   chips?: string[];
   conditionalOn?: {
     fieldId: string;
-    value: any;
+    value: unknown;
   };
 }
 
@@ -51,59 +51,27 @@ export function BookingForm({
   defaultWhatsAppMessage = "Hi, I would like to book an appointment.",
   palette,
 }: BookingFormProps) {
-  const [formData, setFormData] = useState<Record<string, any>>({});
+  const [formData, setFormData] = useState<Record<string, string | boolean>>({});
   const [selectedChip, setSelectedChip] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (fieldId: string, value: any) => {
+  const handleChange = (fieldId: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [fieldId]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    try {
-      // Format reservation details
-      const name = formData.name || formData.fullName || formData.clientName || "Demo Client";
-      const contactPhone = formData.phone || phone;
-      const email = formData.email || "inquiry@shreejanai.in";
-
-      const detailsList = Object.entries(formData)
-        .map(([k, v]) => `• ${k}: ${v}`)
-        .join("\n");
-      const reservationSummary = `[PROTOTYPE RESERVATION — ${heading}]\n${detailsList || "Direct booking request"}\nPreferred Slot: ${selectedChip || "Not specified"}`;
-
-      // Dispatch to internal /api/contact so inquiry is reliably recorded
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: name,
-          contact: `${email} / ${contactPhone}`,
-          email,
-          phone: contactPhone,
-          projectType: `Demo Reservation (${heading})`,
-          message: reservationSummary,
-        }),
-      }).catch((err) => {
-        console.warn("Reservation notification warning:", err);
-      });
-
-      // Brief animation buffer for user assurance
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      setSubmitted(true);
-    } catch {
-      setSubmitted(true);
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Simulate brief client-side preview delay
+    await new Promise((resolve) => setTimeout(resolve, 450));
+    setIsSubmitting(false);
+    setSubmitted(true);
   };
 
   const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(
-    formData.name
-      ? `${defaultWhatsAppMessage} Name: ${formData.name}, Phone: ${formData.phone || ""}`
+    formData.name || formData.clientName || formData.patientName
+      ? `${defaultWhatsAppMessage} Name: ${formData.name || formData.clientName || formData.patientName}, Phone: ${formData.phone || ""}`
       : defaultWhatsAppMessage
   )}`;
 
@@ -115,18 +83,18 @@ export function BookingForm({
             className="rounded-[32px] p-6 sm:p-10 lg:p-12 border shadow-xl transition-all"
             style={{
               backgroundColor: palette.surface,
-              borderColor: `${palette.ink}15`,
+              borderColor: "rgba(0, 0, 0, 0.12)",
               color: palette.ink,
             }}
           >
             {/* Header */}
             <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
               <span
-                className="inline-block px-3.5 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase mb-3"
+                className="inline-block px-3.5 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase mb-3 border"
                 style={{
-                  backgroundColor: `${palette.accent}18`,
+                  backgroundColor: "rgba(0, 0, 0, 0.04)",
                   color: palette.accent,
-                  border: `1px solid ${palette.accent}30`,
+                  borderColor: "rgba(0, 0, 0, 0.1)",
                 }}
               >
                 {badge}
@@ -145,28 +113,49 @@ export function BookingForm({
             </div>
 
             {submitted ? (
-              <div className="text-center py-10 px-4 space-y-4">
+              <div className="text-center py-8 px-4 space-y-4">
                 <div
-                  className="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-white"
+                  className="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-white shadow-md"
                   style={{ backgroundColor: palette.accent }}
                 >
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
+
+                <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300">
+                  Preview Confirmation
+                </div>
+
                 <h3 className="font-heading font-bold text-2xl" style={{ color: palette.ink }}>
-                  Booking Request Received!
+                  Demo Request Captured
                 </h3>
-                <p className="font-body text-sm opacity-80 max-w-md mx-auto">
-                  Our team has reserved your slot and dispatched a confirmation alert to your WhatsApp.
-                </p>
-                <div className="pt-4 flex justify-center">
+
+                {/* Explicit required prompt message */}
+                <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-950 text-sm max-w-lg mx-auto leading-relaxed shadow-sm">
+                  <strong>Demo form:</strong> In a live website, this connects directly to your WhatsApp or email inbox.
+                </div>
+
+                <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormData({});
+                      setSelectedChip("");
+                    }}
+                    className="px-5 py-2.5 rounded-full text-xs font-semibold border border-current/20 hover:opacity-80 transition-opacity cursor-pointer"
+                    style={{ color: palette.ink }}
+                  >
+                    Test another submission
+                  </button>
+
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] text-white font-heading font-bold text-sm shadow-md"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-heading font-bold text-xs shadow-md transition-colors"
                   >
                     <MessageSquare className="w-4 h-4 fill-white" />
-                    <span>Open in WhatsApp</span>
+                    <span>Test WhatsApp Link</span>
                   </a>
                 </div>
               </div>
@@ -201,10 +190,10 @@ export function BookingForm({
                             name={field.id}
                             required={field.required}
                             aria-label={field.label}
-                            value={formData[field.id] || ""}
+                            value={(formData[field.id] as string) || ""}
                             onChange={(e) => handleChange(field.id, e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl border bg-black/5 dark:bg-white/5 font-body text-sm focus:outline-none focus:ring-2 transition-all"
-                            style={{ borderColor: `${palette.ink}20`, color: palette.ink }}
+                            className="w-full px-4 py-3 rounded-xl border border-black/15 bg-black/5 dark:bg-white/5 font-body text-sm focus:outline-none focus:ring-2 transition-all"
+                            style={{ color: palette.ink }}
                           >
                             <option value="">Select {field.label}</option>
                             {field.options?.map((opt) => (
@@ -221,13 +210,13 @@ export function BookingForm({
                             required={field.required}
                             aria-label={field.label}
                             placeholder={field.placeholder}
-                            value={formData[field.id] || ""}
+                            value={(formData[field.id] as string) || ""}
                             onChange={(e) => handleChange(field.id, e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl border bg-black/5 dark:bg-white/5 font-body text-sm focus:outline-none focus:ring-2 transition-all resize-none"
-                            style={{ borderColor: `${palette.ink}20`, color: palette.ink }}
+                            className="w-full px-4 py-3 rounded-xl border border-black/15 bg-black/5 dark:bg-white/5 font-body text-sm focus:outline-none focus:ring-2 transition-all resize-none"
+                            style={{ color: palette.ink }}
                           />
                         ) : field.type === "checkbox" ? (
-                          <label className="flex items-center gap-3 p-3 rounded-xl border bg-black/5 dark:bg-white/5 cursor-pointer">
+                          <label className="flex items-center gap-3 p-3 rounded-xl border border-black/15 bg-black/5 dark:bg-white/5 cursor-pointer">
                             <input
                               type="checkbox"
                               name={field.id}
@@ -257,11 +246,11 @@ export function BookingForm({
                                         ? "line-through opacity-30 cursor-not-allowed border-current/10"
                                         : isSelected
                                         ? "text-white font-bold shadow-md scale-105"
-                                        : "opacity-80 hover:opacity-100"
+                                        : "opacity-80 hover:opacity-100 border-black/15"
                                     }`}
                                     style={{
                                       backgroundColor: isSelected ? palette.accent : "transparent",
-                                      borderColor: isSelected ? palette.accent : `${palette.ink}20`,
+                                      borderColor: isSelected ? palette.accent : "rgba(0,0,0,0.15)",
                                     }}
                                   >
                                     {time}
@@ -278,10 +267,10 @@ export function BookingForm({
                             required={field.required}
                             aria-label={field.label}
                             placeholder={field.placeholder}
-                            value={formData[field.id] || ""}
+                            value={(formData[field.id] as string) || ""}
                             onChange={(e) => handleChange(field.id, e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl border bg-black/5 dark:bg-white/5 font-body text-sm focus:outline-none focus:ring-2 transition-all"
-                            style={{ borderColor: `${palette.ink}20`, color: palette.ink }}
+                            className="w-full px-4 py-3 rounded-xl border border-black/15 bg-black/5 dark:bg-white/5 font-body text-sm focus:outline-none focus:ring-2 transition-all"
+                            style={{ color: palette.ink }}
                           />
                         )}
                       </div>
@@ -289,7 +278,7 @@ export function BookingForm({
                   })}
                 </div>
 
-                {/* Form Buttons: Submit & Secondary WhatsApp Button */}
+                {/* Form Buttons */}
                 <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
                   <button
                     type="submit"
@@ -301,7 +290,7 @@ export function BookingForm({
                     {isSubmitting ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin text-white" />
-                        <span>Confirming Reservation...</span>
+                        <span>Confirming Request...</span>
                       </>
                     ) : (
                       <>
@@ -315,10 +304,10 @@ export function BookingForm({
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-heading font-bold text-sm bg-[#25D366] hover:bg-[#20ba59] text-white shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-heading font-bold text-sm bg-emerald-600 hover:bg-emerald-700 text-white shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
                   >
                     <MessageSquare className="w-4 h-4 fill-white" />
-                    <span>Chat on WhatsApp</span>
+                    <span>Test WhatsApp Flow</span>
                   </a>
                 </div>
               </form>
@@ -332,4 +321,3 @@ export function BookingForm({
 }
 
 export default BookingForm;
-

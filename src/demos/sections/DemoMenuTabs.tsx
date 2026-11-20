@@ -138,7 +138,7 @@ export function DemoMenuTabs({ config }: { config: DemoConfig }) {
             <a
               href="#demo-note"
               className="px-5 py-2.5 rounded-lg text-xs font-semibold shadow-sm transition-transform active:scale-95"
-              style={{ backgroundColor: palette.accent, color: '#FFFFFF' }}
+              style={{ backgroundColor: palette.accent, color: 'white' }}
             >
               Order on WhatsApp
             </a>

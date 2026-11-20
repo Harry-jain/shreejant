@@ -3,7 +3,7 @@ export const salonData = {
     brandName: "Aura Studio",
     navLinks: [
       { label: "Treatments", href: "#treatments" },
-      { label: "Bridal Suite", href: "#bridal" },
+      { label: "Bridal Suite", href: "#bridal-ai" },
       { label: "WhatsApp Concierge", href: "#bridal-ai" },
       { label: "Book Appointment", href: "#booking" },
     ],
@@ -26,10 +26,10 @@ export const salonData = {
     },
   },
   trustStrip: [
-    { value: "450+", label: "Brides Styled" },
-    { value: "4.9 ★", label: "Google & WedMeGood" },
-    { value: "100%", label: "Cruelty-Free Actives" },
-    { value: "1-on-1", label: "Private Suite Privacy" },
+    { value: "100%", label: "Cruelty-Free Botanicals" },
+    { value: "Private", label: "Dedicated Treatment Suites" },
+    { value: "Bespoke", label: "Custom Bridal Styling" },
+    { value: "Sterilized", label: "Autoclave Hygiene Standard" },
   ],
   treatments: [
     {
@@ -98,7 +98,7 @@ export const salonData = {
       },
       {
         sender: "bot" as const,
-        text: "Namaste and congratulations! We would love to design your bridal look. Lead Artist Meera has 2 trial slots open next Saturday (Nov 28): 11:00 AM or 3:30 PM. Each trial includes both hair sculpting and makeup swatch.",
+        text: "Namaste and congratulations! We would love to design your bridal look. Lead Artist Meera has 2 trial slots open next Saturday: 11:00 AM or 3:30 PM. Each trial includes both hair sculpting and makeup swatch.",
         time: "03:23 PM",
         actionButton: {
           label: "Lock Saturday 11:00 AM Trial (₹2,000 Deposit)",
@@ -117,29 +117,6 @@ export const salonData = {
       },
     ],
   },
-  testimonials: [
-    {
-      name: "Neha K.",
-      city: "Pune",
-      rating: 5,
-      quote:
-        "My bridal trial was calm, unhurried, and the final look photographed beautifully. Two weeks later I did the full day with the same team.",
-    },
-    {
-      name: "Shruti P.",
-      city: "Nashik",
-      rating: 5,
-      quote:
-        "The Keratin smoothing made my unruly monsoon curls so manageable and soft. Worth every rupee.",
-    },
-    {
-      name: "Tanvi S.",
-      city: "Mumbai",
-      rating: 5,
-      quote:
-        "The Radiance Illuminating Facial gave my skin a noticeable luminous glow that lasted through three family wedding functions.",
-    },
-  ],
   bookingForm: {
     badge: "PRIVATE SANCTUARY RESERVATION",
     heading: "Reserve Your Private Suite",
@@ -200,4 +177,3 @@ export const salonData = {
     email: "concierge@aurastudio.shreejan.ai",
   },
 };
-

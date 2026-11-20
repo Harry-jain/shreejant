@@ -29,10 +29,10 @@ export const DEMOS: DemoConfig[] = [
     domain: 'aurastudio.shreejan.ai',
     tagline: 'Luxury Hair, Skin & Bridal Sanctuary',
     palette: {
-      bg: '#FBF4EF',
-      surface: '#FFFFFF',
-      ink: '#2B1F1F',
-      accent: '#A4565F',
+      bg: 'rgb(251, 244, 239)',
+      surface: 'rgb(255, 255, 255)',
+      ink: 'rgb(43, 31, 31)',
+      accent: 'rgb(164, 86, 95)',
     },
     fontId: 'dm-serif',
     hero: {
@@ -49,10 +49,10 @@ export const DEMOS: DemoConfig[] = [
     domain: 'drvoraclinic.shreejan.ai',
     tagline: 'Specialist Dermatology & Family Care',
     palette: {
-      bg: '#F4F9F9',
-      surface: '#FFFFFF',
-      ink: '#1E2A32',
-      accent: '#0F8A8A',
+      bg: 'rgb(244, 249, 249)',
+      surface: 'rgb(255, 255, 255)',
+      ink: 'rgb(30, 42, 50)',
+      accent: 'rgb(15, 138, 138)',
     },
     fontId: 'source-sans',
     hero: {
@@ -69,10 +69,10 @@ export const DEMOS: DemoConfig[] = [
     domain: 'bombaybistro.shreejan.ai',
     tagline: 'Coastal & Bombay Street Classics',
     palette: {
-      bg: '#FBF6EE',
-      surface: '#FFFFFF',
-      ink: '#2A1A1A',
-      accent: '#7A1F2B',
+      bg: 'rgb(251, 246, 238)',
+      surface: 'rgb(255, 255, 255)',
+      ink: 'rgb(42, 26, 26)',
+      accent: 'rgb(122, 31, 43)',
     },
     fontId: 'fraunces',
     hero: {

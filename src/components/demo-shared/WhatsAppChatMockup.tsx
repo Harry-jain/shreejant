@@ -35,9 +35,7 @@ export function WhatsAppChatMockup({
   bullets,
   brandName,
   messages,
-  accentColor = "#25D366",
-  bgColor,
-  surfaceColor,
+  accentColor = "rgb(37, 211, 102)",
   textColor,
   phone = "919999999999",
 }: WhatsAppChatMockupProps) {
@@ -50,11 +48,11 @@ export function WhatsAppChatMockup({
           <div className="lg:col-span-6 flex flex-col items-start text-left">
             <FadeUp>
               <div
-                className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono font-semibold tracking-wider uppercase mb-4"
+                className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono font-semibold tracking-wider uppercase mb-4 border"
                 style={{
-                  backgroundColor: `${accentColor}18`,
+                  backgroundColor: "rgba(0, 0, 0, 0.05)",
                   color: accentColor,
-                  border: `1px solid ${accentColor}35`,
+                  borderColor: "rgba(0, 0, 0, 0.1)",
                 }}
               >
                 <MessageSquare className="w-3.5 h-3.5" />
@@ -80,7 +78,7 @@ export function WhatsAppChatMockup({
                   <div key={idx} className="flex items-start gap-3">
                     <div
                       className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                      style={{ backgroundColor: `${accentColor}25`, color: accentColor }}
+                      style={{ backgroundColor: "rgba(0, 0, 0, 0.08)", color: accentColor }}
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                     </div>
@@ -107,7 +105,7 @@ export function WhatsAppChatMockup({
           {/* Right: Realistic WhatsApp Mobile Frame */}
           <div className="lg:col-span-6 flex justify-center">
             <FadeUp delay={0.15} className="w-full max-w-[390px]">
-              <div className="rounded-[32px] p-3 sm:p-4 bg-[#111B21] border-2 border-white/10 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.65)] select-none">
+              <div className="rounded-[32px] p-3 sm:p-4 bg-stone-900 border-2 border-white/10 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.65)] select-none">
                 
                 {/* Phone Speaker Notch & Camera */}
                 <div className="flex justify-center mb-2">
@@ -119,9 +117,9 @@ export function WhatsAppChatMockup({
                 {/* WhatsApp Chat Header */}
                 <div className="flex items-center justify-between pb-3 px-1 border-b border-white/10">
                   <div className="flex items-center gap-2.5">
-                    <div className="relative w-9 h-9 rounded-full bg-[#25D366] text-white flex items-center justify-center font-bold text-sm shadow-sm">
+                    <div className="relative w-9 h-9 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shadow-sm">
                       <MessageSquare className="w-5 h-5 fill-white" />
-                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-[#111B21]" />
+                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-stone-900" />
                     </div>
                     <div>
                       <h4 className="font-heading font-bold text-xs text-white leading-tight">
@@ -138,9 +136,9 @@ export function WhatsAppChatMockup({
                 </div>
 
                 {/* Chat Background & Message Bubbles */}
-                <div className="py-4 px-1 min-h-[300px] flex flex-col justify-end gap-3 bg-[#0B141A] rounded-2xl my-2 p-3">
+                <div className="py-4 px-1 min-h-[300px] flex flex-col justify-end gap-3 bg-stone-950 rounded-2xl my-2 p-3">
                   <div className="text-center my-1">
-                    <span className="font-mono text-[9px] px-2.5 py-0.5 rounded-full bg-[#182229] text-white/50">
+                    <span className="font-mono text-[9px] px-2.5 py-0.5 rounded-full bg-stone-800 text-white/50">
                       TODAY
                     </span>
                   </div>
@@ -155,14 +153,14 @@ export function WhatsAppChatMockup({
                         <div
                           className={`max-w-[85%] p-2.5 sm:p-3 rounded-2xl text-xs sm:text-[13px] leading-relaxed shadow-sm ${
                             isUser
-                              ? "bg-[#005C4B] text-white rounded-tr-sm"
-                              : "bg-[#202C33] text-white/95 rounded-tl-sm border border-white/5"
+                              ? "bg-emerald-800 text-white rounded-tr-sm"
+                              : "bg-stone-800 text-white/95 rounded-tl-sm border border-white/5"
                           }`}
                         >
                           <p>{msg.text}</p>
                           <div className="flex items-center justify-end gap-1 mt-1 text-[8px] font-mono text-white/50">
                             <span>{msg.time || "10:32 AM"}</span>
-                            {isUser && <CheckCheck className="w-3 h-3 text-[#53BDEB]" />}
+                            {isUser && <CheckCheck className="w-3 h-3 text-sky-400" />}
                           </div>
                         </div>
 
@@ -183,7 +181,7 @@ export function WhatsAppChatMockup({
 
                 {/* WhatsApp Chat Input Bar */}
                 <div className="flex items-center gap-2 pt-1 px-1">
-                  <div className="flex-1 h-9 rounded-full bg-[#2A3942] px-3 flex items-center text-xs text-white/40 font-body">
+                  <div className="flex-1 h-9 rounded-full bg-stone-800 px-3 flex items-center text-xs text-white/40 font-body">
                     Type a message...
                   </div>
                   <div
@@ -205,4 +203,3 @@ export function WhatsAppChatMockup({
 }
 
 export default WhatsAppChatMockup;
-

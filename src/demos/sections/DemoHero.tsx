@@ -49,7 +49,7 @@ export function DemoHero({ config }: { config: DemoConfig }) {
               <a
                 href="#menu"
                 className="px-6 py-3 rounded-lg font-semibold text-sm transition-transform active:scale-95 shadow-md"
-                style={{ backgroundColor: palette.accent, color: '#FFFFFF' }}
+                style={{ backgroundColor: palette.accent, color: 'white' }}
               >
                 {hero.cta}
               </a>
@@ -100,7 +100,7 @@ export function DemoHero({ config }: { config: DemoConfig }) {
             <a
               href="#booking"
               className="px-6 py-3 rounded-lg font-semibold text-sm transition-transform active:scale-95 shadow-md"
-              style={{ backgroundColor: palette.accent, color: '#FFFFFF' }}
+              style={{ backgroundColor: palette.accent, color: 'white' }}
             >
               {hero.cta}
             </a>
