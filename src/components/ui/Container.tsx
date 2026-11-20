@@ -1,0 +1,23 @@
+import React from "react";
+
+export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  className?: string;
+  as?: React.ElementType;
+}
+
+export function Container({
+  children,
+  className = "",
+  as: Component = "div",
+  ...props
+}: ContainerProps) {
+  return (
+    <Component
+      className={`mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8 ${className}`}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+}

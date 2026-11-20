@@ -6,7 +6,7 @@ import "@/styles/demo.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const viewport: Viewport = {
-  themeColor: "#090C15",
+  themeColor: "#FAFAF9",
   width: "device-width",
   initialScale: 1,
 };
@@ -73,7 +73,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} font-body bg-[#090C15] text-[#F4F7FB] antialiased selection:bg-[#7C5CFC] selection:text-white`}>
+      <body className={`${inter.className} bg-bg text-text antialiased selection:bg-accent selection:text-white`}>
         {children}
       </body>
     </html>

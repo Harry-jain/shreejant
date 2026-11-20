@@ -4,19 +4,21 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   hoverEffect?: boolean;
-  highlighted?: boolean;
 }
 
 export function Card({
   children,
   className = "",
-  hoverEffect = true,
-  highlighted = false,
+  hoverEffect = false,
   ...props
 }: CardProps) {
+  const hoverStyles = hoverEffect
+    ? "transition-colors duration-150 hover:border-muted"
+    : "";
+
   return (
     <div
-      className={`rounded-xl border border-white/10 bg-white/5 p-6 ${className}`}
+      className={`rounded-xl border border-border bg-surface p-6 ${hoverStyles} ${className}`}
       {...props}
     >
       {children}

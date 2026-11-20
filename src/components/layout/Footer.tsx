@@ -3,187 +3,127 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MessageSquare, Linkedin, Instagram, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
+import { Container } from "@/components/ui/Container";
+
+const FOOTER_NAV = [
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services & Pricing" },
+  { href: "/demos", label: "Sample Demos" },
+  { href: "/about", label: "About Us" },
+  { href: "/contact", label: "Contact Us" },
+];
 
 export function Footer() {
   const [logoError, setLogoError] = useState(false);
   const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "aishreejan@gmail.com";
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918976517353";
-  const displayPhone = whatsappNumber.startsWith("91") && whatsappNumber.length === 12
-    ? `+91 ${whatsappNumber.slice(2, 7)} ${whatsappNumber.slice(7)}`
-    : `+${whatsappNumber}`;
+  const displayPhone =
+    whatsappNumber.startsWith("91") && whatsappNumber.length === 12
+      ? `+91 ${whatsappNumber.slice(2, 7)} ${whatsappNumber.slice(7)}`
+      : `+${whatsappNumber}`;
 
   return (
-    <footer className="w-full bg-[#080A10] text-[#F4F7FB] pt-16 sm:pt-20 pb-24 sm:pb-28 md:pb-6 border-t border-white/10 relative overflow-hidden select-none">
-      <div className="site-container-wide relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-        
-        {/* Four Minimalist Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-12 mb-14 sm:mb-20">
-          
-          {/* Column 1: Brand & Identity (4 cols) */}
-          <div className="lg:col-span-4 space-y-4">
+    <footer className="w-full border-t border-border bg-surface text-muted py-12 md:py-16">
+      <Container>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 mb-10 pb-10 border-b border-border">
+          {/* Brand Info */}
+          <div className="md:col-span-5 space-y-3">
             <Link
               href="/"
-              className="logo-link inline-block outline-none"
+              className="inline-block outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg"
               aria-label="SHREEJAN AI SOLUTIONS Home"
             >
               {!logoError ? (
-                <div className="relative h-11 w-44 sm:h-12 sm:w-52 transition-all duration-200">
+                <div className="relative h-9 w-40 sm:h-10 sm:w-44">
                   <Image
                     src="/brand/logo-transparent.png"
                     alt="SHREEJAN AI SOLUTIONS"
                     fill
-                    sizes="(max-width: 768px) 176px, 208px"
-                    className="object-contain object-left border-0 outline-none"
+                    sizes="176px"
+                    className="object-contain object-left"
                     onError={() => setLogoError(true)}
                   />
                 </div>
               ) : (
-                <span className="font-heading font-black text-2xl tracking-tight text-white">
-                  SHREEJAN <span className="text-[#1D4ED8]">AI</span>
+                <span className="font-bold text-lg tracking-tight text-text">
+                  SHREEJAN <span className="text-accent">AI</span>
                 </span>
               )}
             </Link>
-
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span className="font-mono text-xs text-white/60">Mumbai, Maharashtra, India</span>
-            </div>
-
-            <p className="font-body text-sm text-[#8E95A5] leading-relaxed max-w-sm">
-              Mumbai web development &amp; AI automation agency. Building clean, high-performance Next.js websites and automated workflows for Indian businesses.
+            <p className="text-sm text-text font-medium">
+              Simple, high-performance websites for Mumbai businesses.
             </p>
-
-            {/* Social Links */}
-            <div className="flex items-center space-x-2.5 pt-2">
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-[#8E95A5] hover:text-white hover:border-[#1D4ED8] transition-all"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-[#8E95A5] hover:text-white hover:border-[#1D4ED8] transition-all"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-[#8E95A5] hover:text-white hover:border-[#1D4ED8] transition-all"
-                aria-label="Twitter / X"
-              >
-                <Twitter className="w-3.5 h-3.5" />
-              </a>
-            </div>
+            <p className="text-xs text-muted leading-relaxed max-w-sm">
+              We are a new web development agency in Mumbai building fast, clean, and honest websites that help local businesses grow online.
+            </p>
           </div>
 
-          {/* Column 2: Solutions & Capabilities (3 cols) */}
-          <div className="lg:col-span-3">
-            <h4 className="font-mono text-xs font-semibold tracking-wider text-white uppercase mb-4">
-              What We Build
-            </h4>
-            <ul className="space-y-2.5 font-body text-sm">
-              {[
-                { href: "/services", label: "Business Websites" },
-                { href: "/services", label: "WhatsApp & Chat Automations" },
-                { href: "/services", label: "Custom Web Applications" },
-                { href: "/services", label: "Pricing & Plans" },
-              ].map((item) => (
-                <li key={item.label}>
+          {/* Quick Links */}
+          <div className="md:col-span-3 space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-text">
+              Navigation
+            </h3>
+            <ul className="space-y-2 text-sm">
+              {FOOTER_NAV.map((link) => (
+                <li key={link.href}>
                   <Link
-                    href={item.href}
-                    className="text-[#8E95A5] hover:text-white transition-colors inline-block py-0.5"
+                    href={link.href}
+                    className="text-muted hover:text-text transition-colors"
                   >
-                    {item.label}
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 3: Live Demos (2 cols) */}
-          <div className="lg:col-span-2">
-            <h4 className="font-mono text-xs font-semibold tracking-wider text-white uppercase mb-4">
-              Sample Demos
-            </h4>
-            <ul className="space-y-2.5 font-body text-sm">
-              {[
-                { href: "/demos/salon", label: "Aura Studio (Salon)" },
-                { href: "/demos/clinic", label: "Dr. Vora Clinic (Healthcare)" },
-                { href: "/demos/restaurant", label: "The Bombay Bistro" },
-              ].map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-[#8E95A5] hover:text-white transition-colors inline-block py-0.5"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 4: Contact & Desk (3 cols) */}
-          <div className="lg:col-span-3">
-            <h4 className="font-mono text-xs font-semibold tracking-wider text-white uppercase mb-4">
+          {/* Contact Details */}
+          <div className="md:col-span-4 space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-text">
               Direct Contact
-            </h4>
-            <div className="space-y-3 font-body text-sm text-[#8E95A5]">
-              <a
-                href={`https://wa.me/${whatsappNumber}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2.5 hover:text-white transition-colors"
-              >
-                <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>WhatsApp Desk</span>
-              </a>
-              <a
-                href={`mailto:${contactEmail}`}
-                className="flex items-center gap-2.5 hover:text-white transition-colors"
-              >
-                <Mail className="w-4 h-4 text-[#1D4ED8] shrink-0" />
-                <span>{contactEmail}</span>
-              </a>
-              <a
-                href={`tel:+${whatsappNumber}`}
-                className="flex items-center gap-2.5 hover:text-white transition-colors"
-              >
-                <Phone className="w-4 h-4 text-[#1D4ED8] shrink-0" />
-                <span>{displayPhone}</span>
-              </a>
-            </div>
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-accent shrink-0" />
+                <a
+                  href={`mailto:${contactEmail}`}
+                  className="text-muted hover:text-text transition-colors"
+                >
+                  {contactEmail}
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-accent shrink-0" />
+                <a
+                  href={`tel:+${whatsappNumber}`}
+                  className="text-muted hover:text-text transition-colors"
+                >
+                  {displayPhone}
+                </a>
+              </li>
+              <li className="flex items-start gap-2 text-muted">
+                <MapPin className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                <span>Mumbai, Maharashtra, India</span>
+              </li>
+            </ul>
           </div>
-
         </div>
 
-        {/* Footer Bottom Row */}
-        <div className="border-t border-white/[0.08] pt-6 pb-4 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-white/50 gap-3">
-          <p>© 2026 SHREEJAN AI SOLUTIONS. All rights reserved.</p>
+        {/* Bottom Bar: Copyright & Legal */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted">
+          <p>© {new Date().getFullYear()} SHREEJAN AI SOLUTIONS. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="hover:text-white transition-colors">
-              Privacy
+            <Link href="/privacy" className="hover:text-text transition-colors">
+              Privacy Policy
             </Link>
-            <span>·</span>
-            <Link href="/terms" className="hover:text-white transition-colors">
-              Terms
+            <span aria-hidden="true" className="text-border">|</span>
+            <Link href="/terms" className="hover:text-text transition-colors">
+              Terms of Service
             </Link>
-            <span>·</span>
-            <span className="text-white/70">Mumbai, Maharashtra</span>
           </div>
         </div>
-
-      </div>
+      </Container>
     </footer>
   );
 }

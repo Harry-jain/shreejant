@@ -1,7 +1,6 @@
 import React from "react";
-import { Navbar } from "@/components/layout/Navbar";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 
 export default function SiteLayout({
   children,
@@ -10,10 +9,9 @@ export default function SiteLayout({
 }>) {
   return (
     <>
-      <Navbar />
-      <main className="min-h-screen pb-16 md:pb-0 overflow-x-clip">{children}</main>
+      <Header />
+      <main className="min-h-screen bg-bg text-text">{children}</main>
       <Footer />
-      <WhatsAppButton />
     </>
   );
 }
