@@ -16,7 +16,8 @@ export function ClosingCTASection() {
   return (
     <Section className="bg-surface relative overflow-hidden">
       <Container>
-        <div className="rounded-3xl border border-border bg-bg p-8 sm:p-12 md:p-16 relative overflow-hidden bg-paper-grid">
+        <div className="rounded-3xl border border-border bg-bg p-8 sm:p-12 md:p-16 relative overflow-hidden">
+          <div className="absolute -inset-[60px] bg-paper-grid animate-dot-breathe pointer-events-none" />
           <div className="max-w-2xl space-y-6 relative z-10">
             <div className="flex items-center gap-2">
               <span className="font-mono text-xs uppercase px-2 py-0.5 rounded bg-accent text-white font-bold">

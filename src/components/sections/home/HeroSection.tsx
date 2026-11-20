@@ -12,8 +12,14 @@ export function HeroSection() {
   const [activeFocus, setActiveFocus] = useState<FocusMode>("websites");
 
   return (
-    <section className="relative pt-12 pb-16 sm:pt-20 sm:pb-24 border-b border-border bg-paper-grid overflow-hidden">
-      <Container>
+    <section className="relative pt-12 pb-16 sm:pt-20 sm:pb-24 border-b border-border overflow-hidden">
+      {/* Living Breathing Dot Grid Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+        <div className="absolute -inset-[80px] bg-paper-grid animate-dot-breathe" />
+        <div className="absolute inset-0 bg-radial-vignette" />
+      </div>
+
+      <Container className="relative z-10">
         {/* Top Studio Label */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8 sm:mb-12 border-b border-border pb-4">
           <div className="flex items-center gap-2">
@@ -68,11 +74,10 @@ export function HeroSection() {
                   <button
                     key={item.id}
                     onClick={() => setActiveFocus(item.id as FocusMode)}
-                    className={`p-3 rounded-lg border text-left transition-all font-mono text-xs ${
-                      activeFocus === item.id
+                    className={`p-3 rounded-lg border text-left transition-all font-mono text-xs ${activeFocus === item.id
                         ? "bg-surface border-accent shadow-sm ring-1 ring-accent"
                         : "bg-surface/50 border-border hover:bg-surface hover:border-text/40"
-                    }`}
+                      }`}
                   >
                     <div className="font-bold text-text">{item.label}</div>
                     <div className="text-[11px] text-muted">{item.sub}</div>
