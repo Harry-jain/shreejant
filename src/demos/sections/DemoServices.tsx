@@ -86,7 +86,7 @@ export function DemoServices({ config }: { config: DemoConfig }) {
                   style={{
                     backgroundColor: palette.accent,
                     borderColor: palette.accent,
-                    color: '#FFFFFF',
+                    color: 'white',
                   }}
                 >
                   Book this

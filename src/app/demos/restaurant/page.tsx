@@ -34,83 +34,83 @@ export default async function RestaurantDemoPage({
   return (
     <DemoShell config={config} initialEmbed={isEmbed}>
       <div
-        className="min-h-screen text-[#2A1A1A] antialiased selection:bg-[#7A1F2B] selection:text-white"
-        style={{ backgroundColor: palette.bg }}
+        className="min-h-screen antialiased selection:bg-rose-900 selection:text-white"
+        style={{ backgroundColor: palette.bg, color: palette.ink }}
       >
-      {/* 1. Sticky Header */}
-      <DemoHeader
-        brandName={restaurantData.header.brandName}
-        logoIcon={<Utensils className="w-4 h-4 text-white" />}
-        navLinks={restaurantData.header.navLinks}
-        ctaLabel={restaurantData.header.ctaLabel}
-        ctaHref={restaurantData.header.ctaHref}
-        palette={palette}
-      />
-
-      {/* 2. Hero */}
-      <DemoHero
-        eyebrow={restaurantData.hero.eyebrow}
-        headline={restaurantData.hero.headline}
-        subhead={restaurantData.hero.subhead}
-        primaryCta={restaurantData.hero.primaryCta}
-        secondaryCta={restaurantData.hero.secondaryCta}
-        visual={<CopperPotArt />}
-        palette={palette}
-      />
-
-      {/* 3. Core Offering → Menu */}
-      <FadeUp>
-        <RestaurantMenuTabs />
-      </FadeUp>
-
-      {/* 4. Signature Feature: WhatsApp Table Concierge */}
-      <div id="ai-chat" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
-        <WhatsAppChatMockup
-          badge={restaurantData.signatureFeature.badge}
-          heading={restaurantData.signatureFeature.heading}
-          description={restaurantData.signatureFeature.description}
-          bullets={restaurantData.signatureFeature.bullets}
+        {/* 1. Sticky Header */}
+        <DemoHeader
           brandName={restaurantData.header.brandName}
-          messages={restaurantData.signatureFeature.messages}
-          accentColor={palette.accent}
-          textColor={palette.ink}
+          logoIcon={<Utensils className="w-4 h-4 text-white" />}
+          navLinks={restaurantData.header.navLinks}
+          ctaLabel={restaurantData.header.ctaLabel}
+          ctaHref={restaurantData.header.ctaHref}
+          palette={palette}
+        />
+
+        {/* 2. Hero */}
+        <DemoHero
+          eyebrow={restaurantData.hero.eyebrow}
+          headline={restaurantData.hero.headline}
+          subhead={restaurantData.hero.subhead}
+          primaryCta={restaurantData.hero.primaryCta}
+          secondaryCta={restaurantData.hero.secondaryCta}
+          visual={<CopperPotArt />}
+          palette={palette}
+        />
+
+        {/* 3. Core Offering → Menu */}
+        <FadeUp>
+          <RestaurantMenuTabs />
+        </FadeUp>
+
+        {/* 4. Signature Feature: WhatsApp Table Concierge */}
+        <div id="ai-chat" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+          <WhatsAppChatMockup
+            badge={restaurantData.signatureFeature.badge}
+            heading={restaurantData.signatureFeature.heading}
+            description={restaurantData.signatureFeature.description}
+            bullets={restaurantData.signatureFeature.bullets}
+            brandName={restaurantData.header.brandName}
+            messages={restaurantData.signatureFeature.messages}
+            accentColor={palette.accent}
+            textColor={palette.ink}
+          />
+        </div>
+
+        {/* 5. Reservation Booking Form */}
+        <div id="reservation" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+          <FadeUp>
+            <BookingForm
+              badge={restaurantData.reservationForm.badge}
+              heading={restaurantData.reservationForm.heading}
+              subhead={restaurantData.reservationForm.subhead}
+              fields={restaurantData.reservationForm.fields}
+              submitLabel={restaurantData.reservationForm.submitLabel}
+              palette={palette}
+              phone="919876500000"
+              defaultWhatsAppMessage="Hi! I want to confirm my table reservation at The Bombay Bistro Nashik."
+            />
+          </FadeUp>
+        </div>
+
+        {/* 6. Demo Footer */}
+        <DemoFooter
+          brandName={restaurantData.header.brandName}
+          domain={restaurantTheme.domain}
+          address={restaurantData.footer.address}
+          hours={restaurantData.footer.hours}
+          phone={restaurantData.footer.phone}
+          email={restaurantData.footer.email}
+          palette={palette}
+        />
+
+        {/* 7. Floating WhatsApp */}
+        <FloatingWhatsApp
+          brandName={restaurantData.header.brandName}
+          phone="919876500000"
+          defaultMessage="Namaste! I'd like to ask about today's menu specialties and table availability at The Bombay Bistro."
         />
       </div>
-
-      {/* 5. Reservation Booking Form */}
-      <div id="reservation" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
-        <FadeUp>
-          <BookingForm
-            badge={restaurantData.reservationForm.badge}
-            heading={restaurantData.reservationForm.heading}
-            subhead={restaurantData.reservationForm.subhead}
-            fields={restaurantData.reservationForm.fields}
-            submitLabel={restaurantData.reservationForm.submitLabel}
-            palette={palette}
-            phone="919876500000"
-            defaultWhatsAppMessage="Hi! I want to confirm my table reservation at The Bombay Bistro Nashik."
-          />
-        </FadeUp>
-      </div>
-
-      {/* 6. Demo Footer */}
-      <DemoFooter
-        brandName={restaurantData.header.brandName}
-        domain={restaurantTheme.domain}
-        address={restaurantData.footer.address}
-        hours={restaurantData.footer.hours}
-        phone={restaurantData.footer.phone}
-        email={restaurantData.footer.email}
-        palette={palette}
-      />
-
-      {/* 7. Floating WhatsApp */}
-      <FloatingWhatsApp
-        brandName={restaurantData.header.brandName}
-        phone="919876500000"
-        defaultMessage="Namaste! I'd like to ask about today's menu specialties and table availability at The Bombay Bistro."
-      />
-    </div>
     </DemoShell>
   );
 }

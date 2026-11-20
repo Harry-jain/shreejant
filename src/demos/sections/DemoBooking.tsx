@@ -35,37 +35,13 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    try {
-      const clientName = name.trim() || 'Demo Guest';
-      const contactPhone = phone.trim() || 'Not specified';
-      const bookingSummary = `[PROTOTYPE RESERVATION — ${id.toUpperCase()}]\nName: ${clientName}\nPhone: ${contactPhone}\nSelected Slot: ${selectedSlot}\nNotes: ${extraNote || 'None'}`;
-
-      await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fullName: clientName,
-          contact: contactPhone,
-          phone: contactPhone,
-          projectType: `Demo Reservation (${id})`,
-          message: bookingSummary,
-        }),
-      }).catch((err) => {
-        console.warn('Demo booking dispatch notice:', err);
-      });
-
-      await new Promise((r) => setTimeout(r, 650));
-      setIsSubmitted(true);
-    } catch {
-      setIsSubmitted(true);
-    } finally {
-      setIsSubmitting(false);
-    }
+    await new Promise((r) => setTimeout(r, 450));
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
   return (
-    <section id="booking" className="w-full py-12 sm:py-16 px-4 sm:px-8 border-b" style={{ backgroundColor: palette.bg, borderColor: `${palette.accent}20` }}>
+    <section id="booking" className="w-full py-12 sm:py-16 px-4 sm:px-8 border-b border-black/10" style={{ backgroundColor: palette.bg }}>
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="text-center space-y-2">
           <h2 className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'var(--font-demo-display), Georgia, serif', color: palette.ink }}>
@@ -77,10 +53,9 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
         </div>
 
         <div
-          className="p-6 sm:p-8 rounded-2xl border space-y-5 shadow-sm"
+          className="p-6 sm:p-8 rounded-2xl border border-black/10 space-y-5 shadow-sm"
           style={{
             backgroundColor: palette.surface,
-            borderColor: `${palette.accent}30`,
           }}
         >
           {isSubmitted ? (
@@ -91,19 +66,25 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
               >
                 <CheckCircle2 className="w-7 h-7" />
               </div>
+
+              <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300">
+                Preview Confirmation
+              </div>
+
               <h3 className="text-xl font-bold" style={{ color: palette.ink }}>
-                Reservation Confirmed!
+                Reservation Request Captured
               </h3>
-              <p className="text-xs sm:text-sm opacity-80 max-w-md mx-auto" style={{ color: palette.ink }}>
-                Your request has been captured. In production, this immediately syncs with your staff calendar and pings the customer on WhatsApp.
-              </p>
+
+              <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-950 text-xs sm:text-sm max-w-md mx-auto leading-relaxed shadow-sm">
+                <strong>Demo form:</strong> In a live website, this connects directly to your WhatsApp or email inbox.
+              </div>
+
               <div className="pt-2 flex justify-center">
                 <button
                   type="button"
                   onClick={() => setIsSubmitted(false)}
-                  className="px-5 py-2 rounded-lg text-xs font-semibold border transition-all"
+                  className="px-5 py-2 rounded-lg text-xs font-semibold border border-current/20 hover:opacity-80 transition-opacity cursor-pointer"
                   style={{
-                    borderColor: `${palette.accent}50`,
                     color: palette.ink,
                   }}
                 >
@@ -127,9 +108,9 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
                         onClick={() => setSelectedSlot(slot)}
                         className="px-3 py-1.5 rounded-lg border text-xs font-mono font-medium cursor-pointer transition-colors"
                         style={{
-                          borderColor: isSelected ? palette.accent : `${palette.accent}30`,
-                          backgroundColor: isSelected ? `${palette.accent}15` : palette.bg,
-                          color: palette.ink,
+                          borderColor: isSelected ? palette.accent : 'rgba(0,0,0,0.15)',
+                          backgroundColor: isSelected ? palette.accent : palette.bg,
+                          color: isSelected ? 'white' : palette.ink,
                         }}
                       >
                         {slot}
@@ -152,8 +133,8 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="w-full px-3 py-2 text-xs rounded-lg border bg-transparent focus:outline-none focus:ring-1"
-                    style={{ borderColor: `${palette.accent}40`, color: palette.ink }}
+                    className="w-full px-3 py-2 text-xs rounded-lg border border-black/15 bg-transparent focus:outline-none focus:ring-1"
+                    style={{ color: palette.ink }}
                   />
                 </div>
 
@@ -169,8 +150,8 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required
-                    className="w-full px-3 py-2 text-xs rounded-lg border bg-transparent focus:outline-none focus:ring-1"
-                    style={{ borderColor: `${palette.accent}40`, color: palette.ink }}
+                    className="w-full px-3 py-2 text-xs rounded-lg border border-black/15 bg-transparent focus:outline-none focus:ring-1"
+                    style={{ color: palette.ink }}
                   />
                 </div>
               </div>
@@ -186,8 +167,8 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
                   placeholder="Any specific preference or requirement"
                   value={extraNote}
                   onChange={(e) => setExtraNote(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-lg border bg-transparent focus:outline-none focus:ring-1"
-                  style={{ borderColor: `${palette.accent}40`, color: palette.ink }}
+                  className="w-full px-3 py-2 text-xs rounded-lg border border-black/15 bg-transparent focus:outline-none focus:ring-1"
+                  style={{ color: palette.ink }}
                 />
               </div>
 
@@ -196,10 +177,9 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
                   type="submit"
                   disabled={isSubmitting}
                   aria-busy={isSubmitting}
-                  className="w-full py-3 rounded-lg text-xs font-semibold text-center flex items-center justify-center gap-2 shadow-md transition-transform active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
+                  className="w-full py-3 rounded-lg text-xs font-semibold text-center text-white flex items-center justify-center gap-2 shadow-md transition-transform active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
                   style={{
                     backgroundColor: palette.accent,
-                    color: '#FFFFFF',
                   }}
                 >
                   {isSubmitting ? (

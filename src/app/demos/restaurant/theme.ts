@@ -1,9 +1,9 @@
 export const restaurantTheme = {
   palette: {
-    bg: "#FBF6EE",
-    surface: "#FFFFFF",
-    ink: "#2A1A1A",
-    accent: "#7A1F2B",
+    bg: "rgb(251, 246, 238)",
+    surface: "rgb(255, 255, 255)",
+    ink: "rgb(42, 26, 26)",
+    accent: "rgb(122, 31, 43)",
   },
   domain: "bombaybistro.shreejan.ai",
   brandName: "The Bombay Bistro",

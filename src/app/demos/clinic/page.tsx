@@ -35,88 +35,88 @@ export default async function ClinicDemoPage({
   return (
     <DemoShell config={config} initialEmbed={isEmbed}>
       <div
-        className="min-h-screen text-[#1E2A32] antialiased selection:bg-[#0F8A8A] selection:text-white"
-        style={{ backgroundColor: palette.bg }}
+        className="min-h-screen antialiased selection:bg-teal-700 selection:text-white"
+        style={{ backgroundColor: palette.bg, color: palette.ink }}
       >
-      {/* 1. Sticky Header */}
-      <DemoHeader
-        brandName={clinicData.header.brandName}
-        logoIcon={<Stethoscope className="w-4 h-4 text-white" />}
-        navLinks={clinicData.header.navLinks}
-        ctaLabel={clinicData.header.ctaLabel}
-        ctaHref={clinicData.header.ctaHref}
-        palette={palette}
-      />
-
-      {/* 2. Hero */}
-      <DemoHero
-        eyebrow={clinicData.hero.eyebrow}
-        headline={clinicData.hero.headline}
-        subhead={clinicData.hero.subhead}
-        primaryCta={clinicData.hero.primaryCta}
-        secondaryCta={clinicData.hero.secondaryCta}
-        visual={<ClinicStethoscopeArt />}
-        palette={palette}
-      />
-
-      {/* 3. Doctor Profile Spotlight */}
-      <FadeUp>
-        <DoctorProfileCard />
-      </FadeUp>
-
-      {/* 4. Core Offering: Specialities Grid */}
-      <FadeUp>
-        <ClinicSpecialtiesGrid />
-      </FadeUp>
-
-      {/* 5. Signature Feature: Smart WhatsApp Triage */}
-      <div id="triage" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
-        <WhatsAppChatMockup
-          badge={clinicData.signatureFeature.badge}
-          heading={clinicData.signatureFeature.heading}
-          description={clinicData.signatureFeature.description}
-          bullets={clinicData.signatureFeature.bullets}
+        {/* 1. Sticky Header */}
+        <DemoHeader
           brandName={clinicData.header.brandName}
-          messages={clinicData.signatureFeature.messages}
-          accentColor={palette.accent}
-          textColor={palette.ink}
+          logoIcon={<Stethoscope className="w-4 h-4 text-white" />}
+          navLinks={clinicData.header.navLinks}
+          ctaLabel={clinicData.header.ctaLabel}
+          ctaHref={clinicData.header.ctaHref}
+          palette={palette}
+        />
+
+        {/* 2. Hero */}
+        <DemoHero
+          eyebrow={clinicData.hero.eyebrow}
+          headline={clinicData.hero.headline}
+          subhead={clinicData.hero.subhead}
+          primaryCta={clinicData.hero.primaryCta}
+          secondaryCta={clinicData.hero.secondaryCta}
+          visual={<ClinicStethoscopeArt />}
+          palette={palette}
+        />
+
+        {/* 3. Doctor Profile Spotlight */}
+        <FadeUp>
+          <DoctorProfileCard />
+        </FadeUp>
+
+        {/* 4. Core Offering: Specialities Grid */}
+        <FadeUp>
+          <ClinicSpecialtiesGrid />
+        </FadeUp>
+
+        {/* 5. Signature Feature: Smart WhatsApp Triage */}
+        <div id="triage" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+          <WhatsAppChatMockup
+            badge={clinicData.signatureFeature.badge}
+            heading={clinicData.signatureFeature.heading}
+            description={clinicData.signatureFeature.description}
+            bullets={clinicData.signatureFeature.bullets}
+            brandName={clinicData.header.brandName}
+            messages={clinicData.signatureFeature.messages}
+            accentColor={palette.accent}
+            textColor={palette.ink}
+          />
+        </div>
+
+        {/* 6. Appointment Booking Form */}
+        <div id="appointment" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+          <FadeUp>
+            <BookingForm
+              badge={clinicData.bookingForm.badge}
+              heading={clinicData.bookingForm.heading}
+              subhead={clinicData.bookingForm.subhead}
+              fields={clinicData.bookingForm.fields}
+              submitLabel={clinicData.bookingForm.submitLabel}
+              palette={palette}
+              phone="919876500000"
+              defaultWhatsAppMessage="Hi Dr. Vora Clinic, I would like to confirm my consultation appointment."
+            />
+          </FadeUp>
+        </div>
+
+        {/* 7. Demo Footer */}
+        <DemoFooter
+          brandName={clinicData.header.brandName}
+          domain={clinicTheme.domain}
+          address={clinicData.footer.address}
+          hours={clinicData.footer.hours}
+          phone={clinicData.footer.phone}
+          email={clinicData.footer.email}
+          palette={palette}
+        />
+
+        {/* 8. Floating WhatsApp */}
+        <FloatingWhatsApp
+          brandName={clinicData.header.brandName}
+          phone="919876500000"
+          defaultMessage="Namaste Dr. Vora Clinic! I want to inquire about consultation slots with Dr. Anaya Vora."
         />
       </div>
-
-      {/* 6. Appointment Booking Form */}
-      <div id="appointment" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
-        <FadeUp>
-          <BookingForm
-            badge={clinicData.bookingForm.badge}
-            heading={clinicData.bookingForm.heading}
-            subhead={clinicData.bookingForm.subhead}
-            fields={clinicData.bookingForm.fields}
-            submitLabel={clinicData.bookingForm.submitLabel}
-            palette={palette}
-            phone="919876500000"
-            defaultWhatsAppMessage="Hi Dr. Vora Clinic, I would like to confirm my consultation appointment."
-          />
-        </FadeUp>
-      </div>
-
-      {/* 7. Demo Footer */}
-      <DemoFooter
-        brandName={clinicData.header.brandName}
-        domain={clinicTheme.domain}
-        address={clinicData.footer.address}
-        hours={clinicData.footer.hours}
-        phone={clinicData.footer.phone}
-        email={clinicData.footer.email}
-        palette={palette}
-      />
-
-      {/* 8. Floating WhatsApp */}
-      <FloatingWhatsApp
-        brandName={clinicData.header.brandName}
-        phone="919876500000"
-        defaultMessage="Namaste Dr. Vora Clinic! I want to inquire about consultation slots with Dr. Anaya Vora."
-      />
-    </div>
     </DemoShell>
   );
 }

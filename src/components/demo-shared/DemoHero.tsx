@@ -46,11 +46,11 @@ export function DemoHero({
             <FadeUp>
               {/* Eyebrow Pill */}
               <div
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold tracking-wider uppercase mb-5"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold tracking-wider uppercase mb-5 border"
                 style={{
-                  backgroundColor: `${palette.accent}18`,
+                  backgroundColor: "rgba(0, 0, 0, 0.04)",
                   color: palette.accent,
-                  border: `1px solid ${palette.accent}35`,
+                  borderColor: "rgba(0, 0, 0, 0.12)",
                 }}
               >
                 <Sparkles className="w-3.5 h-3.5" />
@@ -64,7 +64,7 @@ export function DemoHero({
                 </span>
               )}
 
-              {/* Headline (Max 2 lines on desktop) */}
+              {/* Headline */}
               <h1
                 className="font-heading font-black text-3xl sm:text-5xl lg:text-[54px] tracking-tight leading-[1.08] mb-5"
                 style={{ color: palette.ink }}
@@ -72,7 +72,7 @@ export function DemoHero({
                 {headline}
               </h1>
 
-              {/* Subhead (One line / clean) */}
+              {/* Subhead */}
               <p className="font-body text-base sm:text-lg opacity-80 leading-relaxed mb-8 max-w-xl">
                 {subhead}
               </p>
@@ -91,11 +91,10 @@ export function DemoHero({
                 {secondaryCta && (
                   <a
                     href={secondaryCta.href}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-heading font-semibold text-sm sm:text-base border hover:scale-105 active:scale-95 transition-all"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-heading font-semibold text-sm sm:text-base border border-current/20 hover:scale-105 active:scale-95 transition-all"
                     style={{
-                      borderColor: `${palette.ink}25`,
                       color: palette.ink,
-                      backgroundColor: `${palette.surface}60`,
+                      backgroundColor: palette.surface,
                     }}
                   >
                     <span>{secondaryCta.label}</span>
@@ -105,25 +104,17 @@ export function DemoHero({
             </FadeUp>
           </div>
 
-          {/* Right Column: Finished Visual Illustration */}
-          <div className="lg:col-span-5 flex justify-center items-center w-full">
-            <FadeUp delay={0.15} className="w-full max-w-[460px]">
+          {/* Right Column: Visual Frame */}
+          <div className="lg:col-span-5 flex justify-center">
+            <FadeUp delay={0.2} className="w-full">
               <div
-                className="relative rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 border shadow-xl flex items-center justify-center overflow-hidden"
+                className="rounded-3xl p-4 sm:p-6 border shadow-xl flex items-center justify-center relative overflow-hidden"
                 style={{
                   backgroundColor: palette.surface,
-                  borderColor: `${palette.ink}15`,
+                  borderColor: "rgba(0, 0, 0, 0.1)",
                 }}
               >
-                {/* Subtle internal gradient aura */}
-                <div
-                  className="absolute -top-10 -right-10 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-20"
-                  style={{ backgroundColor: palette.accent }}
-                />
-
-                <div className="relative z-10 w-full flex items-center justify-center">
-                  {visual}
-                </div>
+                {visual}
               </div>
             </FadeUp>
           </div>
@@ -135,4 +126,3 @@ export function DemoHero({
 }
 
 export default DemoHero;
-

@@ -25,10 +25,10 @@ export const clinicData = {
     },
   },
   trustStrip: [
-    { value: "12+ Yrs", label: "Clinical Excellence" },
-    { value: "18,500+", label: "Patients Treated" },
-    { value: "4.9 ★", label: "Practo & Google Rating" },
-    { value: "< 15 min", label: "Average Clinic Wait Time" },
+    { value: "OPD", label: "General & Specialty OPD" },
+    { value: "1-on-1", label: "Dedicated Consultation Time" },
+    { value: "Transparent", label: "Upfront Published Consultation Fees" },
+    { value: "Direct", label: "WhatsApp & Online Slot Booking" },
   ],
   doctor: {
     name: "Dr. Anaya Vora",
@@ -130,29 +130,6 @@ export const clinicData = {
       },
     ],
   },
-  testimonials: [
-    {
-      name: "Kiran D.",
-      city: "Nashik",
-      rating: 5,
-      quote:
-        "Booked on WhatsApp at night, got a confirmation, and was seen the next morning. No phone tag at all.",
-    },
-    {
-      name: "Meenal S.",
-      city: "Pune",
-      rating: 5,
-      quote:
-        "Dr. Anaya took the time to explain my hormonal acne triggers instead of just prescribing heavy antibiotics. My skin cleared within 8 weeks.",
-    },
-    {
-      name: "Rajesh P.",
-      city: "Nashik",
-      rating: 5,
-      quote:
-        "Transparent fee structure (₹500 consultation) with zero surprise costs. The clinic was immaculately clean and organized.",
-    },
-  ],
   bookingForm: {
     badge: "DIRECT CLINIC SCHEDULING",
     heading: "Book Your In-Clinic Consultation",
@@ -202,4 +179,3 @@ export const clinicData = {
     email: "appointments@drvoraclinic.shreejan.ai",
   },
 };
-

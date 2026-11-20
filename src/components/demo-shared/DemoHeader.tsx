@@ -37,8 +37,8 @@ export function DemoHeader({
     <header
       className="sticky top-0 z-40 w-full backdrop-blur-xl border-b transition-colors"
       style={{
-        backgroundColor: `${palette.bg}E6`,
-        borderColor: `${palette.ink}15`,
+        backgroundColor: palette.bg,
+        borderColor: "rgba(0, 0, 0, 0.1)",
         color: palette.ink,
       }}
     >
@@ -47,7 +47,7 @@ export function DemoHeader({
         <Link href="#" className="flex items-center gap-2.5 group">
           {logoIcon && (
             <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold shadow-sm"
               style={{ backgroundColor: palette.accent }}
             >
               {logoIcon}
@@ -58,7 +58,7 @@ export function DemoHeader({
           </span>
         </Link>
 
-        {/* Desktop Nav Links (4 to 5 links) */}
+        {/* Desktop Nav Links */}
         <nav className="hidden lg:flex items-center gap-7">
           {navLinks.map((link) => (
             <a
@@ -98,24 +98,23 @@ export function DemoHeader({
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div
-          className="lg:hidden border-b px-4 py-5 space-y-4"
+          className="lg:hidden border-b px-4 pt-3 pb-6 space-y-3"
           style={{
-            backgroundColor: palette.bg,
-            borderColor: `${palette.ink}15`,
+            backgroundColor: palette.surface,
+            borderColor: "rgba(0, 0, 0, 0.1)",
+            color: palette.ink,
           }}
         >
-          <div className="flex flex-col gap-3">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="font-body text-base font-semibold py-1 opacity-85 hover:opacity-100"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block font-body text-base font-medium py-2 opacity-80 hover:opacity-100"
+            >
+              {link.label}
+            </a>
+          ))}
           <div className="pt-2">
             <a
               href={ctaHref}
@@ -134,4 +133,3 @@ export function DemoHeader({
 }
 
 export default DemoHeader;
-
