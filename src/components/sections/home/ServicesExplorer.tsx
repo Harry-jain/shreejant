@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
-import { ArrowUpRight, Globe, Bot, Layers, Check, ArrowRight } from "lucide-react";
+import { ArrowUpRight, Check, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
+import { useWorld } from "@/context/WorldContext";
 
 interface ServiceItem {
   id: string;
@@ -71,9 +71,10 @@ const SERVICES: ServiceItem[] = [
 
 export function ServicesExplorer() {
   const [selectedService, setSelectedService] = useState<ServiceItem>(SERVICES[0]);
+  const { config } = useWorld();
 
   return (
-    <Section id="services" className="border-b border-border bg-surface">
+    <Section id="services" className="border-b border-border bg-surface transition-colors duration-300">
       <Container>
         {/* Editorial Section Header */}
         <div className="flex flex-wrap items-end justify-between gap-6 mb-12 sm:mb-16">
@@ -84,7 +85,7 @@ export function ServicesExplorer() {
               </span>
               <span className="text-xs text-muted font-mono">[ WHAT WE BUILD ]</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text tracking-tight">
+            <h2 className={`${config.fontClass.display} text-3xl sm:text-4xl lg:text-5xl font-bold text-text tracking-tight`}>
               Three engineering pillars. No generic templates.
             </h2>
           </div>
@@ -103,10 +104,12 @@ export function ServicesExplorer() {
                 <button
                   key={service.id}
                   onClick={() => setSelectedService(service)}
-                  className={`w-full text-left p-5 sm:p-6 rounded-2xl border transition-all ${
+                  className={`w-full text-left p-5 sm:p-6 transition-all ${
+                    config.cardStyle
+                  } ${
                     isSelected
-                      ? "bg-bg-secondary border-accent shadow-sm ring-1 ring-accent"
-                      : "bg-surface border-border hover:bg-bg/40 hover:border-text/40"
+                      ? "ring-2 ring-accent border-accent shadow-md"
+                      : "opacity-80 hover:opacity-100 hover:border-text/40"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
@@ -119,7 +122,7 @@ export function ServicesExplorer() {
                       </span>
                     )}
                   </div>
-                  <h3 className="font-display font-bold text-lg sm:text-xl text-text">
+                  <h3 className={`${config.fontClass.display} font-bold text-lg sm:text-xl text-text`}>
                     {service.title}
                   </h3>
                   <p className="text-xs text-muted mt-1 leading-relaxed line-clamp-2">
@@ -131,7 +134,7 @@ export function ServicesExplorer() {
           </div>
 
           {/* Right Interactive Detail & Technical Visual Card (7 cols) */}
-          <div className="lg:col-span-7 rounded-2xl border border-border bg-bg p-6 sm:p-8 md:p-10 space-y-6">
+          <div className={`lg:col-span-7 ${config.cardStyle} p-6 sm:p-8 md:p-10 space-y-6 transition-all`}>
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
               <div className="font-mono text-xs text-accent font-bold">
                 {selectedService.number} &mdash; {selectedService.title.toUpperCase()}
@@ -146,7 +149,7 @@ export function ServicesExplorer() {
             </div>
 
             <div className="space-y-3">
-              <h4 className="font-display text-2xl sm:text-3xl font-bold text-text">
+              <h4 className={`${config.fontClass.display} text-2xl sm:text-3xl font-bold text-text`}>
                 {selectedService.tagline}
               </h4>
               <p className="text-sm text-muted leading-relaxed font-sans">

@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowUpRight, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Compass } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { useWorld } from "@/context/WorldContext";
 
 const FOOTER_LINKS = {
   work: [
@@ -28,25 +28,39 @@ const FOOTER_LINKS = {
 };
 
 export function Footer() {
-  const [logoError, setLogoError] = useState(false);
+  const { config, surpriseMe } = useWorld();
   const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "aishreejan@gmail.com";
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918976517353";
 
   return (
-    <footer className="w-full border-t border-border bg-bg text-text pt-16 pb-12 sm:pt-20 sm:pb-16 bg-paper-lines">
+    <footer className="w-full border-t border-border bg-bg text-text pt-16 pb-12 sm:pt-20 sm:pb-16 bg-paper-lines transition-colors duration-300">
       <Container>
         {/* Massive Editorial Masthead Banner */}
         <div className="border-b border-border pb-12 mb-12">
           <div className="flex flex-wrap items-baseline justify-between gap-4 mb-4">
-            <span className="font-mono text-xs text-accent font-bold uppercase tracking-wider">
-              SHREEJAN // DIGITAL ENGINEERING STUDIO
-            </span>
-            <span className="font-mono text-xs text-muted">
-              EST. 2026 // MUMBAI, MAHARASHTRA
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs text-accent font-bold uppercase tracking-wider">
+                SHREEJAN // DIGITAL ENGINEERING STUDIO
+              </span>
+              <span className="font-mono text-[10px] text-muted uppercase">
+                [{config.name} / {config.index}]
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={surpriseMe}
+                className="font-mono text-xs text-accent hover:underline flex items-center gap-1.5"
+              >
+                <Compass className="w-3.5 h-3.5" /> Switch Reality
+              </button>
+              <span className="text-border">•</span>
+              <span className="font-mono text-xs text-muted">
+                EST. 2026 // MUMBAI, MAHARASHTRA
+              </span>
+            </div>
           </div>
 
-          <h2 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-text tracking-tight uppercase leading-none">
+          <h2 className={`${config.fontClass.display} text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-text tracking-tight uppercase leading-none`}>
             SHREEJAN
           </h2>
         </div>
@@ -55,7 +69,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 pb-12 border-b border-border">
           {/* Studio Statement Left (5 cols) */}
           <div className="md:col-span-5 space-y-4">
-            <p className="font-display font-bold text-lg text-text">
+            <p className={`${config.fontClass.display} font-bold text-lg text-text`}>
               We make ambitious ideas work in the real world.
             </p>
             <p className="text-xs text-muted leading-relaxed font-sans max-w-sm">
@@ -118,7 +132,7 @@ export function Footer() {
             </div>
 
             {/* Studio */}
-            <div className="space-y-3">
+            <div className="space-y-3 col-span-2 sm:col-span-1">
               <div className="font-bold text-text uppercase tracking-wider text-[11px]">
                 03. Studio
               </div>
@@ -135,24 +149,15 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted">
+        {/* Bottom Bar: Copyright & Location */}
+        <div className="pt-8 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-muted">
           <div>
             &copy; {new Date().getFullYear()} SHREEJAN AI SOLUTIONS. All rights reserved.
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="hover:text-text transition-colors">
-              Privacy
-            </Link>
-            <span>•</span>
-            <Link href="/terms" className="hover:text-text transition-colors">
-              Terms
-            </Link>
-            <span>•</span>
-            <span className="flex items-center gap-1.5 text-emerald-700">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>All Systems Operational</span>
-            </span>
+            <span className="text-[11px]">Real code. No fabricated claims.</span>
+            <span className="text-border">•</span>
+            <span>Mumbai, India</span>
           </div>
         </div>
       </Container>

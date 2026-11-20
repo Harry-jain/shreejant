@@ -1,23 +1,24 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { ArrowUpRight, MessageSquare, Mail } from "lucide-react";
+import { ArrowUpRight, MessageSquare } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { BreathingWaveGrid } from "@/components/ui/BreathingWaveGrid";
+import { useWorld } from "@/context/WorldContext";
 
 export function ClosingCTASection() {
+  const { config } = useWorld();
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918976517353";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     "Hi Shreejan AI, I would like to discuss building a project for my business."
   )}`;
 
   return (
-    <Section className="bg-surface relative overflow-hidden">
+    <Section className="bg-surface relative overflow-hidden transition-colors duration-300">
       <Container>
-        <div className="rounded-3xl border border-border bg-bg p-8 sm:p-12 md:p-16 relative overflow-hidden">
+        <div className={`${config.cardStyle} p-8 sm:p-12 md:p-16 relative overflow-hidden transition-all`}>
           <BreathingWaveGrid dotSpacing={32} baseRadius={1.0} maxRadius={2.8} />
           <div className="max-w-2xl space-y-6 relative z-10">
             <div className="flex items-center gap-2">
@@ -27,7 +28,7 @@ export function ClosingCTASection() {
               <span className="text-xs text-muted font-mono">[ NEXT STEPS ]</span>
             </div>
 
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-text tracking-tight leading-[1.08]">
+            <h2 className={`${config.fontClass.display} text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-text tracking-tight leading-[1.08]`}>
               Have an idea that deserves to exist?
             </h2>
 

@@ -3,7 +3,8 @@
 import React from "react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { ShieldCheck, Zap, Code2, Users, FileCheck } from "lucide-react";
+import { Zap, Code2, Users, FileCheck } from "lucide-react";
+import { useWorld } from "@/context/WorldContext";
 
 const STANDARDS = [
   {
@@ -33,8 +34,10 @@ const STANDARDS = [
 ];
 
 export function CraftStandardsSection() {
+  const { config } = useWorld();
+
   return (
-    <Section className="border-b border-border bg-bg-secondary/20">
+    <Section className="border-b border-border bg-bg-secondary/20 transition-colors duration-300">
       <Container>
         <div className="max-w-2xl mb-12 space-y-3">
           <div className="flex items-center gap-2">
@@ -43,7 +46,7 @@ export function CraftStandardsSection() {
             </span>
             <span className="text-xs text-muted font-mono">[ OUR COMMITMENT ]</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-text tracking-tight">
+          <h2 className={`${config.fontClass.display} text-3xl sm:text-4xl font-bold text-text tracking-tight`}>
             Built with rigor. Delivered with honesty.
           </h2>
           <p className="text-sm sm:text-base text-muted leading-relaxed font-sans">
@@ -57,12 +60,12 @@ export function CraftStandardsSection() {
             return (
               <div
                 key={idx}
-                className="p-6 rounded-2xl border border-border bg-surface space-y-3"
+                className={`${config.cardStyle} p-6 space-y-3 transition-all`}
               >
-                <div className="w-9 h-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
                   <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-display text-base font-bold text-text">
+                <h3 className={`${config.fontClass.display} font-bold text-base text-text`}>
                   {std.title}
                 </h3>
                 <p className="text-xs text-muted leading-relaxed font-sans">

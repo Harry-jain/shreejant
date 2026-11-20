@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { ArrowUpRight, ArrowRight, ExternalLink, Sparkles } from "lucide-react";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
+import { useWorld } from "@/context/WorldContext";
 
 interface WorkProject {
   id: string;
@@ -59,8 +59,10 @@ const PROJECTS: WorkProject[] = [
 ];
 
 export function SelectedWorkSection() {
+  const { config } = useWorld();
+
   return (
-    <Section id="work" className="border-b border-border bg-bg-secondary/30">
+    <Section id="work" className="border-b border-border bg-bg-secondary/30 transition-colors duration-300">
       <Container>
         {/* Editorial Section Header */}
         <div className="flex flex-wrap items-end justify-between gap-6 mb-12 sm:mb-16">
@@ -71,7 +73,7 @@ export function SelectedWorkSection() {
               </span>
               <span className="text-xs text-muted font-mono">[ PRODUCTION PROTOTYPES ]</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text tracking-tight">
+            <h2 className={`${config.fontClass.display} text-3xl sm:text-4xl lg:text-5xl font-bold text-text tracking-tight`}>
               Evidence of our engineering and interface craft.
             </h2>
           </div>
@@ -85,7 +87,7 @@ export function SelectedWorkSection() {
           {PROJECTS.map((project) => (
             <div
               key={project.id}
-              className={`rounded-2xl border border-border bg-surface p-6 sm:p-8 md:p-10 shadow-sm border-l-4 ${project.visualAccent} transition-all hover:border-text/30`}
+              className={`${config.cardStyle} p-6 sm:p-8 md:p-10 border-l-4 ${project.visualAccent} transition-all`}
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 {/* Project Info Left (7 cols) */}
@@ -103,7 +105,7 @@ export function SelectedWorkSection() {
                     </span>
                   </div>
 
-                  <h3 className="font-display text-2xl sm:text-3xl font-bold text-text">
+                  <h3 className={`${config.fontClass.display} text-2xl sm:text-3xl font-bold text-text`}>
                     {project.title}
                   </h3>
 
@@ -134,7 +136,7 @@ export function SelectedWorkSection() {
                       <span>LIVE DEMO SANDBOX</span>
                       <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     </div>
-                    <p className="text-xs text-text font-medium leading-relaxed">
+                    <p className="text-xs text-text font-medium leading-relaxed font-sans">
                       Experience the responsive navigation, booking forms, and sub-second page transitions in action.
                     </p>
                   </div>

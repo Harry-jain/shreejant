@@ -4,6 +4,7 @@ import React from "react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Compass, PenTool, Terminal, Rocket } from "lucide-react";
+import { useWorld } from "@/context/WorldContext";
 
 const STAGES = [
   {
@@ -45,8 +46,10 @@ const STAGES = [
 ];
 
 export function ProcessSection() {
+  const { config } = useWorld();
+
   return (
-    <Section className="border-b border-border bg-surface">
+    <Section className="border-b border-border bg-surface transition-colors duration-300">
       <Container>
         {/* Editorial Section Header */}
         <div className="max-w-2xl mb-12 sm:mb-16 space-y-3">
@@ -56,52 +59,49 @@ export function ProcessSection() {
             </span>
             <span className="text-xs text-muted font-mono">[ STRUCTURED EXECUTION ]</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text tracking-tight">
+          <h2 className={`${config.fontClass.display} text-3xl sm:text-4xl lg:text-5xl font-bold text-text tracking-tight`}>
             Four stages. Direct communication. Zero guesswork.
           </h2>
           <p className="text-sm sm:text-base text-muted leading-relaxed font-sans">
-            You work directly with the engineers building your website. Structured milestone reviews,
-            clear timelines, and full transparency from kickoff to final handoff.
+            Every build follows a predictable four-stage sprint. You get clear milestones, preview URLs at every stage, and direct Slack or WhatsApp communication with the engineers building your site.
           </p>
         </div>
 
-        {/* Process Timeline Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
-          {STAGES.map((stage, idx) => {
+        {/* Process Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {STAGES.map((stage) => {
             const Icon = stage.icon;
             return (
               <div
                 key={stage.step}
-                className="p-6 rounded-2xl border border-border bg-bg/50 space-y-4 relative flex flex-col justify-between"
+                className={`${config.cardStyle} p-6 sm:p-7 flex flex-col justify-between transition-all`}
               >
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-xl font-bold text-accent">
-                      {stage.step}
+                    <span className="font-mono text-xs font-bold text-accent">
+                      STAGE {stage.step}
                     </span>
-                    <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-surface border border-border text-muted">
+                    <span className="font-mono text-[10px] uppercase px-2 py-0.5 rounded bg-bg-secondary text-muted">
                       {stage.timeline}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-text" />
-                    <h3 className="font-display text-lg font-bold text-text">
-                      {stage.title}
-                    </h3>
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+                    <Icon className="w-5 h-5" />
                   </div>
 
-                  <div className="font-mono text-xs text-muted font-semibold">
-                    {stage.tagline}
+                  <div className="space-y-1">
+                    <h3 className={`${config.fontClass.display} font-bold text-xl text-text`}>
+                      {stage.title}
+                    </h3>
+                    <div className="font-mono text-xs text-accent font-medium">
+                      {stage.tagline}
+                    </div>
                   </div>
 
                   <p className="text-xs text-muted leading-relaxed font-sans">
                     {stage.description}
                   </p>
-                </div>
-
-                <div className="pt-4 border-t border-border/60 text-[11px] font-mono text-text/60">
-                  Phase Milestone Checkpoint
                 </div>
               </div>
             );

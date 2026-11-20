@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Compass } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { useWorld } from "@/context/WorldContext";
 
 const NAV_LINKS = [
   { href: "/#work", label: "Work" },
@@ -20,9 +21,10 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [logoError, setLogoError] = useState(false);
   const pathname = usePathname();
+  const { config, surpriseMe } = useWorld();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-bg/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-bg/95 backdrop-blur-md transition-colors duration-300">
       <Container>
         <div className="flex h-16 sm:h-18 items-center justify-between gap-4">
           {/* Brand Logo / Monogram */}
@@ -45,14 +47,18 @@ export function Header() {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <span className="font-display font-black text-xl tracking-tight text-text">
+                <span className={`${config.fontClass.display} font-black text-xl tracking-tight text-text`}>
                   SHREEJAN
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-accent" />
               </div>
             )}
             <span className="hidden lg:inline-block font-mono text-[10px] text-muted uppercase tracking-wider pl-2 border-l border-border">
-              Digital Studio
+              {config.id === "future-interface" || config.id === "secret-world"
+                ? `SYS_MODE // ${config.name.toUpperCase()}`
+                : config.id === "mumbai-momentum"
+                ? "MUMBAI STUDIO"
+                : "Digital Studio"}
             </span>
           </Link>
 
@@ -76,8 +82,16 @@ export function Header() {
             })}
           </nav>
 
-          {/* Desktop Right CTA */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Desktop Right CTA + World Switch Quick Trigger */}
+          <div className="hidden sm:flex items-center gap-2.5">
+            <button
+              onClick={surpriseMe}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border text-[11px] font-mono text-muted hover:text-text hover:border-text/40 transition-colors"
+              title="Switch design reality"
+            >
+              <Compass className="w-3.5 h-3.5 text-accent" />
+              <span>{config.index}</span>
+            </button>
             <Button
               href="/contact"
               variant="primary"
@@ -103,6 +117,9 @@ export function Header() {
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-border py-4 px-2 space-y-2 bg-surface rounded-b-2xl shadow-lg animate-in slide-in-from-top-2">
+            <div className="px-3 py-1.5 font-mono text-[10px] uppercase text-accent font-bold">
+              Current Reality: {config.name} ({config.index})
+            </div>
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}

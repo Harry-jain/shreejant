@@ -2,18 +2,23 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ArrowDown, Code2, Cpu, Database, CheckCircle2, Terminal, Sparkles } from "lucide-react";
+import { ArrowUpRight, ArrowDown, CheckCircle2, Compass, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { BreathingWaveGrid } from "@/components/ui/BreathingWaveGrid";
+import { useWorld } from "@/context/WorldContext";
+import { WORLDS, WorldId } from "@/types/world";
 
 type FocusMode = "websites" | "automation" | "platforms";
 
 export function HeroSection() {
   const [activeFocus, setActiveFocus] = useState<FocusMode>("websites");
+  const { config, world, switchWorld, isSecretUnlocked } = useWorld();
+
+  const worldKeys = Object.keys(WORLDS) as WorldId[];
 
   return (
-    <section className="relative pt-12 pb-16 sm:pt-20 sm:pb-24 border-b border-border overflow-hidden">
+    <section className="relative pt-12 pb-16 sm:pt-20 sm:pb-24 border-b border-border overflow-hidden transition-colors duration-300">
       {/* Living Breathing Undulating Wave Dot Grid */}
       <BreathingWaveGrid dotSpacing={28} baseRadius={1.2} maxRadius={3.4} />
       <div className="absolute inset-0 bg-radial-vignette pointer-events-none" />
@@ -22,15 +27,21 @@ export function HeroSection() {
         {/* Top Studio Label */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8 sm:mb-12 border-b border-border pb-4">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            <span
+              className="w-2.5 h-2.5 rounded-full animate-pulse"
+              style={{ backgroundColor: config.colors.accent }}
+            />
             <span className="font-mono text-xs text-text font-bold uppercase tracking-wider">
               SHREEJAN // DIGITAL ENGINEERING STUDIO
+            </span>
+            <span className="hidden sm:inline-block px-1.5 py-0.5 rounded bg-accent/15 text-accent font-mono text-[10px] font-bold uppercase">
+              REALITY {config.index}
             </span>
           </div>
           <div className="font-mono text-xs text-muted flex items-center gap-2">
             <span>MUMBAI, INDIA</span>
             <span className="text-border">•</span>
-            <span>AVAILABLE FOR SELECT Q1/Q2 BUILDS</span>
+            <span className="text-text font-bold uppercase">{config.energyLabel} MODE</span>
           </div>
         </div>
 
@@ -39,7 +50,7 @@ export function HeroSection() {
           {/* Left Editorial Narrative Column (7 cols) */}
           <div className="lg:col-span-7 space-y-6 sm:space-y-8">
             <div className="space-y-4">
-              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-bold text-text tracking-tight leading-[1.05]">
+              <h1 className={`${config.fontClass.display} text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-bold text-text tracking-tight leading-[1.05]`}>
                 We build the digital systems behind ambitious businesses.
               </h1>
               <p className="text-base sm:text-lg text-muted font-sans leading-relaxed max-w-xl">
@@ -59,8 +70,51 @@ export function HeroSection() {
               </Button>
             </div>
 
+            {/* "Choose How You Enter" Reality Selector Ribbon */}
+            <div className="pt-4 space-y-2">
+              <div className="flex items-center justify-between font-mono text-[11px] text-muted">
+                <span className="flex items-center gap-1.5 uppercase font-bold text-accent">
+                  <Compass className="w-3.5 h-3.5" />
+                  CHOOSE HOW YOU ENTER (ONE AGENCY, 6 REALITIES)
+                </span>
+                <span className="hidden sm:inline-block text-[10px]">
+                  {config.whyThisWorld.emotionalResponse}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                {worldKeys.map((wId) => {
+                  const w = WORLDS[wId];
+                  const isActive = world === wId;
+                  const isLocked = wId === "secret-world" && !isSecretUnlocked;
+
+                  if (isLocked) return null;
+
+                  return (
+                    <button
+                      key={wId}
+                      onClick={() => switchWorld(wId)}
+                      className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono transition-all flex items-center gap-1.5 ${
+                        isActive
+                          ? "bg-accent text-white border-accent shadow-sm font-bold ring-1 ring-accent"
+                          : "bg-surface/70 border-border hover:bg-surface text-text hover:border-text/50"
+                      }`}
+                      title={w.tagline}
+                    >
+                      <span
+                        className="w-1.5 h-1.5 rounded-full"
+                        style={{ backgroundColor: isActive ? "#FFFFFF" : w.colors.accent }}
+                      />
+                      <span>{w.name}</span>
+                      {wId === "secret-world" && <Sparkles className="w-3 h-3 text-amber-300 ml-0.5" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Interactive Focus Switcher */}
-            <div className="pt-6 sm:pt-8 border-t border-border space-y-3">
+            <div className="pt-4 border-t border-border space-y-3">
               <div className="font-mono text-[11px] uppercase tracking-wider text-muted">
                 SELECT ENGINEERING DISCIPLINE TO INSPECT:
               </div>
@@ -73,10 +127,11 @@ export function HeroSection() {
                   <button
                     key={item.id}
                     onClick={() => setActiveFocus(item.id as FocusMode)}
-                    className={`p-3 rounded-lg border text-left transition-all font-mono text-xs ${activeFocus === item.id
-                      ? "bg-surface border-accent shadow-sm ring-1 ring-accent"
-                      : "bg-surface/50 border-border hover:bg-surface hover:border-text/40"
-                      }`}
+                    className={`p-3 rounded-lg border text-left transition-all font-mono text-xs ${
+                      activeFocus === item.id
+                        ? "bg-surface border-accent shadow-sm ring-1 ring-accent"
+                        : "bg-surface/50 border-border hover:bg-surface hover:border-text/40"
+                    }`}
                   >
                     <div className="font-bold text-text">{item.label}</div>
                     <div className="text-[11px] text-muted">{item.sub}</div>
@@ -88,7 +143,7 @@ export function HeroSection() {
 
           {/* Right Sticky Interactive Console Panel (5 cols) */}
           <div className="lg:col-span-5 lg:sticky lg:top-24">
-            <div className="rounded-2xl border border-border bg-surface shadow-sm overflow-hidden">
+            <div className={`${config.cardStyle} overflow-hidden transition-all duration-300`}>
               {/* Console Chrome Header */}
               <div className="px-4 py-3 bg-bg-secondary border-b border-border flex items-center justify-between text-xs font-mono">
                 <div className="flex items-center gap-2">
