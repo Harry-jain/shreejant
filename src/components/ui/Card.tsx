@@ -1,5 +1,4 @@
 import React from "react";
-import { GlassCard } from "./GlassCard";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -16,12 +15,11 @@ export function Card({
   ...props
 }: CardProps) {
   return (
-    <GlassCard
-      variant={highlighted ? "gold" : "default"}
-      className={className}
+    <div
+      className={`rounded-xl border border-white/10 bg-white/5 p-6 ${className}`}
       {...props}
     >
       {children}
-    </GlassCard>
+    </div>
   );
 }

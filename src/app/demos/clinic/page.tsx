@@ -5,9 +5,7 @@ import { clinicTheme } from "./theme";
 import { clinicData } from "./data";
 import { DemoHeader } from "@/components/demo-shared/DemoHeader";
 import { DemoHero } from "@/components/demo-shared/DemoHero";
-import { TrustStrip } from "@/components/demo-shared/TrustStrip";
 import { WhatsAppChatMockup } from "@/components/demo-shared/WhatsAppChatMockup";
-import { TestimonialCards } from "@/components/demo-shared/TestimonialCards";
 import { BookingForm } from "@/components/demo-shared/BookingForm";
 import { DemoFooter } from "@/components/demo-shared/DemoFooter";
 import { FloatingWhatsApp } from "@/components/demo-shared/FloatingWhatsApp";
@@ -19,9 +17,9 @@ import { DoctorProfileCard } from "./components/DoctorProfileCard";
 import { ClinicSpecialtiesGrid } from "./components/ClinicSpecialtiesGrid";
 
 export const metadata: Metadata = {
-  title: "Dr. Vora Clinic — Specialist Dermatology & Family Care, Nashik",
+  title: "Dr. Vora Clinic — Sample Healthcare Website | SHREEJAN AI",
   description:
-    "Specialist care booked in under a minute. Clinical dermatology and general medicine in Nashik. Instant WhatsApp slot allocation.",
+    "Sample business demo for specialist dermatology & family care in Nashik. Built by SHREEJAN AI SOLUTIONS.",
 };
 
 export default async function ClinicDemoPage({
@@ -61,20 +59,17 @@ export default async function ClinicDemoPage({
         palette={palette}
       />
 
-      {/* 3. Trust Strip */}
-      <TrustStrip stats={clinicData.trustStrip} palette={palette} />
-
-      {/* 4. Doctor Profile Spotlight */}
+      {/* 3. Doctor Profile Spotlight */}
       <FadeUp>
         <DoctorProfileCard />
       </FadeUp>
 
-      {/* 5. Core Offering: Specialities Grid */}
+      {/* 4. Core Offering: Specialities Grid */}
       <FadeUp>
         <ClinicSpecialtiesGrid />
       </FadeUp>
 
-      {/* 6. Signature Feature: Smart WhatsApp Triage */}
+      {/* 5. Signature Feature: Smart WhatsApp Triage */}
       <div id="triage" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
         <WhatsAppChatMockup
           badge={clinicData.signatureFeature.badge}
@@ -88,18 +83,7 @@ export default async function ClinicDemoPage({
         />
       </div>
 
-      {/* 7. Patient Testimonials */}
-      <FadeUp>
-        <TestimonialCards
-          badge="PATIENT EXPERIENCES"
-          heading="Trusted by Over 18,500 Families in Nashik & Pune"
-          subhead="Real feedback from verified patients receiving specialist clinical care."
-          testimonials={clinicData.testimonials}
-          palette={palette}
-        />
-      </FadeUp>
-
-      {/* 8. Appointment Booking Form */}
+      {/* 6. Appointment Booking Form */}
       <div id="appointment" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
         <FadeUp>
           <BookingForm
@@ -115,7 +99,7 @@ export default async function ClinicDemoPage({
         </FadeUp>
       </div>
 
-      {/* 9. Demo Footer */}
+      {/* 7. Demo Footer */}
       <DemoFooter
         brandName={clinicData.header.brandName}
         domain={clinicTheme.domain}
@@ -126,7 +110,7 @@ export default async function ClinicDemoPage({
         palette={palette}
       />
 
-      {/* 10. Floating WhatsApp */}
+      {/* 8. Floating WhatsApp */}
       <FloatingWhatsApp
         brandName={clinicData.header.brandName}
         phone="919876500000"

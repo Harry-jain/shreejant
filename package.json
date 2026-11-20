@@ -7,21 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit",
-    "smoke:demos": "node scripts/smoke-demos.mjs",
-    "i18n:check": "node scripts/check-i18n.mjs"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "framer-motion": "^12.4.7",
-    "gray-matter": "^4.0.3",
     "lucide-react": "^0.469.0",
     "next": "^15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "resend": "^4.1.2",
-    "three": "^0.170.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -29,7 +25,6 @@
     "@types/node": "^20.17.10",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
-    "@types/three": "^0.170.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.16.0",
     "eslint-config-next": "^15.1.7",

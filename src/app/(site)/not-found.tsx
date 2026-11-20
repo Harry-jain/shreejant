@@ -1,29 +1,28 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { BrandWatermark } from "@/components/ui/BrandWatermark";
 
 export default function NotFound() {
   return (
     <div className="min-h-[70vh] flex items-center justify-center relative px-4 text-center overflow-hidden">
-      <BrandWatermark text="404" position="center" className="opacity-10" />
-      <div className="relative z-10 max-w-md space-y-6">
-        <div className="font-mono font-bold text-7xl sm:text-8xl text-[#7C5CFC]">
+      <div className="relative z-10 max-w-md space-y-6 text-white">
+        <div className="font-mono font-bold text-7xl sm:text-8xl text-blue-500">
           404
         </div>
-        <h1
-          className="font-heading font-bold text-2xl sm:text-3xl text-brand-text"
-          style={{ textTransform: "none" }}
-        >
+        <h1 className="font-bold text-2xl sm:text-3xl text-white">
           Page Not Found
         </h1>
-        <p className="font-body text-[15px] text-brand-muted leading-relaxed">
-          The requested coordinate does not exist in our digital architecture. Navigate back to the main portal.
+        <p className="text-sm text-gray-300 leading-relaxed">
+          The page you are looking for does not exist. Navigate back to the main portal.
         </p>
         <div className="pt-2">
-          <Button href="/" variant="primary" size="default" leftIcon={<ArrowLeft className="w-4 h-4 mr-1" />}>
-            Return to Homepage
-          </Button>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Return to Homepage</span>
+          </Link>
         </div>
       </div>
     </div>

@@ -11,14 +11,7 @@ export function DemoFaq({ config }: { config: DemoConfig }) {
     { q: 'Can I reschedule or cancel my booking?', a: 'Yes, appointments can be modified or cancelled up to 2 hours before the scheduled time with zero cancellation fee.' },
   ];
 
-  if (id === 'classes') {
-    faqs = [
-      { q: 'How are batch sizes determined?', a: 'Batches are strictly capped at 20 students to guarantee individual attention, regular homework correction, and personal mentoring.' },
-      { q: 'What is the schedule for doubt-clearing sessions?', a: 'Dedicated 1-on-1 doubt clearing desks are open daily from 3 PM to 5 PM with faculty assistance.' },
-      { q: 'Do you offer trial demo lectures?', a: 'Yes, prospective students can attend 2 complimentary evaluation lectures before finalizing admission.' },
-      { q: 'How do parents receive performance updates?', a: 'Weekly attendance and chapter-wise test results are automatically sent via WhatsApp to registered guardian numbers.' },
-    ];
-  } else if (id === 'clinic') {
+  if (id === 'clinic') {
     faqs = [
       { q: 'Do I need a prior appointment for consultation?', a: 'Prior appointments are recommended to ensure zero waiting time, though walk-ins are accommodated based on emergency priority.' },
       { q: 'Are digital diagnostic reports provided?', a: 'Yes, all blood investigations, imaging, and prescriptions are uploaded to your encrypted digital patient portal within 4 hours.' },

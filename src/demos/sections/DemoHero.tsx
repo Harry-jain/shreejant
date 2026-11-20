@@ -9,21 +9,12 @@ export function DemoHero({ config }: { config: DemoConfig }) {
     switch (id) {
       case 'salon':
         return <Art.SalonArt className="w-full max-w-[280px] sm:max-w-[320px] mx-auto drop-shadow-sm" />;
-      case 'jewellery':
-        return <Art.JewelleryArt className="w-full max-w-[280px] sm:max-w-[320px] mx-auto drop-shadow-sm" />;
       case 'clinic':
         return <Art.ClinicArt className="w-full max-w-[280px] sm:max-w-[320px] mx-auto drop-shadow-sm" />;
       case 'restaurant':
         return <Art.RestaurantArt className="w-full max-w-[280px] sm:max-w-[320px] mx-auto drop-shadow-sm" />;
-      case 'gym':
-        return <Art.GymArt className="w-full max-w-[280px] sm:max-w-[320px] mx-auto drop-shadow-sm" />;
-      case 'shop':
-        return <Art.ShopArt className="w-full max-w-[280px] sm:max-w-[320px] mx-auto drop-shadow-sm" />;
-      case 'classes':
-        return <Art.ClassesArt className="w-full max-w-[280px] sm:max-w-[320px] mx-auto drop-shadow-sm" />;
-      case 'general':
       default:
-        return <Art.GeneralArt className="w-full max-w-[280px] sm:max-w-[320px] mx-auto drop-shadow-sm" />;
+        return null;
     }
   };
 
@@ -79,59 +70,7 @@ export function DemoHero({ config }: { config: DemoConfig }) {
     );
   }
 
-  // Layout 2: Centered Layout (Jewellery, Classes)
-  if (id === 'jewellery' || id === 'classes') {
-    return (
-      <section
-        className="w-full py-12 sm:py-20 px-4 sm:px-8 border-b"
-        style={{
-          backgroundColor: palette.bg,
-          borderColor: palette.accent,
-          color: palette.ink,
-        }}
-      >
-        <div className="max-w-5xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider" style={{ backgroundColor: palette.surface, color: palette.accent, border: `1px solid ${palette.accent}` }}>
-            <span>{name}</span>
-            <span>✦</span>
-            <span>{tagline}</span>
-          </div>
-          <h1
-            className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight max-w-3xl mx-auto"
-            style={{ fontFamily: 'var(--font-demo-display), Georgia, serif' }}
-          >
-            {hero.title}
-          </h1>
-          <p className="text-base sm:text-lg opacity-85 max-w-2xl mx-auto leading-relaxed">
-            {hero.sub}
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <a
-              href="#demo-note"
-              className="px-7 py-3 rounded-lg font-semibold text-sm transition-transform active:scale-95 shadow-md"
-              style={{ backgroundColor: palette.accent, color: id === 'jewellery' ? '#151515' : '#FFFFFF' }}
-            >
-              {hero.cta}
-            </a>
-            <a
-              href="#demo-note"
-              className="px-6 py-3 rounded-lg font-semibold text-sm border-2 transition-transform active:scale-95"
-              style={{ borderColor: palette.accent, color: palette.ink }}
-            >
-              Contact store
-            </a>
-          </div>
-          <div className="pt-6 flex justify-center">
-            <div className="p-6 rounded-2xl border" style={{ backgroundColor: palette.surface, borderColor: `${palette.accent}40` }}>
-              {renderArt()}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // Layout 3: Split 2-Column Hero (Salon, Clinic, Gym, Shop, General)
+  // Layout 2: Split 2-Column Hero (Salon, Clinic)
   return (
     <section
       className="w-full py-12 sm:py-16 px-4 sm:px-8 border-b"
@@ -159,14 +98,14 @@ export function DemoHero({ config }: { config: DemoConfig }) {
           </p>
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
             <a
-              href="#demo-note"
+              href="#booking"
               className="px-6 py-3 rounded-lg font-semibold text-sm transition-transform active:scale-95 shadow-md"
-              style={{ backgroundColor: palette.accent, color: id === 'gym' ? '#FFFFFF' : '#FFFFFF' }}
+              style={{ backgroundColor: palette.accent, color: '#FFFFFF' }}
             >
               {hero.cta}
             </a>
             <a
-              href="#demo-note"
+              href="#appointment"
               className="px-6 py-3 rounded-lg font-semibold text-sm border-2 transition-transform active:scale-95"
               style={{ borderColor: palette.ink, color: palette.ink }}
             >

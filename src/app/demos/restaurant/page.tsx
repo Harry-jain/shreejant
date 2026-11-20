@@ -5,9 +5,7 @@ import { restaurantTheme } from "./theme";
 import { restaurantData } from "./data";
 import { DemoHeader } from "@/components/demo-shared/DemoHeader";
 import { DemoHero } from "@/components/demo-shared/DemoHero";
-import { TrustStrip } from "@/components/demo-shared/TrustStrip";
 import { WhatsAppChatMockup } from "@/components/demo-shared/WhatsAppChatMockup";
-import { TestimonialCards } from "@/components/demo-shared/TestimonialCards";
 import { BookingForm } from "@/components/demo-shared/BookingForm";
 import { DemoFooter } from "@/components/demo-shared/DemoFooter";
 import { FloatingWhatsApp } from "@/components/demo-shared/FloatingWhatsApp";
@@ -18,9 +16,9 @@ import { CopperPotArt } from "./components/CopperPotArt";
 import { RestaurantMenuTabs } from "./components/RestaurantMenuTabs";
 
 export const metadata: Metadata = {
-  title: "The Bombay Bistro — Coastal & Bombay Street Classics, Nashik",
+  title: "The Bombay Bistro — Sample Restaurant Website | SHREEJAN AI",
   description:
-    "Authentic coastal and Mumbai street classics slow-cooked since 2016 in Nashik. Reserve tables or ask our WhatsApp AI maitre d'.",
+    "Sample business demo for coastal & Mumbai street dining in Nashik. Built by SHREEJAN AI SOLUTIONS.",
 };
 
 export default async function RestaurantDemoPage({
@@ -60,15 +58,12 @@ export default async function RestaurantDemoPage({
         palette={palette}
       />
 
-      {/* 3. Trust Strip */}
-      <TrustStrip stats={restaurantData.trustStrip} palette={palette} />
-
-      {/* 4. Core Offering → Menu */}
+      {/* 3. Core Offering → Menu */}
       <FadeUp>
         <RestaurantMenuTabs />
       </FadeUp>
 
-      {/* 5. Signature Feature: WhatsApp Table Concierge */}
+      {/* 4. Signature Feature: WhatsApp Table Concierge */}
       <div id="ai-chat" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
         <WhatsAppChatMockup
           badge={restaurantData.signatureFeature.badge}
@@ -82,20 +77,7 @@ export default async function RestaurantDemoPage({
         />
       </div>
 
-      {/* 6. Guest Testimonials */}
-      <div id="reviews">
-        <FadeUp>
-          <TestimonialCards
-            badge="GUEST EXPERIENCES"
-            heading="Loved by Food Enthusiasts Across Maharashtra"
-            subhead="Authentic tastes and unhurried hospitality that keeps tables booked weeks in advance."
-            testimonials={restaurantData.testimonials}
-            palette={palette}
-          />
-        </FadeUp>
-      </div>
-
-      {/* 7. Reservation Booking Form */}
+      {/* 5. Reservation Booking Form */}
       <div id="reservation" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
         <FadeUp>
           <BookingForm
@@ -111,7 +93,7 @@ export default async function RestaurantDemoPage({
         </FadeUp>
       </div>
 
-      {/* 8. Demo Footer */}
+      {/* 6. Demo Footer */}
       <DemoFooter
         brandName={restaurantData.header.brandName}
         domain={restaurantTheme.domain}
@@ -122,7 +104,7 @@ export default async function RestaurantDemoPage({
         palette={palette}
       />
 
-      {/* 9. Floating WhatsApp */}
+      {/* 7. Floating WhatsApp */}
       <FloatingWhatsApp
         brandName={restaurantData.header.brandName}
         phone="919876500000"

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { DemoConfig } from '../demos.config';
-import { Loader2, CheckCircle2, MessageSquare } from 'lucide-react';
+import { Loader2, CheckCircle2 } from 'lucide-react';
 
 export function DemoBooking({ config }: { config: DemoConfig }) {
   const { id, palette } = config;
@@ -30,19 +30,6 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
     title = 'Reserve a Dining Table';
     subtitle = 'Tables held for 15 minutes past reservation time';
     buttonText = 'Reserve Table';
-  } else if (id === 'gym') {
-    title = 'Book a Free 1-Day Trial Pass';
-    subtitle = 'Experience our coaches, equipment, and recovery deck with zero obligation';
-    buttonText = 'Claim Free Pass';
-  } else if (id === 'classes') {
-    title = 'Direct Admission & Batch Enquiry';
-    subtitle = 'Speak with our academic advisors and book a free demo diagnostic test';
-    buttonText = 'Submit Batch Enquiry';
-  } else {
-    // general
-    title = 'Request a Discovery Discussion';
-    subtitle = 'Tell us about your project requirements and get a detailed proposal';
-    buttonText = 'Send Inquiry';
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,7 +55,6 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
         console.warn('Demo booking dispatch notice:', err);
       });
 
-      // UX buffer so user observes loader assurance
       await new Promise((r) => setTimeout(r, 650));
       setIsSubmitted(true);
     } catch {
@@ -127,36 +113,32 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Slot Chips if Salon, Clinic or Gym */}
-              {(id === 'salon' || id === 'clinic' || id === 'gym' || id === 'restaurant') && (
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold block" style={{ color: palette.ink }}>
-                    Select Preferred Slot
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {['10:00 AM', '11:30 AM', '02:00 PM', '04:30 PM', '06:00 PM', '07:30 PM'].map((slot) => {
-                      const isSelected = selectedSlot === slot;
-                      return (
-                        <button
-                          key={slot}
-                          type="button"
-                          onClick={() => setSelectedSlot(slot)}
-                          className="px-3 py-1.5 rounded-lg border text-xs font-mono font-medium cursor-pointer transition-colors"
-                          style={{
-                            borderColor: isSelected ? palette.accent : `${palette.accent}30`,
-                            backgroundColor: isSelected ? `${palette.accent}15` : palette.bg,
-                            color: palette.ink,
-                          }}
-                        >
-                          {slot}
-                        </button>
-                      );
-                    })}
-                  </div>
+              <div className="space-y-2">
+                <label className="text-xs font-semibold block" style={{ color: palette.ink }}>
+                  Select Preferred Slot
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {['10:00 AM', '11:30 AM', '02:00 PM', '04:30 PM', '06:00 PM', '07:30 PM'].map((slot) => {
+                    const isSelected = selectedSlot === slot;
+                    return (
+                      <button
+                        key={slot}
+                        type="button"
+                        onClick={() => setSelectedSlot(slot)}
+                        className="px-3 py-1.5 rounded-lg border text-xs font-mono font-medium cursor-pointer transition-colors"
+                        style={{
+                          borderColor: isSelected ? palette.accent : `${palette.accent}30`,
+                          backgroundColor: isSelected ? `${palette.accent}15` : palette.bg,
+                          color: palette.ink,
+                        }}
+                      >
+                        {slot}
+                      </button>
+                    );
+                  })}
                 </div>
-              )}
+              </div>
 
-              {/* Form Fields */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label htmlFor="demo-name" className="text-xs font-semibold block" style={{ color: palette.ink }}>
@@ -193,41 +175,21 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
                 </div>
               </div>
 
-              {id === 'classes' && (
-                <div className="space-y-1.5">
-                  <label htmlFor="demo-class" className="text-xs font-semibold block" style={{ color: palette.ink }}>
-                    Current Class / Standard
-                  </label>
-                  <input
-                    id="demo-class"
-                    type="text"
-                    autoComplete="off"
-                    placeholder="e.g. Class 10 CBSE or Class 12 JEE"
-                    value={extraNote}
-                    onChange={(e) => setExtraNote(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-lg border bg-transparent focus:outline-none focus:ring-1"
-                    style={{ borderColor: `${palette.accent}40`, color: palette.ink }}
-                  />
-                </div>
-              )}
-
-              {id !== 'classes' && (
-                <div className="space-y-1.5">
-                  <label htmlFor="demo-note-input" className="text-xs font-semibold block" style={{ color: palette.ink }}>
-                    Optional Note
-                  </label>
-                  <input
-                    id="demo-note-input"
-                    type="text"
-                    autoComplete="off"
-                    placeholder="Any specific preference or requirement"
-                    value={extraNote}
-                    onChange={(e) => setExtraNote(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-lg border bg-transparent focus:outline-none focus:ring-1"
-                    style={{ borderColor: `${palette.accent}40`, color: palette.ink }}
-                  />
-                </div>
-              )}
+              <div className="space-y-1.5">
+                <label htmlFor="demo-note-input" className="text-xs font-semibold block" style={{ color: palette.ink }}>
+                  Optional Note
+                </label>
+                <input
+                  id="demo-note-input"
+                  type="text"
+                  autoComplete="off"
+                  placeholder="Any specific preference or requirement"
+                  value={extraNote}
+                  onChange={(e) => setExtraNote(e.target.value)}
+                  className="w-full px-3 py-2 text-xs rounded-lg border bg-transparent focus:outline-none focus:ring-1"
+                  style={{ borderColor: `${palette.accent}40`, color: palette.ink }}
+                />
+              </div>
 
               <div className="pt-2">
                 <button
@@ -249,9 +211,6 @@ export function DemoBooking({ config }: { config: DemoConfig }) {
                     <span>{buttonText}</span>
                   )}
                 </button>
-                <p className="text-[11px] text-center opacity-60 mt-2" style={{ color: palette.ink }}>
-                  Sample interface. In production, this instantly notifies via WhatsApp & SMS.
-                </p>
               </div>
             </form>
           )}

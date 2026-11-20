@@ -5,16 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
-import { useLanguage } from "@/i18n";
 
 const NAV_LINKS = [
-  { href: "/", key: "nav.home", label: "Home" },
-  { href: "/#demos", key: "nav.demos", label: "Demos" },
-  { href: "/services", key: "nav.services", label: "Services" },
-  { href: "/portfolio", key: "nav.portfolio", label: "Portfolio" },
-  { href: "/about", key: "nav.about", label: "About" },
-  { href: "/blog", key: "nav.blog", label: "Blog" },
-  { href: "/contact", key: "nav.contact", label: "Contact" },
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services & Pricing" },
+  { href: "/demos", label: "Demos" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -27,7 +24,6 @@ export function Navbar() {
 
   const pathname = usePathname();
   const router = useRouter();
-  const { t } = useLanguage();
 
   // Scroll detection via IntersectionObserver
   useEffect(() => {
@@ -62,8 +58,8 @@ export function Navbar() {
     NAV_LINKS.forEach((link) => {
       try {
         router.prefetch(link.href);
-      } catch (err) {
-        // Ignore prefetch network errors
+      } catch {
+        // Ignore prefetch errors
       }
     });
   }, [router]);
@@ -130,27 +126,27 @@ export function Navbar() {
         aria-hidden="true"
       >
         <div
-          className="h-full bg-gradient-to-r from-[#7C5CFC] via-[#A78BFA] to-[#38BDF8] shadow-[0_0_12px_rgba(124,92,252,0.9)] transition-all duration-200 ease-out"
+          className="h-full bg-[#1D4ED8] transition-all duration-200 ease-out"
           style={{ width: `${navProgress}%` }}
         />
       </div>
 
-      {/* Floating Glassmorphism Navbar — Seamlessly Merged into Hero */}
+      {/* Floating Navbar */}
       <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 sm:pt-4 px-3 sm:px-6 pointer-events-none transition-all duration-300">
         <div className="w-full max-w-[1280px] pointer-events-auto">
           <nav
-            className={`flex items-center justify-between px-4 sm:px-6 rounded-full transition-all duration-300 ease-out bg-[#090C15]/80 backdrop-blur-2xl border border-white/[0.04] shadow-[0_12px_40px_rgba(0,0,0,0.7)] ${
+            className={`flex items-center justify-between px-4 sm:px-6 rounded-full transition-all duration-300 ease-out bg-[#090C15]/90 backdrop-blur-2xl border border-white/[0.08] shadow-lg ${
               scrolled
-                ? "h-[50px] sm:h-[52px] bg-[#090C15]/92 border-white/[0.06] shadow-[0_16px_48px_rgba(0,0,0,0.85)]"
+                ? "h-[50px] sm:h-[52px] bg-[#090C15]/95"
                 : "h-[58px] sm:h-[62px]"
             }`}
             aria-label="Main Navigation"
           >
-            {/* Logo — Always Clean White on Dark Glass */}
+            {/* Logo */}
             <Link
               href="/"
               onClick={() => handleNavClick("/")}
-              className="logo-link flex items-center group outline-none focus:outline-none ring-0 border-0 select-none transition-transform duration-200 hover:scale-[1.02]"
+              className="logo-link flex items-center select-none"
               aria-label="SHREEJAN AI SOLUTIONS Home"
             >
               {!logoError ? (
@@ -168,7 +164,7 @@ export function Navbar() {
               ) : (
                 <div className="flex items-center gap-1.5">
                   <span className="font-heading font-black text-lg sm:text-xl tracking-tight text-white">
-                    SHREEJAN <span className="text-[#7C5CFC]">AI</span>
+                    SHREEJAN <span className="text-[#1D4ED8]">AI</span>
                   </span>
                 </div>
               )}
@@ -191,29 +187,29 @@ export function Navbar() {
                     onClick={() => handleNavClick(link.href)}
                     className={`font-body font-medium text-[13.5px] xl:text-[14.5px] px-3.5 py-1.5 rounded-full transition-all duration-200 relative select-none ${
                       isActive || isPending
-                        ? "text-[#A78BFA] bg-[#7C5CFC]/20 font-semibold shadow-xs"
+                        ? "text-white bg-white/10 font-semibold"
                         : "text-white/75 hover:text-white hover:bg-white/10"
                     }`}
                   >
-                    <span>{t(link.key) || link.label}</span>
+                    <span>{link.label}</span>
                   </Link>
                 );
               })}
             </div>
 
-            {/* Right side CTA: Electric Violet CTA Button (Language Pill Removed) */}
+            {/* Right side CTA Button */}
             <div className="hidden md:flex items-center gap-3">
               <Link
                 href="/contact"
                 onClick={() => handleNavClick("/contact")}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-[#7C5CFC] hover:bg-[#6847ED] text-white font-heading font-semibold text-xs sm:text-sm tracking-tight shadow-[0_4px_16px_rgba(124,92,252,0.4)] hover:shadow-[0_6px_24px_rgba(124,92,252,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-[#1D4ED8] hover:bg-[#1E40AF] text-white font-heading font-semibold text-xs sm:text-sm tracking-tight transition-all"
               >
-                <span>Start a Project</span>
+                <span>Contact Us</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
-            {/* Mobile Controls */}
+            {/* Mobile Menu Toggle */}
             <div className="flex items-center gap-2 md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -228,7 +224,7 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Drawer — Dark Frosted Glass */}
+      {/* Mobile Drawer */}
       <div
         className={`fixed inset-0 z-40 md:hidden transition-opacity duration-300 ${
           mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
@@ -240,12 +236,12 @@ export function Navbar() {
         />
 
         <div
-          className={`absolute top-0 right-0 w-[85vw] max-w-sm h-full bg-[#090C15]/95 backdrop-blur-2xl border-l border-white/10 p-6 flex flex-col justify-between shadow-2xl transition-transform duration-300 ease-out overflow-y-auto text-white ${
+          className={`absolute top-0 right-0 w-[85vw] max-w-sm h-full bg-[#090C15] border-l border-white/10 p-6 flex flex-col justify-between shadow-2xl transition-transform duration-300 ease-out overflow-y-auto text-white ${
             mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           <div className="pt-12">
-            <div className="text-[11px] font-mono font-semibold uppercase tracking-[2px] text-[#7C5CFC] mb-5">
+            <div className="text-[11px] font-mono font-semibold uppercase tracking-[2px] text-[#1D4ED8] mb-5">
               SHREEJAN AI SOLUTIONS
             </div>
             <nav className="flex flex-col space-y-2">
@@ -264,11 +260,11 @@ export function Navbar() {
                     onClick={() => handleNavClick(link.href)}
                     className={`flex items-center justify-between text-base font-heading font-medium py-3 px-3.5 rounded-xl transition-colors ${
                       isActive || isPending
-                        ? "text-[#A78BFA] bg-[#7C5CFC]/20 font-semibold"
+                        ? "text-white bg-white/15 font-semibold"
                         : "text-white/80 hover:text-white hover:bg-white/10"
                     }`}
                   >
-                    <span>{t(link.key) || link.label}</span>
+                    <span>{link.label}</span>
                     <ArrowRight className="w-4 h-4 opacity-50" />
                   </Link>
                 );
@@ -280,13 +276,13 @@ export function Navbar() {
             <Link
               href="/contact"
               onClick={() => handleNavClick("/contact")}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#7C5CFC] hover:bg-[#6847ED] text-white font-heading font-semibold text-sm shadow-lg shadow-[#7C5CFC]/30"
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#1D4ED8] hover:bg-[#1E40AF] text-white font-heading font-semibold text-sm"
             >
-              <span>Start a Project</span>
+              <span>Contact Us</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <div className="text-center text-xs text-white/50 font-mono">
-              Mumbai HQ · Sovereign Gen AI Agency
+              Mumbai HQ · Web &amp; AI Agency
             </div>
           </div>
         </div>
@@ -294,3 +290,5 @@ export function Navbar() {
     </>
   );
 }
+
+export default Navbar;

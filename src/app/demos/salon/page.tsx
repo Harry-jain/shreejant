@@ -5,9 +5,7 @@ import { salonTheme } from "./theme";
 import { salonData } from "./data";
 import { DemoHeader } from "@/components/demo-shared/DemoHeader";
 import { DemoHero } from "@/components/demo-shared/DemoHero";
-import { TrustStrip } from "@/components/demo-shared/TrustStrip";
 import { WhatsAppChatMockup } from "@/components/demo-shared/WhatsAppChatMockup";
-import { TestimonialCards } from "@/components/demo-shared/TestimonialCards";
 import { BookingForm } from "@/components/demo-shared/BookingForm";
 import { DemoFooter } from "@/components/demo-shared/DemoFooter";
 import { FloatingWhatsApp } from "@/components/demo-shared/FloatingWhatsApp";
@@ -18,9 +16,9 @@ import { SalonArchArt } from "./components/SalonArchArt";
 import { SalonTreatmentsGrid } from "./components/SalonTreatmentsGrid";
 
 export const metadata: Metadata = {
-  title: "Aura Studio — Luxury Hair, Skin & Bridal Sanctuary, Pune",
+  title: "Aura Studio — Sample Salon & Spa Website | SHREEJAN AI",
   description:
-    "Unapologetic luxury for hair, skin & bridal couture in Pune. सौंदर्य, आपल्या पद्धतीने. Book private suite appointments or consult on WhatsApp.",
+    "Sample business demo for a hair, skin & bridal sanctuary in Pune. Built by SHREEJAN AI SOLUTIONS.",
 };
 
 export default async function SalonDemoPage({
@@ -61,15 +59,12 @@ export default async function SalonDemoPage({
         palette={palette}
       />
 
-      {/* 3. Trust Strip */}
-      <TrustStrip stats={salonData.trustStrip} palette={palette} />
-
-      {/* 4. Core Offering: Signature Treatments */}
+      {/* 3. Core Offering: Signature Treatments */}
       <FadeUp>
         <SalonTreatmentsGrid />
       </FadeUp>
 
-      {/* 5. Signature Feature: Bridal Trial Concierge */}
+      {/* 4. Signature Feature: Bridal Trial Concierge */}
       <div id="bridal-ai" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
         <WhatsAppChatMockup
           badge={salonData.signatureFeature.badge}
@@ -83,18 +78,7 @@ export default async function SalonDemoPage({
         />
       </div>
 
-      {/* 6. Guest Testimonials */}
-      <FadeUp>
-        <TestimonialCards
-          badge="CLIENT EXPERIENCES"
-          heading="Loved by Brides & Discerning Clients Across Pune & Mumbai"
-          subhead="Real stories from our private suites and wedding mornings."
-          testimonials={salonData.testimonials}
-          palette={palette}
-        />
-      </FadeUp>
-
-      {/* 7. Booking Form */}
+      {/* 5. Booking Form */}
       <div id="booking" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
         <FadeUp>
           <BookingForm
@@ -110,7 +94,7 @@ export default async function SalonDemoPage({
         </FadeUp>
       </div>
 
-      {/* 8. Demo Footer */}
+      {/* 6. Demo Footer */}
       <DemoFooter
         brandName={salonData.header.brandName}
         domain={salonTheme.domain}
@@ -121,7 +105,7 @@ export default async function SalonDemoPage({
         palette={palette}
       />
 
-      {/* 9. Floating WhatsApp */}
+      {/* 7. Floating WhatsApp */}
       <FloatingWhatsApp
         brandName={salonData.header.brandName}
         phone="919876500000"
