@@ -1,29 +1,62 @@
 import React from "react";
+import { Section } from "@/components/ui/Section";
+import { Container } from "@/components/ui/Container";
+import { Heading } from "@/components/ui/Heading";
+import { Card } from "@/components/ui/Card";
+
+const STEPS = [
+  {
+    step: "01",
+    title: "Scope & Plan",
+    desc: "We understand your business goals and map out the pages.",
+  },
+  {
+    step: "02",
+    title: "Design",
+    desc: "Clean, responsive layout tailored to your brand.",
+  },
+  {
+    step: "03",
+    title: "Development",
+    desc: "Fast Next.js build with clean code.",
+  },
+  {
+    step: "04",
+    title: "Launch & Handoff",
+    desc: "Tested, deployed, with full code ownership.",
+  },
+];
 
 export function ProcessSection() {
-  const steps = [
-    { number: "01", title: "Discovery", desc: "We review your requirements and business goals." },
-    { number: "02", title: "Strategy & Scope", desc: "You receive a clear scope, wireframes, and timeline." },
-    { number: "03", title: "Build & Review", desc: "We develop your site with Next.js and host a staging preview." },
-    { number: "04", title: "Launch & Support", desc: "We deploy to your domain and provide post-launch support." },
-  ];
-
   return (
-    <section id="process" className="py-16 px-4 max-w-5xl mx-auto text-white">
-      <div className="text-center mb-12">
-        <h2 className="text-2xl sm:text-3xl font-bold text-white">How We Work</h2>
-        <p className="text-sm text-gray-400 mt-2">A clean 4-step engineering process.</p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {steps.map((s) => (
-          <div key={s.number} className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
-            <span className="text-xs font-mono font-bold text-blue-400">{s.number}</span>
-            <h3 className="text-base font-semibold text-white">{s.title}</h3>
-            <p className="text-xs text-gray-400 leading-relaxed">{s.desc}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+    <Section className="border-t border-border bg-surface">
+      <Container>
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+          <Heading level="h2" className="mb-3">
+            Our 4-Step Process
+          </Heading>
+          <p className="text-muted text-sm sm:text-base">
+            A straightforward process from initial discussion to project delivery.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {STEPS.map((step) => (
+            <Card key={step.step} hoverEffect className="space-y-3">
+              <span className="text-xs font-mono font-semibold text-accent">
+                Step {step.step}
+              </span>
+              <Heading level="h3" className="text-base sm:text-lg font-semibold">
+                {step.title}
+              </Heading>
+              <p className="text-muted text-sm leading-relaxed">
+                {step.desc}
+              </p>
+            </Card>
+          ))}
+        </div>
+      </Container>
+    </Section>
   );
 }
 

@@ -1,36 +1,51 @@
 import React from "react";
-import Link from "next/link";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { Section } from "@/components/ui/Section";
+import { Container } from "@/components/ui/Container";
+import { Heading } from "@/components/ui/Heading";
+import { Button } from "@/components/ui/Button";
+import { MessageSquare, ArrowRight } from "lucide-react";
 
 export function CTASection() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918976517353";
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    "Hi Shreejan AI, I would like to discuss a website project for my business."
+  )}`;
 
   return (
-    <section className="py-20 px-4 max-w-4xl mx-auto text-center text-white">
-      <div className="p-8 sm:p-12 rounded-3xl bg-white/5 border border-white/10 space-y-6">
-        <h2 className="text-2xl sm:text-4xl font-bold">Ready to Start Your Project?</h2>
-        <p className="text-gray-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-          Tell us about your business goals and what you need. We will get back to you with an honest timeline and estimate.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-          <Link
-            href="/contact"
-            className="px-8 py-3.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-colors"
-          >
-            Contact Us
-          </Link>
-          <a
-            href={`https://wa.me/${whatsappNumber}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-colors"
-          >
-            <MessageCircle className="w-4 h-4" />
-            <span>Chat on WhatsApp</span>
-          </a>
+    <Section className="border-t border-border bg-surface">
+      <Container>
+        <div className="rounded-2xl border border-border bg-bg p-8 sm:p-12 text-center max-w-3xl mx-auto space-y-6">
+          <Heading level="h2" className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+            Ready to Build Your Website?
+          </Heading>
+
+          <p className="text-muted text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            Tell us about your business goals and requirements. We will review your brief and share an honest timeline and estimate.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <Button
+              href="/contact"
+              variant="primary"
+              size="lg"
+              className="w-full sm:w-auto"
+              rightIcon={<ArrowRight className="w-4 h-4" />}
+            >
+              Contact Us
+            </Button>
+            <Button
+              href={whatsappUrl}
+              variant="secondary"
+              size="lg"
+              className="w-full sm:w-auto"
+              leftIcon={<MessageSquare className="w-4 h-4 text-accent" />}
+            >
+              Chat on WhatsApp
+            </Button>
+          </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }
 

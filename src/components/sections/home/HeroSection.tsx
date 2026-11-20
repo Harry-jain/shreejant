@@ -1,36 +1,50 @@
-"use client";
-
 import React from "react";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { Section } from "@/components/ui/Section";
+import { Container } from "@/components/ui/Container";
+import { Heading } from "@/components/ui/Heading";
+import { Button } from "@/components/ui/Button";
+import { ArrowRight, MessageSquare } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="pt-36 pb-20 text-center max-w-5xl mx-auto px-4">
-      <span className="text-xs font-mono uppercase tracking-wider text-blue-400 bg-white/10 px-3 py-1 rounded-full">
-        MUMBAI WEB &amp; AI AGENCY
-      </span>
-      <h1 className="text-4xl sm:text-6xl font-bold text-white tracking-tight mt-6 mb-6 leading-tight">
-        Modern Websites &amp; AI Automation for Indian Businesses
-      </h1>
-      <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
-        Fast, mobile-first websites and smart WhatsApp automations that help local businesses grow without technical complexity.
-      </p>
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <Link
-          href="/demos"
-          className="px-8 py-3.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-colors"
-        >
-          View Demos
-        </Link>
-        <Link
-          href="/contact"
-          className="px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-sm transition-colors"
-        >
-          Contact Us
-        </Link>
-      </div>
-    </section>
+    <Section className="pt-12 sm:pt-16 md:pt-24 pb-12 sm:pb-16 text-center">
+      <Container>
+        <div className="max-w-3xl mx-auto space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-xs font-medium text-muted">
+            <span>Mumbai Web Development &amp; Design</span>
+          </div>
+
+          <Heading level="h1" className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-text">
+            Clean, Fast Websites for Mumbai Businesses
+          </Heading>
+
+          <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed">
+            We build modern, mobile-friendly websites and web applications with clean code, fast loading speeds, and zero bloat.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <Button
+              href="/demos"
+              variant="primary"
+              size="lg"
+              className="w-full sm:w-auto"
+              rightIcon={<ArrowRight className="w-4 h-4" />}
+            >
+              View Sample Sites
+            </Button>
+            <Button
+              href="/contact"
+              variant="secondary"
+              size="lg"
+              className="w-full sm:w-auto"
+              leftIcon={<MessageSquare className="w-4 h-4 text-accent" />}
+            >
+              Talk to Us
+            </Button>
+          </div>
+        </div>
+      </Container>
+    </Section>
   );
 }
 
