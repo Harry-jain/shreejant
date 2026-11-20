@@ -2,56 +2,50 @@ import { NextRequest, NextResponse } from "next/server";
 import { contactFormSchema } from "@/lib/validations";
 import { Resend } from "resend";
 
-// In-memory rate limiting store: IP -> timestamps array
-const hourlyIpMap = new Map<string, number[]>();
-const dailyIpMap = new Map<string, number[]>();
-let globalTimestamps: number[] = [];
-
+/**
+ * In-memory rate limiting store: client IP -> timestamps array.
+ *
+ * SERVERLESS CAVEATS:
+ * Note that in-memory state is maintained per individual serverless execution instance.
+ * On platforms like Vercel, requests may be routed to different lambda instances or reset on cold starts.
+ * This provides best-effort mitigation against rapid-fire spam and accidental duplicate clicks.
+ * For distributed production-grade rate limiting across multiple serverless regions/instances,
+ * use Upstash Redis, Cloudflare Turnstile/WAF, or an external rate limiter.
+ */
+const ipRequestsMap = new Map<string, number[]>();
 const ONE_HOUR_MS = 60 * 60 * 1000;
-const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const MAX_REQUESTS_PER_HOUR = 5;
-const MAX_REQUESTS_PER_DAY = 15;
-const MAX_GLOBAL_PER_DAY = 150;
 
-function isRateLimited(ip: string): { limited: boolean; reason?: string } {
-  // Relax rate limit in development or loopback testing
+function isRateLimited(ip: string): boolean {
   if (process.env.NODE_ENV !== "production" || ip === "127.0.0.1" || ip === "::1" || ip === "localhost") {
-    return { limited: false };
+    return false;
   }
 
   const now = Date.now();
+  const timestamps = ipRequestsMap.get(ip) || [];
+  const recent = timestamps.filter((t) => now - t < ONE_HOUR_MS);
 
-  // 1. Global Daily Circuit Breaker
-  globalTimestamps = globalTimestamps.filter((t) => now - t < ONE_DAY_MS);
-  if (globalTimestamps.length >= MAX_GLOBAL_PER_DAY) {
-    return { limited: true, reason: "Global submission threshold reached. Please connect on WhatsApp." };
+  if (recent.length >= MAX_REQUESTS_PER_HOUR) {
+    ipRequestsMap.set(ip, recent);
+    return true;
   }
 
-  // 2. Per-IP Hourly Limit
-  const hourly = hourlyIpMap.get(ip) || [];
-  const validHourly = hourly.filter((time) => now - time < ONE_HOUR_MS);
-  if (validHourly.length >= MAX_REQUESTS_PER_HOUR) {
-    hourlyIpMap.set(ip, validHourly);
-    return { limited: true, reason: "Hourly rate limit reached. Please connect on WhatsApp." };
+  recent.push(now);
+  ipRequestsMap.set(ip, recent);
+
+  // Periodic pruning of stale IPs to prevent unbounded memory growth
+  if (ipRequestsMap.size > 500) {
+    for (const [key, times] of ipRequestsMap.entries()) {
+      const active = times.filter((t) => now - t < ONE_HOUR_MS);
+      if (active.length === 0) {
+        ipRequestsMap.delete(key);
+      } else {
+        ipRequestsMap.set(key, active);
+      }
+    }
   }
 
-  // 3. Per-IP Daily Limit
-  const daily = dailyIpMap.get(ip) || [];
-  const validDaily = daily.filter((time) => now - time < ONE_DAY_MS);
-  if (validDaily.length >= MAX_REQUESTS_PER_DAY) {
-    dailyIpMap.set(ip, validDaily);
-    return { limited: true, reason: "Daily submission limit reached. Please connect on WhatsApp." };
-  }
-
-  validHourly.push(now);
-  hourlyIpMap.set(ip, validHourly);
-
-  validDaily.push(now);
-  dailyIpMap.set(ip, validDaily);
-
-  globalTimestamps.push(now);
-
-  return { limited: false };
+  return false;
 }
 
 // Extract sanitized client IP
@@ -70,107 +64,164 @@ function getClientIp(request: NextRequest): string {
   return "127.0.0.1";
 }
 
-// Helper to escape HTML characters and prevent HTML injection in emails
+// Escape HTML characters to prevent HTML/XSS injection in rendered email notifications
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(/'/g, "&apos;");
 }
 
 export async function POST(request: NextRequest) {
   try {
     // 1. IP Rate Limiting Check
     const ip = getClientIp(request);
-    const rateCheck = isRateLimited(ip);
-
-    if (rateCheck.limited) {
+    if (isRateLimited(ip)) {
       return NextResponse.json(
         {
-          error:
-            rateCheck.reason ||
-            "Rate limit reached. For immediate assistance, please connect with us directly on WhatsApp.",
+          success: false,
+          error: "Too many submissions. Please reach out to us directly on WhatsApp.",
         },
         { status: 429 }
       );
     }
 
-    // 2. Body Parsing & Zod Validation
-    const rawBody = await request.json();
-    const validatedData = contactFormSchema.parse(rawBody);
-
-    const fullName = validatedData.fullName;
-    const contact = validatedData.contact || validatedData.email || validatedData.phone || "Not provided";
-    const message = validatedData.message;
-    const projectType = validatedData.projectType || validatedData.service || "General Inquiry";
-
-    const isEmail = contact.includes("@");
-    const clientEmail = isEmail ? contact : (validatedData.email || undefined);
-    const clientPhone = !isEmail ? contact : (validatedData.phone || undefined);
-
-    // 3. Email Dispatch via Resend (if configured)
-    const resendApiKey = process.env.RESEND_API_KEY;
-    const recipientEmail = process.env.CONTACT_EMAIL_TO || "aishreejan@gmail.com";
-
-    if (resendApiKey && !resendApiKey.includes("placeholder") && !resendApiKey.includes("re_xxxx")) {
-      try {
-        const resend = new Resend(resendApiKey);
-        const safeSubject = `⚡ New Project Inquiry: ${fullName.replace(/[\r\n]/g, " ")} — ${projectType.replace(/[\r\n]/g, " ")}`;
-        const plainTextBody = `New Project Inquiry — SHREEJAN AI SOLUTIONS\n\nClient Name: ${fullName}\nContact Info: ${contact}\nProject Type: ${projectType}\n\nMessage:\n${message}`;
-
-        await resend.emails.send({
-          from: "SHREEJAN AI Inquiries <onboarding@resend.dev>",
-          to: recipientEmail,
-          replyTo: clientEmail,
-          subject: safeSubject,
-          text: plainTextBody,
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #7C5CFC; border-radius: 12px; background-color: #0A0D15; color: #FFFFFF;">
-              <h2 style="color: #7C5CFC; font-size: 22px; margin-bottom: 20px; border-bottom: 1px solid rgba(124,92,252,0.3); padding-bottom: 10px;">
-                New Project Inquiry — SHREEJAN AI SOLUTIONS
-              </h2>
-              <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-                <tr>
-                  <td style="padding: 8px 0; color: #A0B4CC; width: 140px;">Client Name:</td>
-                  <td style="padding: 8px 0; font-weight: bold; color: #FFFFFF;">${escapeHtml(fullName)}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; color: #A0B4CC;">Contact Info:</td>
-                  <td style="padding: 8px 0; color: #7C5CFC; font-weight: bold;">${escapeHtml(contact)}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; color: #A0B4CC;">Project Type:</td>
-                  <td style="padding: 8px 0; color: #FFFFFF;">${escapeHtml(projectType)}</td>
-                </tr>
-              </table>
-              <div style="background-color: rgba(255,255,255,0.04); border-left: 3px solid #7C5CFC; padding: 14px; border-radius: 4px; margin-top: 15px;">
-                <p style="margin: 0; color: #FFFFFF; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(message)}</p>
-              </div>
-            </div>
-          `,
-        });
-      } catch (emailErr) {
-        console.error("Resend delivery notice:", emailErr);
-        // Non-blocking so client receives success
-      }
-    } else {
-      console.log("Mock lead recorded (Resend unconfigured):", { projectType, timestamp: new Date().toISOString() });
+    // 2. Parse request body
+    const rawBody = await request.json().catch(() => null);
+    if (!rawBody || typeof rawBody !== "object") {
+      return NextResponse.json(
+        { success: false, error: "Invalid request payload." },
+        { status: 400 }
+      );
     }
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Your inquiry has been received. A founding partner will review your requirements and respond within 4 hours.",
-        fullName,
-      },
-      { status: 200 }
-    );
+    // Support field name aliases (name / fullName, service / projectType)
+    const normalizedBody = {
+      ...rawBody,
+      name: rawBody.name ?? rawBody.fullName,
+      service: rawBody.service ?? rawBody.projectType,
+    };
+
+    // 3. Zod Validation
+    const validatedData = contactFormSchema.parse(normalizedBody);
+
+    // 4. Honeypot Check: if website field is filled, silently reject to drop automated bots
+    if (validatedData.website && validatedData.website.trim().length > 0) {
+      return NextResponse.json(
+        { success: true, message: "Thank you. We'll reply as soon as we can." },
+        { status: 200 }
+      );
+    }
+
+    // 5. Verify Resend Configuration
+    const resendApiKey = process.env.RESEND_API_KEY;
+    const contactEmailTo = process.env.CONTACT_EMAIL_TO;
+
+    if (!resendApiKey || !contactEmailTo) {
+      console.error("Contact service misconfigured: RESEND_API_KEY or CONTACT_EMAIL_TO is missing");
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Contact service is not configured. Please reach out via WhatsApp.",
+        },
+        { status: 500 }
+      );
+    }
+
+    // 6. Dispatch Email via Resend
+    try {
+      const resend = new Resend(resendApiKey);
+      const safeSenderName = validatedData.name.replace(/[\r\n]/g, " ").slice(0, 50);
+      const safeService = (validatedData.service || "General Inquiry").replace(/[\r\n]/g, " ").slice(0, 50);
+      const safeSubject = `New Project Inquiry from ${safeSenderName} - ${safeService}`;
+
+      const plainTextBody = [
+        "New Project Inquiry — SHREEJAN AI SOLUTIONS",
+        "",
+        `Name: ${validatedData.name}`,
+        `Email: ${validatedData.email}`,
+        `Phone / WhatsApp: ${validatedData.phone || "Not provided"}`,
+        `Service Interest: ${validatedData.service || "General Inquiry"}`,
+        "",
+        "Message:",
+        validatedData.message,
+      ].join("\n");
+
+      const htmlBody = `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid rgb(229, 231, 235); border-radius: 8px; background-color: rgb(255, 255, 255); color: rgb(17, 24, 39);">
+          <h2 style="font-size: 20px; font-weight: 600; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgb(229, 231, 235); padding-bottom: 12px; color: rgb(17, 24, 39);">
+            New Inquiry — SHREEJAN AI SOLUTIONS
+          </h2>
+          <table style="width: 552px; border-collapse: collapse; margin-bottom: 16px;">
+            <tr>
+              <td style="padding: 6px 0; color: rgb(107, 114, 128); width: 140px; font-size: 14px;">Name:</td>
+              <td style="padding: 6px 0; font-weight: 500; font-size: 14px; color: rgb(17, 24, 39);">${escapeHtml(validatedData.name)}</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 0; color: rgb(107, 114, 128); font-size: 14px;">Email:</td>
+              <td style="padding: 6px 0; font-size: 14px; color: rgb(29, 78, 216);"><a href="mailto:${escapeHtml(validatedData.email)}" style="color: rgb(29, 78, 216); text-decoration: none;">${escapeHtml(validatedData.email)}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 0; color: rgb(107, 114, 128); font-size: 14px;">Phone / WhatsApp:</td>
+              <td style="padding: 6px 0; font-size: 14px; color: rgb(17, 24, 39);">${escapeHtml(validatedData.phone || "Not provided")}</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 0; color: rgb(107, 114, 128); font-size: 14px;">Service Interest:</td>
+              <td style="padding: 6px 0; font-size: 14px; color: rgb(17, 24, 39);">${escapeHtml(validatedData.service || "General Inquiry")}</td>
+            </tr>
+          </table>
+          <div style="margin-top: 16px; padding: 12px 16px; background-color: rgb(250, 250, 249); border-radius: 6px; border: 1px solid rgb(229, 231, 235);">
+            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: rgb(17, 24, 39); white-space: pre-wrap;">${escapeHtml(validatedData.message)}</p>
+          </div>
+        </div>
+      `;
+
+      const fromAddress = process.env.RESEND_FROM_EMAIL || "SHREEJAN AI <onboarding@resend.dev>";
+
+      const { error } = await resend.emails.send({
+        from: fromAddress,
+        to: contactEmailTo,
+        replyTo: validatedData.email,
+        subject: safeSubject,
+        text: plainTextBody,
+        html: htmlBody,
+      });
+
+      if (error) {
+        console.error("Resend delivery failed:", error);
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Failed to send message. Please reach out directly on WhatsApp.",
+          },
+          { status: 502 }
+        );
+      }
+
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Thank you. We'll reply as soon as we can.",
+        },
+        { status: 200 }
+      );
+    } catch (sendError) {
+      console.error("Resend delivery exception:", sendError);
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Failed to send message. Please reach out directly on WhatsApp.",
+        },
+        { status: 502 }
+      );
+    }
   } catch (error: any) {
     if (error?.name === "ZodError") {
       return NextResponse.json(
         {
+          success: false,
           error: "Please check your inputs and try again.",
           details: error.errors?.map((e: any) => `${e.path.join(".")}: ${e.message}`),
         },
@@ -178,9 +229,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.error("Contact API error:", error);
+    console.error("Contact API unexpected error:", error);
     return NextResponse.json(
-      { error: "We could not process your inquiry. Please reach out to us directly on WhatsApp." },
+      {
+        success: false,
+        error: "We could not process your inquiry. Please reach out to us directly on WhatsApp.",
+      },
       { status: 500 }
     );
   }
