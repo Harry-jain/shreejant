@@ -22,7 +22,7 @@ export function DemoFooter({ config }: { config: DemoConfig }) {
             Your customer reviews show here.
           </p>
           <p className="text-xs opacity-75 max-w-sm mx-auto" style={{ color: palette.ink }}>
-            Sync live Google Business reviews, video testimonials, and verified customer ratings directly.
+            Sync live Google Business reviews and verified customer ratings directly.
           </p>
         </div>
 

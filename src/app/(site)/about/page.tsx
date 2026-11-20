@@ -49,7 +49,7 @@ export default function AboutPage() {
     {
       title: "Full Source Code Ownership",
       description:
-        "Upon project completion and final settlement, you own 100% of your source code, design assets, and repository. No vendor lock-in.",
+        "Upon project completion and final settlement, you own all of your source code, design assets, and repository. No vendor lock-in.",
       icon: Code2,
     },
   ];

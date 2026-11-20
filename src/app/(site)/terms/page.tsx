@@ -40,7 +40,7 @@ export default function TermsPage() {
       icon: Users,
     },
     {
-      title: "100% Code Ownership",
+      title: "Full Code Ownership",
       description:
         "Upon final milestone settlement, full source code and intellectual property transfer to you with zero vendor lock-in.",
       icon: Code2,
@@ -190,7 +190,7 @@ export default function TermsPage() {
               </p>
               <ul className="list-disc pl-5 space-y-1.5">
                 <li>
-                  100% intellectual property rights to custom code, designs, and
+                  complete intellectual property rights to custom code, designs, and
                   project assets transfer to you.
                 </li>
                 <li>

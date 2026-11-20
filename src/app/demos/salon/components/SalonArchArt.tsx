@@ -27,7 +27,7 @@ export function SalonArchArt() {
           </linearGradient>
           <radialGradient id="auraGlow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="rgb(201, 138, 138)" stopOpacity="0.30" />
-            <stop offset="100%" stopColor="rgb(201, 138, 138)" stopOpacity="0" />
+            <stop offset="1" stopColor="rgb(201, 138, 138)" stopOpacity="0" />
           </radialGradient>
         </defs>
 

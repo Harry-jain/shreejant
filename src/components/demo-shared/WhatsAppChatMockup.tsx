@@ -29,7 +29,7 @@ export interface WhatsAppChatMockupProps {
 }
 
 export function WhatsAppChatMockup({
-  badge = "24/7 AI SALES CONCIERGE",
+  badge = "SMART WHATSAPP ASSISTANT",
   heading,
   description,
   bullets,

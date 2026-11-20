@@ -25,7 +25,7 @@ export function CopperPotArt() {
           </linearGradient>
           <radialGradient id="steamGlow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="rgb(200, 150, 62)" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="rgb(200, 150, 62)" stopOpacity="0" />
+            <stop offset="1" stopColor="rgb(200, 150, 62)" stopOpacity="0" />
           </radialGradient>
         </defs>
 

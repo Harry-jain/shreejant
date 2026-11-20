@@ -33,16 +33,6 @@ export interface ProjectItem {
   featured: boolean;
 }
 
-export interface TestimonialItem {
-  id: string;
-  quote: string;
-  author: string;
-  role: string;
-  business: string;
-  location: string;
-  initials: string;
-}
-
 export interface PricingPlan {
   id: string;
   name: string;

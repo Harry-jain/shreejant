@@ -26,7 +26,7 @@ export const salonData = {
     },
   },
   trustStrip: [
-    { value: "100%", label: "Cruelty-Free Botanicals" },
+    { value: "Pure", label: "Cruelty-Free Botanicals" },
     { value: "Private", label: "Dedicated Treatment Suites" },
     { value: "Bespoke", label: "Custom Bridal Styling" },
     { value: "Sterilized", label: "Autoclave Hygiene Standard" },

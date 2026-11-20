@@ -24,7 +24,7 @@ export function ClinicStethoscopeArt() {
           </linearGradient>
           <radialGradient id="clinicGlow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="rgb(15, 138, 138)" stopOpacity="0.25" />
-            <stop offset="100%" stopColor="rgb(15, 138, 138)" stopOpacity="0" />
+            <stop offset="1" stopColor="rgb(15, 138, 138)" stopOpacity="0" />
           </radialGradient>
         </defs>
 
