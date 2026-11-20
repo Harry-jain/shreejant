@@ -6,6 +6,7 @@ import { ArrowUpRight, MessageSquare, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
+import { BreathingWaveGrid } from "@/components/ui/BreathingWaveGrid";
 
 export function ClosingCTASection() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918976517353";
@@ -17,7 +18,7 @@ export function ClosingCTASection() {
     <Section className="bg-surface relative overflow-hidden">
       <Container>
         <div className="rounded-3xl border border-border bg-bg p-8 sm:p-12 md:p-16 relative overflow-hidden">
-          <div className="absolute -inset-[60px] bg-paper-grid animate-dot-breathe pointer-events-none" />
+          <BreathingWaveGrid dotSpacing={32} baseRadius={1.0} maxRadius={2.8} />
           <div className="max-w-2xl space-y-6 relative z-10">
             <div className="flex items-center gap-2">
               <span className="font-mono text-xs uppercase px-2 py-0.5 rounded bg-accent text-white font-bold">

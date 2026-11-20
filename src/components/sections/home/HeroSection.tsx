@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight, ArrowDown, Code2, Cpu, Database, CheckCircle2, Terminal, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { BreathingWaveGrid } from "@/components/ui/BreathingWaveGrid";
 
 type FocusMode = "websites" | "automation" | "platforms";
 
@@ -13,11 +14,9 @@ export function HeroSection() {
 
   return (
     <section className="relative pt-12 pb-16 sm:pt-20 sm:pb-24 border-b border-border overflow-hidden">
-      {/* Living Breathing Dot Grid Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
-        <div className="absolute -inset-[80px] bg-paper-grid animate-dot-breathe" />
-        <div className="absolute inset-0 bg-radial-vignette" />
-      </div>
+      {/* Living Breathing Undulating Wave Dot Grid */}
+      <BreathingWaveGrid dotSpacing={28} baseRadius={1.2} maxRadius={3.4} />
+      <div className="absolute inset-0 bg-radial-vignette pointer-events-none" />
 
       <Container className="relative z-10">
         {/* Top Studio Label */}
@@ -75,8 +74,8 @@ export function HeroSection() {
                     key={item.id}
                     onClick={() => setActiveFocus(item.id as FocusMode)}
                     className={`p-3 rounded-lg border text-left transition-all font-mono text-xs ${activeFocus === item.id
-                        ? "bg-surface border-accent shadow-sm ring-1 ring-accent"
-                        : "bg-surface/50 border-border hover:bg-surface hover:border-text/40"
+                      ? "bg-surface border-accent shadow-sm ring-1 ring-accent"
+                      : "bg-surface/50 border-border hover:bg-surface hover:border-text/40"
                       }`}
                   >
                     <div className="font-bold text-text">{item.label}</div>
