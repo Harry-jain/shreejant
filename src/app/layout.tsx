@@ -1,27 +1,44 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import "@/styles/demo.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
-  themeColor: "#FAFAF9",
+  themeColor: "#F5F2EA",
   width: "device-width",
   initialScale: 1,
 };
 
 export const metadata: Metadata = {
-  title: "SHREEJAN AI SOLUTIONS | AI-Powered Websites & Automation — Mumbai",
+  title: "SHREEJAN // Digital Engineering Studio — Mumbai",
   description:
-    "Mumbai-based web agency building modern Next.js websites, AI chatbots, and smart automations for businesses across India.",
+    "We build the digital systems behind ambitious businesses. Fast, clean web platforms, intelligent automation, and custom digital products.",
   keywords: [
-    "AI website development India",
-    "AI chatbot India",
-    "web development Mumbai",
-    "business automation India",
-    "Shreejan AI",
-    "SHREEJAN AI SOLUTIONS",
+    "Digital Engineering Studio Mumbai",
+    "Next.js web development Mumbai",
+    "intelligent automation India",
+    "custom software development",
+    "Shreejan AI Solutions",
+    "SHREEJAN",
   ],
   authors: [{ name: "SHREEJAN AI SOLUTIONS" }],
   creator: "SHREEJAN AI SOLUTIONS",
@@ -31,38 +48,28 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/brand/app-icon.png", sizes: "any" },
+      { url: "/brand/logo-transparent.png", sizes: "any" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
-    shortcut: "/brand/app-icon.png",
-    apple: "/brand/app-icon.png",
+    shortcut: "/brand/logo-transparent.png",
+    apple: "/brand/logo-transparent.png",
   },
   openGraph: {
-    title: "SHREEJAN AI SOLUTIONS — AI Websites & Automation",
-    description: "Modern Next.js websites and business automation for ambitious Indian businesses.",
+    title: "SHREEJAN // Digital Engineering Studio",
+    description: "We make ambitious ideas work in the real world. Websites. Intelligent automation. Custom digital products.",
     url: "https://shreejanai.in",
-    siteName: "SHREEJAN AI SOLUTIONS",
-    images: [{ url: "/brand/brand-banner.png", width: 1200, height: 630, alt: "SHREEJAN AI SOLUTIONS" }],
+    siteName: "SHREEJAN",
     locale: "en_IN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SHREEJAN AI SOLUTIONS — AI Websites & Automation",
-    description: "Modern Next.js websites and business automation for ambitious Indian businesses.",
-    images: ["/brand/brand-banner.png"],
+    title: "SHREEJAN // Digital Engineering Studio",
+    description: "We make ambitious ideas work in the real world. Websites. Intelligent automation. Custom digital products.",
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
 };
 
@@ -73,7 +80,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-bg text-text antialiased selection:bg-accent selection:text-white`}>
+      <body
+        className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} font-sans bg-bg text-text antialiased selection:bg-accent selection:text-white`}
+      >
         {children}
       </body>
     </html>

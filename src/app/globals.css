@@ -3,13 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --bg: #FAFAF9;
+  --bg: #F5F2EA;
+  --bg-secondary: #EBE6DA;
   --surface: #FFFFFF;
-  --text: #111827;
-  --muted: #6B7280;
-  --border: #E5E7EB;
-  --accent: #1D4ED8;
-  --accent-hover: #1E40AF;
+  --text: #181818;
+  --muted: #68665F;
+  --border: rgba(24, 24, 24, 0.16);
+  --border-subtle: rgba(24, 24, 24, 0.08);
+  --accent: #F05D35;
+  --accent-hover: #D84822;
+  --accent-lime: #D7E66B;
+  --accent-blue: #B9D8EF;
 }
 
 @layer base {
@@ -28,11 +32,32 @@
   body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  code, pre, kbd, .font-mono {
+    font-family: var(--font-mono), monospace;
+  }
+}
+
+/* Engineering grid & dot textures */
+.bg-paper-grid {
+  background-image: radial-gradient(rgba(24, 24, 24, 0.14) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-paper-lines {
+  background-image: linear-gradient(to right, rgba(24, 24, 24, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(24, 24, 24, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
 @media (prefers-reduced-motion: reduce) {

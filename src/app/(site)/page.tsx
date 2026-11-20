@@ -1,27 +1,29 @@
 import React from "react";
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/sections/home/HeroSection";
-import { WhatWeBuildSection } from "@/components/sections/home/WhatWeBuildSection";
-import { DemosSection } from "@/components/sections/home/DemosSection";
+import { ServicesExplorer } from "@/components/sections/home/ServicesExplorer";
+import { SelectedWorkSection } from "@/components/sections/home/SelectedWorkSection";
+import { SideQuestLab } from "@/components/sections/home/SideQuestLab";
 import { ProcessSection } from "@/components/sections/home/ProcessSection";
-import { PricingSummarySection } from "@/components/sections/home/PricingSummarySection";
-import { CTASection } from "@/components/sections/home/CTASection";
+import { CraftStandardsSection } from "@/components/sections/home/CraftStandardsSection";
+import { ClosingCTASection } from "@/components/sections/home/ClosingCTASection";
 
 export const metadata: Metadata = {
-  title: "SHREEJAN AI SOLUTIONS — Clean, Fast Websites for Mumbai Businesses",
+  title: "SHREEJAN // Digital Engineering Studio — Mumbai",
   description:
-    "We build modern, mobile-friendly websites and web applications for Mumbai businesses with clean code, fast loading speeds, and zero bloat.",
+    "We build the digital systems behind ambitious businesses. Websites, intelligent automation, and custom digital platforms engineered with craft.",
 };
 
 export default function HomePage() {
   return (
     <div className="flex flex-col w-full">
       <HeroSection />
-      <WhatWeBuildSection />
-      <DemosSection />
+      <ServicesExplorer />
+      <SelectedWorkSection />
+      <SideQuestLab />
       <ProcessSection />
-      <PricingSummarySection />
-      <CTASection />
+      <CraftStandardsSection />
+      <ClosingCTASection />
     </div>
   );
 }

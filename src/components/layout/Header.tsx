@@ -4,14 +4,14 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, MessageSquare } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
+  { href: "/#work", label: "Work" },
   { href: "/services", label: "Services" },
-  { href: "/demos", label: "Demos" },
+  { href: "/#lab", label: "Side Quest Lab" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -21,38 +21,39 @@ export function Header() {
   const [logoError, setLogoError] = useState(false);
   const pathname = usePathname();
 
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918976517353";
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    "Hi Shreejan AI, I would like to enquire about building a website for my business."
-  )}`;
-
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-surface/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-bg/95 backdrop-blur-md">
       <Container>
-        <div className="flex h-16 items-center justify-between gap-4">
-          {/* Brand Logo / Name */}
+        <div className="flex h-16 sm:h-18 items-center justify-between gap-4">
+          {/* Brand Logo / Monogram */}
           <Link
             href="/"
-            className="flex items-center gap-3 outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg"
-            aria-label="SHREEJAN AI SOLUTIONS Home"
+            className="flex items-center gap-2.5 outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg group"
+            aria-label="SHREEJAN Home"
           >
             {!logoError ? (
-              <div className="relative h-9 w-40 sm:h-10 sm:w-44">
+              <div className="relative h-8 w-32 sm:h-9 sm:w-36">
                 <Image
                   src="/brand/logo-transparent.png"
                   alt="SHREEJAN AI SOLUTIONS"
                   fill
-                  sizes="(max-width: 640px) 160px, 176px"
+                  sizes="160px"
                   className="object-contain object-left"
                   priority
                   onError={() => setLogoError(true)}
                 />
               </div>
             ) : (
-              <span className="font-bold text-lg tracking-tight text-text">
-                SHREEJAN <span className="text-accent">AI</span>
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="font-display font-black text-xl tracking-tight text-text">
+                  SHREEJAN
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+              </div>
             )}
+            <span className="hidden lg:inline-block font-mono text-[10px] text-muted uppercase tracking-wider pl-2 border-l border-border">
+              Digital Studio
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -63,10 +64,10 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                  className={`px-3 py-1.5 text-xs font-mono font-medium rounded-lg transition-colors ${
                     isActive
-                      ? "text-accent font-semibold"
-                      : "text-muted hover:text-text hover:bg-bg"
+                      ? "text-text bg-bg-secondary font-bold"
+                      : "text-muted hover:text-text hover:bg-bg-secondary/60"
                   }`}
                 >
                   {link.label}
@@ -75,76 +76,53 @@ export function Header() {
             })}
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden sm:flex items-center gap-2.5">
+          {/* Desktop Right CTA */}
+          <div className="hidden sm:flex items-center gap-3">
             <Button
-              href={whatsappUrl}
-              variant="secondary"
+              href="/contact"
+              variant="primary"
               size="sm"
-              leftIcon={<MessageSquare className="w-3.5 h-3.5 text-accent" />}
-              aria-label="Chat with us on WhatsApp"
+              rightIcon={<ArrowUpRight className="w-3.5 h-3.5" />}
             >
-              WhatsApp
-            </Button>
-            <Button href="/contact" variant="primary" size="sm">
-              Contact Us
+              Start a Project
             </Button>
           </div>
 
-          {/* Mobile Hamburger Toggle */}
-          <div className="flex items-center gap-2 md:hidden">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-lg text-muted hover:text-text hover:bg-bg border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg text-text hover:bg-bg-secondary transition-colors"
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-border py-4 space-y-3">
-            <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
-              {NAV_LINKS.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`px-3 py-2 text-base font-medium rounded-lg transition-colors ${
-                      isActive
-                        ? "text-accent font-semibold bg-bg"
-                        : "text-muted hover:text-text hover:bg-bg"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </nav>
-            <div className="pt-2 flex flex-col gap-2 border-t border-border">
-              <Button
-                href={whatsappUrl}
-                variant="secondary"
-                size="default"
-                className="w-full justify-center"
-                leftIcon={<MessageSquare className="w-4 h-4 text-accent" />}
+          <div className="md:hidden border-t border-border py-4 px-2 space-y-2 bg-surface rounded-b-2xl shadow-lg animate-in slide-in-from-top-2">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 text-sm font-mono font-medium text-text hover:bg-bg rounded-lg"
               >
-                Chat on WhatsApp
-              </Button>
+                {link.label}
+              </Link>
+            ))}
+            <div className="pt-3 border-t border-border">
               <Button
                 href="/contact"
                 variant="primary"
                 size="default"
                 className="w-full justify-center"
                 onClick={() => setMobileMenuOpen(false)}
+                rightIcon={<ArrowUpRight className="w-4 h-4" />}
               >
-                Contact Us
+                Start a Project
               </Button>
             </div>
           </div>
@@ -153,5 +131,3 @@ export function Header() {
     </header>
   );
 }
-
-export default Header;
